@@ -27,10 +27,6 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    setIsOpen(false);
-  }, [pathname]);
-
-  useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [isOpen]);
@@ -50,10 +46,9 @@ export default function Navbar() {
           height: 72,
           display: "flex",
           alignItems: "center",
-          transition: "all 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
-          background: scrolled ? "rgba(245, 240, 232, 0.85)" : "transparent",
-          backdropFilter: scrolled ? "blur(20px) saturate(180%)" : "none",
-          borderBottom: scrolled ? "1px solid rgba(217, 210, 199, 0.6)" : "1px solid transparent",
+          padding: "0",
+          background: "transparent",
+          pointerEvents: "none",
         }}
       >
         <div
@@ -65,6 +60,16 @@ export default function Navbar() {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
+            gap: "1.5rem",
+            pointerEvents: "auto",
+            background: scrolled ? "rgba(248, 243, 236, 0.9)" : "rgba(248, 243, 236, 0.75)",
+            border: "1px solid rgba(217, 210, 199, 0.72)",
+            borderRadius: 999,
+            boxShadow: scrolled ? "0 18px 48px rgba(26, 22, 18, 0.08)" : "0 12px 32px rgba(26, 22, 18, 0.06)",
+            backdropFilter: "blur(20px) saturate(160%)",
+            WebkitBackdropFilter: "blur(20px) saturate(160%)",
+            paddingTop: "0.85rem",
+            paddingBottom: "0.85rem",
           }}
         >
           {/* Logo */}
@@ -114,9 +119,14 @@ export default function Navbar() {
                     fontWeight: 500,
                     fontSize: "0.85rem",
                     color: isActive ? "var(--text)" : "var(--muted)",
-                    transition: "color 0.3s",
+                    transition: "color 0.3s, background 0.3s, transform 0.3s",
                     position: "relative",
-                    paddingBottom: 4,
+                    padding: "0.45rem 0.8rem",
+                    borderRadius: 999,
+                    background: isActive ? "var(--accent-soft)" : "transparent",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    lineHeight: 1,
                   }}
                 >
                   {link.label}
@@ -125,7 +135,7 @@ export default function Navbar() {
                       layoutId="nav-underline"
                       style={{
                         position: "absolute",
-                        bottom: 0,
+                        bottom: 3,
                         left: 0,
                         right: 0,
                         height: 2,
@@ -148,7 +158,17 @@ export default function Navbar() {
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="hide-desktop"
-            style={{ color: "var(--text)", padding: 8 }}
+            style={{
+              color: "var(--text)",
+              padding: 0,
+              width: 44,
+              height: 44,
+              borderRadius: 999,
+              background: "rgba(255, 255, 255, 0.45)",
+              border: "1px solid rgba(217, 210, 199, 0.8)",
+              backdropFilter: "blur(14px)",
+              boxShadow: "0 10px 24px rgba(26, 22, 18, 0.08)",
+            }}
             aria-label="Toggle menu"
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
@@ -165,6 +185,13 @@ export default function Navbar() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3, ease }}
             className="mobile-menu-overlay"
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+              paddingTop: "6rem",
+              paddingBottom: "2rem",
+              textAlign: "center",
+            }}
           >
             {navLinks.map((link, i) => (
               <motion.div
@@ -176,11 +203,13 @@ export default function Navbar() {
               >
                 <Link
                   href={link.href}
+                  onClick={() => setIsOpen(false)}
                   style={{
                     fontFamily: "var(--font-display)",
                     fontWeight: 700,
-                    fontSize: "2rem",
+                    fontSize: "clamp(1.8rem, 7vw, 2.6rem)",
                     color: pathname === link.href ? "var(--accent)" : "var(--text)",
+                    display: "inline-block",
                   }}
                 >
                   {link.label}
@@ -193,7 +222,7 @@ export default function Navbar() {
               transition={{ delay: 0.3 }}
               style={{ marginTop: "1rem" }}
             >
-              <Link href="/contact" className="btn-primary">
+              <Link href="/contact" className="btn-primary" onClick={() => setIsOpen(false)}>
                 Book a Call
               </Link>
             </motion.div>

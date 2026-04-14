@@ -14,18 +14,24 @@ export default function Footer() {
   return (
     <footer
       style={{
-        background: "var(--secondary)",
-        borderTop: "none",
-        padding: "clamp(2.5rem, 5vw, 4rem) clamp(20px, 6vw, 100px)",
+        background:
+          "linear-gradient(180deg, rgba(44, 62, 53, 0.98) 0%, rgba(28, 39, 33, 1) 100%)",
+        borderTop: "1px solid rgba(193, 123, 60, 0.18)",
+        padding: "clamp(3rem, 6vw, 5rem) clamp(20px, 6vw, 100px)",
+        position: "relative",
+        overflow: "hidden",
+        boxShadow: "0 -24px 60px rgba(26, 22, 18, 0.14)",
       }}
     >
       <div style={{ maxWidth: 1120, margin: "0 auto" }}>
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-            gap: "2rem",
-            marginBottom: "2.5rem",
+            gridTemplateColumns: "minmax(260px, 1.3fr) repeat(auto-fit, minmax(180px, 1fr))",
+            gap: "2.5rem",
+            marginBottom: "2.75rem",
+            paddingBottom: "2.5rem",
+            borderBottom: "1px solid rgba(245, 240, 232, 0.12)",
           }}
         >
           {/* Logo + tagline */}
@@ -63,6 +69,7 @@ export default function Footer() {
                   fontWeight: 700,
                   fontSize: "0.95rem",
                   color: "var(--bg)",
+                  letterSpacing: "-0.01em",
                 }}
               >
                 Vani&apos;s Voice Voyage
@@ -72,7 +79,7 @@ export default function Footer() {
               style={{
                 fontFamily: "var(--font-body)",
                 fontWeight: 400,
-                fontSize: "0.85rem",
+                fontSize: "0.9rem",
                 color: "rgba(245, 240, 232, 0.7)",
                 lineHeight: 1.6,
                 maxWidth: 280,
@@ -145,6 +152,10 @@ export default function Footer() {
                 fontSize: "0.85rem",
                 color: "rgba(245, 240, 232, 0.85)",
                 transition: "color 0.3s",
+                  padding: "0.45rem 0.65rem",
+                  borderRadius: 999,
+                  border: "1px solid rgba(245, 240, 232, 0.08)",
+                  background: "rgba(255, 255, 255, 0.03)",
               }}
               onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent)")}
               onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(245, 240, 232, 0.85)")}
@@ -159,7 +170,7 @@ export default function Footer() {
         <div
           style={{
             borderTop: "1px solid rgba(245, 240, 232, 0.15)",
-            paddingTop: "1.5rem",
+            paddingTop: "1.25rem",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",

@@ -48,10 +48,13 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${notoSerif.variable} ${manrope.variable}`}>
       <body>
-        <CustomCursor />
-        <Navbar />
-        <PageTransition>{children}</PageTransition>
-        <Footer />
+        <div aria-hidden="true" className="site-backdrop" />
+        <div className="site-content">
+          <CustomCursor />
+          <Navbar />
+          <PageTransition>{children}</PageTransition>
+          <Footer />
+        </div>
       </body>
     </html>
   );

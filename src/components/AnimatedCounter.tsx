@@ -6,6 +6,7 @@ import { useInView } from "framer-motion";
 interface Props {
   end: number;
   duration?: number;
+  decimals?: number;
   suffix?: string;
   prefix?: string;
   className?: string;
@@ -14,6 +15,7 @@ interface Props {
 export default function AnimatedCounter({
   end,
   duration = 2000,
+  decimals = 0,
   suffix = "",
   prefix = "",
   className = "",
@@ -33,7 +35,7 @@ export default function AnimatedCounter({
       const progress = Math.min(elapsed / duration, 1);
       // Ease out cubic
       const eased = 1 - Math.pow(1 - progress, 3);
-      setCount(Math.round(eased * end));
+      setCount(eased * end);
 
       if (progress < 1) {
         requestAnimationFrame(animate);
@@ -46,7 +48,7 @@ export default function AnimatedCounter({
   return (
     <span ref={ref} className={className}>
       {prefix}
-      {count}
+      {decimals > 0 ? count.toFixed(decimals) : Math.round(count)}
       {suffix}
     </span>
   );

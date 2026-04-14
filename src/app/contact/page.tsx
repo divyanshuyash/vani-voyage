@@ -4,8 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { motion } from "framer-motion";
-import { ArrowRight, MapPin, Send, CheckCircle, Mail } from "lucide-react";
-import Link from "next/link";
+import { ArrowRight, MapPin, Send, CheckCircle } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 import { useState } from "react";
 

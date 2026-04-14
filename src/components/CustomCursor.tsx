@@ -6,7 +6,6 @@ import { motion, useSpring } from "framer-motion";
 export default function CustomCursor() {
   const [hovering, setHovering] = useState(false);
   const [visible, setVisible] = useState(false);
-  const [isTouch, setIsTouch] = useState(true);
   const cursorRef = useRef<HTMLDivElement>(null);
 
   const springConfig = { stiffness: 400, damping: 28 };
@@ -21,10 +20,8 @@ export default function CustomCursor() {
       window.matchMedia("(hover: none) and (pointer: coarse)").matches;
 
     if (isTouchDevice) {
-      setIsTouch(true);
       return;
     }
-    setIsTouch(false);
 
     const handleMouseMove = (e: MouseEvent) => {
       x.set(e.clientX - 8);
@@ -56,8 +53,6 @@ export default function CustomCursor() {
       document.removeEventListener("mouseout", handleMouseLeave);
     };
   }, [x, y, visible]);
-
-  if (isTouch) return null;
 
   return (
     <motion.div
