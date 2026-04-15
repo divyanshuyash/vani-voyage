@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Mail } from "lucide-react";
 
 const navLinks = [
@@ -41,38 +42,53 @@ export default function Footer() {
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "0.5rem",
+                gap: "0.65rem",
                 marginBottom: "0.75rem",
               }}
             >
-              <svg width="18" height="14" viewBox="0 0 20 16" fill="none">
-                {[
-                  { x: 0, h: 8, y: 4 },
-                  { x: 5, h: 14, y: 1 },
-                  { x: 10, h: 16, y: 0 },
-                  { x: 15, h: 10, y: 3 },
-                ].map((bar, i) => (
-                  <rect
-                    key={i}
-                    x={bar.x}
-                    y={bar.y}
-                    width="3"
-                    height={bar.h}
-                    rx="1.5"
-                    fill="var(--accent)"
-                  />
-                ))}
-              </svg>
+              <Image
+                src="/image-removebg-preview.png"
+                alt="Vani's Voice Voyage Logo"
+                width={88}
+                height={88}
+                style={{
+                  height: 42,
+                  width: "auto",
+                  objectFit: "contain",
+                  filter: "drop-shadow(0 8px 14px rgba(193, 123, 60, 0.24))",
+                }}
+              />
               <span
                 style={{
-                  fontFamily: "var(--font-display)",
-                  fontWeight: 700,
-                  fontSize: "0.95rem",
-                  color: "var(--bg)",
-                  letterSpacing: "-0.01em",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.12rem",
+                  lineHeight: 1,
                 }}
               >
-                Vani&apos;s Voice Voyage
+                <span
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontWeight: 700,
+                    fontSize: "1.02rem",
+                    color: "var(--bg)",
+                    letterSpacing: "-0.012em",
+                  }}
+                >
+                  Vani&apos;s Voice Voyage
+                </span>
+                <span
+                  style={{
+                    fontFamily: "var(--font-body)",
+                    fontWeight: 600,
+                    fontSize: "0.6rem",
+                    color: "rgba(245, 240, 232, 0.78)",
+                    letterSpacing: "0.08em",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  Find your voice. Speak without fear.
+                </span>
               </span>
             </Link>
             <p

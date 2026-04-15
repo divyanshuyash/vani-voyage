@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
@@ -47,67 +48,113 @@ export default function Navbar() {
           display: "flex",
           alignItems: "center",
           padding: "0",
-          background: "transparent",
+          background: scrolled ? "rgba(245, 240, 232, 0.95)" : "rgba(245, 240, 232, 0.9)",
+          borderBottom: scrolled ? "1px solid rgba(217, 210, 199, 0.72)" : "1px solid rgba(217, 210, 199, 0.45)",
+          boxShadow: scrolled ? "0 10px 24px rgba(26, 22, 18, 0.08)" : "0 4px 16px rgba(26, 22, 18, 0.04)",
+          backdropFilter: "blur(10px) saturate(150%)",
+          WebkitBackdropFilter: "blur(10px) saturate(150%)",
           pointerEvents: "none",
         }}
       >
         <div
           style={{
             width: "100%",
-            maxWidth: 1120,
+            maxWidth: 1040,
             margin: "0 auto",
-            padding: "0 clamp(20px, 6vw, 100px)",
+            paddingLeft: "clamp(16px, 4vw, 64px)",
+            paddingRight: "clamp(16px, 4vw, 64px)",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            gap: "1.5rem",
+            gap: "1.1rem",
             pointerEvents: "auto",
-            background: scrolled ? "rgba(248, 243, 236, 0.9)" : "rgba(248, 243, 236, 0.75)",
-            border: "1px solid rgba(217, 210, 199, 0.72)",
-            borderRadius: 999,
-            boxShadow: scrolled ? "0 18px 48px rgba(26, 22, 18, 0.08)" : "0 12px 32px rgba(26, 22, 18, 0.06)",
-            backdropFilter: "blur(20px) saturate(160%)",
-            WebkitBackdropFilter: "blur(20px) saturate(160%)",
-            paddingTop: "0.85rem",
-            paddingBottom: "0.85rem",
+            background: "transparent",
+            border: "none",
+            borderRadius: 0,
+            boxShadow: "none",
+            backdropFilter: "none",
+            WebkitBackdropFilter: "none",
+            paddingTop: "0.65rem",
+            paddingBottom: "0.65rem",
           }}
         >
           {/* Logo */}
-          <Link href="/" style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-            {/* Tiny sound bars icon */}
-            <svg width="20" height="16" viewBox="0 0 20 16" fill="none">
-              {[
-                { x: 0, h: 8, y: 4 },
-                { x: 5, h: 14, y: 1 },
-                { x: 10, h: 16, y: 0 },
-                { x: 15, h: 10, y: 3 },
-              ].map((bar, i) => (
-                <rect
-                  key={i}
-                  x={bar.x}
-                  y={bar.y}
-                  width="3"
-                  height={bar.h}
-                  rx="1.5"
-                  fill="var(--accent)"
-                />
-              ))}
-            </svg>
+          <Link
+            href="/"
+            aria-label="Vani's Voice Voyage Home"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "0.62rem",
+              flexShrink: 0,
+            }}
+          >
             <span
               style={{
-                fontFamily: "var(--font-display)",
-                fontWeight: 700,
-                fontSize: "1.05rem",
-                color: "var(--text)",
-                letterSpacing: "-0.01em",
+                width: 50,
+                height: 50,
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexShrink: 0,
               }}
             >
-              Vani&apos;s Voice Voyage
+              <Image
+                src="/image-removebg-preview.png"
+                alt="Vani's Voice Voyage Logo"
+                width={88}
+                height={88}
+                priority
+                style={{
+                  height: 46,
+                  width: "auto",
+                  objectFit: "contain",
+                  objectPosition: "center",
+                  filter: "drop-shadow(0 8px 16px rgba(193, 123, 60, 0.22))",
+                }}
+              />
+            </span>
+
+            <span
+              className="hide-mobile"
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "0.15rem",
+                justifyContent: "center",
+                lineHeight: 1.02,
+              }}
+            >
+              <span
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontWeight: 700,
+                  fontSize: "1.08rem",
+                  color: "var(--text)",
+                  letterSpacing: "-0.015em",
+                  textShadow: "0 2px 10px rgba(193, 123, 60, 0.18)",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                Vani&apos;s Voice Voyage
+              </span>
+              <span
+                style={{
+                  fontFamily: "var(--font-body)",
+                  fontWeight: 600,
+                  fontSize: "0.56rem",
+                  color: "var(--accent)",
+                  letterSpacing: "0.08em",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                Find your voice. Speak without fear.
+              </span>
             </span>
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hide-mobile" style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
+          <div className="hide-mobile" style={{ display: "flex", alignItems: "center", gap: "1.2rem" }}>
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
@@ -159,6 +206,7 @@ export default function Navbar() {
             onClick={() => setIsOpen(!isOpen)}
             className="hide-desktop"
             style={{
+              marginLeft: "auto",
               color: "var(--text)",
               padding: 0,
               width: 44,

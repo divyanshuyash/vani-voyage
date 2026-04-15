@@ -124,12 +124,7 @@ function CountUpNumber({
   const [displayValue, setDisplayValue] = useState(0);
 
   useEffect(() => {
-    if (shouldReduceMotion) {
-      setDisplayValue(value);
-      return;
-    }
-
-    if (!inView) {
+    if (shouldReduceMotion || !inView) {
       return;
     }
 
@@ -149,9 +144,11 @@ function CountUpNumber({
     };
   }, [inView, motionValue, shouldReduceMotion, value]);
 
+  const renderedValue = shouldReduceMotion ? value : displayValue;
+
   return (
     <span>
-      {displayValue}
+      {renderedValue}
       {suffix}
     </span>
   );
@@ -867,7 +864,16 @@ export default function DiscoverPage() {
                 <h3 className="t-card" style={{ marginBottom: "0.5rem" }}>
                   {quizQuestions.length} questions. Honest answers only.
                 </h3>
-                <p style={{ color: "var(--text-dim)", fontSize: "0.9rem", marginBottom: "1.5rem", maxWidth: 400, margin: "0 auto 1.5rem" }}>
+                <p
+                  style={{
+                    color: "var(--text-dim)",
+                    fontSize: "0.9rem",
+                    marginBottom: "1.5rem",
+                    maxWidth: 400,
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                  }}
+                >
                   This quick assessment shows where you stand in clarity,
                   confidence, and spoken-English flow.
                 </p>
