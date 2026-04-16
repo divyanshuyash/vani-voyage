@@ -11,6 +11,29 @@ const navLinks = [
   { href: "/contact", label: "Contact" },
 ];
 
+const socialLinks = [
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/vani-sumanth-1a32182a4",
+  },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/vani.sumanth?igsh=MXZuY3loYzR0OGt4aQ==",
+  },
+  {
+    label: "Fluent Convo Coach",
+    href: "https://www.instagram.com/fluentconvocoach?igsh=M2hjZjZ3eW41dTNq",
+  },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/share/1bPgh7Tmyz/",
+  },
+  {
+    label: "Facebook Community",
+    href: "https://www.facebook.com/share/18Cqu8oQxD/",
+  },
+];
+
 export default function Footer() {
   return (
     <footer
@@ -101,8 +124,8 @@ export default function Footer() {
                 maxWidth: 280,
               }}
             >
-              Helping professionals and students find their voice and speak with
-              clarity and confidence.
+              Over 20 years in education and 8,000+ learners guided to speak
+              with confidence, clarity, and real-world presence.
             </p>
           </div>
 
@@ -132,9 +155,12 @@ export default function Footer() {
                     fontWeight: 400,
                     fontSize: "0.85rem",
                     color: "rgba(245, 240, 232, 0.85)",
+                    transition: "color 0.3s",
                     display: "inline-block",
                     width: "fit-content",
                   }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = "var(--bg)")}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(245, 240, 232, 0.85)")}
                 >
                   {link.label}
                 </Link>
@@ -142,7 +168,7 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Contact */}
+          {/* Contact + Social */}
           <div>
             <h4
               style={{
@@ -155,30 +181,56 @@ export default function Footer() {
                 marginBottom: "0.75rem",
               }}
             >
-              Get in touch
+              Connect
             </h4>
-            <a
-              href="mailto:hello@vanisvoicevoyage.com"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.5rem",
-                fontFamily: "var(--font-body)",
-                fontWeight: 400,
-                fontSize: "0.85rem",
-                color: "rgba(245, 240, 232, 0.85)",
-                transition: "color 0.3s",
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.45rem" }}>
+              {socialLinks.map((social) => (
+                <a
+                  key={social.href}
+                  href={social.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover-underline"
+                  style={{
+                    fontFamily: "var(--font-body)",
+                    fontWeight: 400,
+                    fontSize: "0.85rem",
+                    color: "rgba(245, 240, 232, 0.85)",
+                    transition: "color 0.3s",
+                    display: "inline-block",
+                    width: "fit-content",
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = "var(--bg)")}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(245, 240, 232, 0.85)")}
+                >
+                  {social.label}
+                </a>
+              ))}
+
+              <a
+                href="mailto:hello@vanisvoicevoyage.com"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  fontFamily: "var(--font-body)",
+                  fontWeight: 400,
+                  fontSize: "0.85rem",
+                  color: "rgba(245, 240, 232, 0.85)",
+                  transition: "color 0.3s",
                   padding: "0.45rem 0.65rem",
                   borderRadius: 999,
                   border: "1px solid rgba(245, 240, 232, 0.08)",
                   background: "rgba(255, 255, 255, 0.03)",
-              }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent)")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(245, 240, 232, 0.85)")}
-            >
-              <Mail size={14} />
-              hello@vanisvoicevoyage.com
-            </a>
+                  marginTop: "0.35rem",
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent)")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(245, 240, 232, 0.85)")}
+              >
+                <Mail size={14} />
+                hello@vanisvoicevoyage.com
+              </a>
+            </div>
           </div>
         </div>
 

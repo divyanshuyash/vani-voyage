@@ -91,13 +91,13 @@ const statsData: StatCardData[] = [
   },
   {
     icon: TrendingUp,
-    numberText: "91%",
-    label: "FEEL MORE CONFIDENT AFTER COACHING",
-    context: "91% of Vani's students report feeling significantly more confident within 4 sessions.",
+    numberText: "8,000+",
+    label: "LEARNERS GUIDED SO FAR",
+    context: "8,000+ students and professionals have trained with Vani across confidence and communication programs.",
     mode: "count",
-    value: 91,
-    suffix: "%",
-    graph: "donut-91",
+    value: 8000,
+    suffix: "+",
+    graph: "one-voice",
   },
   {
     icon: Sparkles,
@@ -760,7 +760,7 @@ export default function DiscoverPage() {
       {/* ════════════════════════════════════
           STATS SECTION
           ════════════════════════════════════ */}
-      <section className="section-pad" style={{ background: "var(--bg)", paddingTop: "clamp(140px, 18vw, 200px)" }}>
+      <section className="section-pad" style={{ background: "var(--bg)", paddingTop: "clamp(110px, 16vw, 190px)" }}>
         <div className="max-w">
           <div style={{ marginBottom: "clamp(2rem, 4vw, 3rem)", textAlign: "left" }}>
             <span
@@ -829,7 +829,7 @@ export default function DiscoverPage() {
               color: "var(--muted)",
             }}
           >
-            Sources: EF EPI Index, LinkedIn Workforce Report, Internal Coaching Survey
+            Sources: EF EPI Index, LinkedIn Workforce Report, Internal learner records
           </p>
         </div>
       </section>

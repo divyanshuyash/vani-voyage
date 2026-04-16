@@ -1,16 +1,12 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowRight,
   Calendar as CalendarIcon,
   MapPin,
   Monitor,
-  Clock,
-  Users,
-  User,
-  Check,
   ChevronLeft,
   ChevronRight,
   X,
@@ -30,87 +26,149 @@ import {
   endOfWeek,
   isToday,
 } from "date-fns";
+import type { ProgramSheetRow } from "@/lib/programSheet";
 
 const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
+type ProgramEvent = {
+  id: number;
+  name: string;
+  type: "online" | "offline";
+  date: Date;
+  description: string;
+  cta: string;
+  url: string;
+};
+
 // ── Events Data ──
-const events = [
+const events: ProgramEvent[] = [
   {
     id: 1,
-    name: "Speak Up Saturday",
+    name: "Speak Like an Executive",
     type: "online" as const,
-    date: new Date(2025, 4, 17),
+    date: new Date(2026, 0, 17),
     description:
-      "A 2-hour interactive session to break the ice with public speaking. Perfect for beginners.",
-    cta: "Save My Spot",
+      "Executive communication training to help you speak with authority in meetings, presentations, and leadership conversations.",
+    cta: "Book This Program",
+    url: "/contact",
   },
   {
     id: 2,
-    name: "Voice & Presence Workshop",
-    type: "offline" as const,
-    date: new Date(2025, 4, 24),
+    name: "Unshakable Confidence Webinar",
+    type: "online" as const,
+    date: new Date(2026, 1, 7),
     description:
-      "In-person deep-dive into vocal variety, body language, and executive presence.",
-    cta: "Save My Spot",
+      "A confidence reset for learners and professionals who know their potential but hesitate when it is time to speak.",
+    cta: "Book This Program",
+    url: "/contact",
   },
   {
     id: 3,
-    name: "Confidence Masterclass",
-    type: "online" as const,
-    date: new Date(2025, 5, 7),
+    name: "From Silent Strength to Recognised Power",
+    type: "offline" as const,
+    date: new Date(2026, 2, 14),
     description:
-      "Learn the psychology of confidence and actionable techniques to overcome speaking anxiety.",
-    cta: "Save My Spot",
+      "For high-potential professionals ready to step forward, communicate clearly, and be seen as valuable contributors.",
+    cta: "Book This Program",
+    url: "/contact",
   },
   {
     id: 4,
-    name: "Group Discussion Bootcamp",
-    type: "offline" as const,
-    date: new Date(2025, 5, 14),
+    name: "Career Catalyst",
+    type: "online" as const,
+    date: new Date(2026, 3, 4),
     description:
-      "Practice structured discussions, learn to lead talks, and express ideas with clarity.",
-    cta: "Save My Spot",
+      "Communication and mindset coaching to accelerate your professional growth and leadership readiness.",
+    cta: "Book This Program",
+    url: "/contact",
+  },
+  {
+    id: 5,
+    name: "Boardroom Breakthrough",
+    type: "offline" as const,
+    date: new Date(2026, 4, 9),
+    description:
+      "High-impact in-person training to own high-stakes rooms, influence decisions, and communicate with executive presence.",
+    cta: "Book This Program",
+    url: "/contact",
+  },
+  {
+    id: 6,
+    name: "Corporate Training for BOSCH Group",
+    type: "offline" as const,
+    date: new Date(2026, 5, 13),
+    description:
+      "Enterprise communication and confidence training model tailored for teams and corporate cohorts.",
+    cta: "Enquire for Corporate",
+    url: "/contact",
   },
 ];
 
-// ── Courses Data ──
-const courses = [
-  {
-    name: "Speak Up, Show Up",
-    tagline: "Group confidence-building program",
-    outcome:
-      "Walk into any room and own your presence. Go from hesitant to heard in 8 weeks.",
-    duration: "8 Weeks",
-    format: "Group · Online",
-    icon: <Users size={20} />,
-  },
-  {
-    name: "Voice & Vocabulary",
-    tagline: "1:1 personalized coaching",
-    outcome:
-      "Tailored sessions that target your specific blocks — filler words, accent anxiety, or stage fright.",
-    duration: "12 Sessions",
-    format: "1:1 · Online/Offline",
-    icon: <User size={20} />,
-    featured: true,
-  },
-  {
-    name: "In-Person Intensive",
-    tagline: "Offline workshop series",
-    outcome:
-      "Immersive weekend workshops with live practice, peer feedback, and real-time transformation.",
-    duration: "2 Days",
-    format: "Workshop · Offline",
-    icon: <MapPin size={20} />,
-  },
-];
+function parseSheetDate(value: string): Date | null {
+  const normalized = value.trim();
+  if (!normalized) {
+    return null;
+  }
+
+  const dayFirstMatch = normalized.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
+  if (dayFirstMatch) {
+    const day = Number(dayFirstMatch[1]);
+    const month = Number(dayFirstMatch[2]) - 1;
+    const year = Number(dayFirstMatch[3]);
+    const date = new Date(year, month, day);
+    return Number.isNaN(date.getTime()) ? null : date;
+  }
+
+  const isoMatch = normalized.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+  if (isoMatch) {
+    const year = Number(isoMatch[1]);
+    const month = Number(isoMatch[2]) - 1;
+    const day = Number(isoMatch[3]);
+    const date = new Date(year, month, day);
+    return Number.isNaN(date.getTime()) ? null : date;
+  }
+
+  const fallback = new Date(normalized);
+  return Number.isNaN(fallback.getTime()) ? null : fallback;
+}
+
+function getProgramType(mode: string, location: string): "online" | "offline" {
+  const normalizedMode = mode.toLowerCase();
+  const normalizedLocation = location.toLowerCase();
+
+  if (normalizedMode.includes("offline") || normalizedLocation.includes("offline")) {
+    return "offline";
+  }
+
+  return "online";
+}
 
 // ── Calendar Component ──
-function EventCalendar() {
-  const [currentDate, setCurrentDate] = useState(new Date(2025, 4, 1));
-  const [selectedEvent, setSelectedEvent] = useState<(typeof events)[0] | null>(
+function EventCalendar({ eventItems }: { eventItems: ProgramEvent[] }) {
+  const [currentDate, setCurrentDate] = useState<Date>(() => {
+    if (eventItems.length > 0) {
+      const firstEvent = [...eventItems].sort(
+        (a, b) => a.date.getTime() - b.date.getTime()
+      )[0];
+      return new Date(firstEvent.date.getFullYear(), firstEvent.date.getMonth(), 1);
+    }
+
+    return new Date();
+  });
+  const [selectedEvent, setSelectedEvent] = useState<ProgramEvent | null>(
     null
   );
+
+  useEffect(() => {
+    if (eventItems.length === 0) {
+      return;
+    }
+
+    const firstEvent = [...eventItems].sort(
+      (a, b) => a.date.getTime() - b.date.getTime()
+    )[0];
+    setCurrentDate(new Date(firstEvent.date.getFullYear(), firstEvent.date.getMonth(), 1));
+  }, [eventItems]);
 
   const monthStart = startOfMonth(currentDate);
   const monthEnd = endOfMonth(currentDate);
@@ -123,7 +181,7 @@ function EventCalendar() {
     [currentDate.getMonth(), currentDate.getFullYear()]
   );
 
-  const getEventForDay = (day: Date) => events.find((e) => isSameDay(e.date, day));
+  const getEventForDay = (day: Date) => eventItems.find((e) => isSameDay(e.date, day));
 
   return (
     <div className="glass-card-static">
@@ -214,27 +272,44 @@ function EventCalendar() {
             </div>
           );
         })}
+      </div>
 
-        {/* Event Popover */}
-        <AnimatePresence>
-          {selectedEvent && (
+      {/* Event Modal */}
+      <AnimatePresence>
+        {selectedEvent && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2, ease }}
+            onClick={() => setSelectedEvent(null)}
+            style={{
+              position: "fixed",
+              inset: 0,
+              zIndex: 80,
+              background: "rgba(10, 10, 10, 0.55)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "1rem",
+            }}
+          >
             <motion.div
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 8 }}
-              transition={{ duration: 0.25, ease }}
+              initial={{ opacity: 0, y: 16, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 16, scale: 0.98 }}
+              transition={{ duration: 0.22, ease }}
+              onClick={(event) => event.stopPropagation()}
               style={{
-                position: "absolute",
-                zIndex: 50,
-                top: "50%",
-                left: "50%",
-                transform: "translate(-50%, -50%)",
+                position: "relative",
                 background: "var(--surface-2)",
                 border: "1px solid var(--border)",
                 borderRadius: "var(--radius)",
                 padding: "1.5rem",
-                minWidth: 280,
-                boxShadow: "0 12px 40px rgba(0,0,0,0.5)",
+                width: "min(560px, calc(100vw - 2rem))",
+                maxHeight: "min(78vh, 560px)",
+                overflowY: "auto",
+                boxShadow: "0 18px 50px rgba(0,0,0,0.45)",
               }}
             >
               <button
@@ -259,39 +334,116 @@ function EventCalendar() {
               <h5 className="t-card" style={{ marginBottom: "0.5rem" }}>
                 {selectedEvent.name}
               </h5>
-              <p style={{
-                fontFamily: "var(--font-body)",
-                fontWeight: 400,
-                fontSize: "0.85rem",
-                color: "var(--text-dim)",
-                marginBottom: "1rem",
-                lineHeight: 1.6,
-              }}>
+              <p
+                style={{
+                  fontFamily: "var(--font-body)",
+                  fontWeight: 400,
+                  fontSize: "0.85rem",
+                  color: "var(--text-dim)",
+                  marginBottom: "1rem",
+                  lineHeight: 1.6,
+                }}
+              >
                 {selectedEvent.description}
               </p>
-              <Link href="/contact" className="btn-primary" style={{ padding: "0.5rem 1.25rem", fontSize: "0.8rem" }}>
+              <Link
+                href={selectedEvent.url || "/contact"}
+                className="btn-primary"
+                style={{ padding: "0.5rem 1.25rem", fontSize: "0.8rem" }}
+              >
                 {selectedEvent.cta}
               </Link>
             </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
 
 export default function ProgramsPage() {
+  const [eventItems, setEventItems] = useState<ProgramEvent[]>([]);
+
+  const summary = useMemo(() => {
+    const onlineCount = eventItems.filter((event) => event.type === "online").length;
+    const offlineCount = eventItems.filter((event) => event.type === "offline").length;
+    const nextEvent = [...eventItems].sort((a, b) => a.date.getTime() - b.date.getTime())[0];
+
+    return {
+      total: eventItems.length,
+      online: onlineCount,
+      offline: offlineCount,
+      nextLabel: nextEvent ? format(nextEvent.date, "MMM d, yyyy") : "To be announced",
+    };
+  }, [eventItems]);
+
+  useEffect(() => {
+    let active = true;
+
+    fetch("/api/programs", { cache: "no-store" })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Programs API failed with status ${response.status}`);
+        }
+
+        return response.json() as Promise<{ rows: ProgramSheetRow[] }>;
+      })
+      .then(({ rows }) => {
+        if (!active) {
+          return;
+        }
+
+        const mappedEvents: ProgramEvent[] = rows
+          .map((row, index) => {
+            const parsedDate = parseSheetDate(row.startDate);
+            if (!parsedDate) {
+              return null;
+            }
+
+            const eventType = getProgramType(row.mode, row.location);
+
+            return {
+              id: index + 1,
+              name: row.course,
+              type: eventType,
+              date: parsedDate,
+              description: row.description || "Details will be shared soon.",
+              cta: "Book This Program",
+              url: row.url || "/contact",
+            };
+          })
+          .filter((event): event is ProgramEvent => event !== null);
+
+        setEventItems(mappedEvents);
+      })
+      .catch((error) => {
+        console.error("Failed to load program rows from API", error);
+        if (!active) {
+          return;
+        }
+
+        setEventItems(events);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
   return (
     <>
       {/* ════════════════════════════════════
           HERO + EVENTS
           ════════════════════════════════════ */}
-      <section className="section-pad" style={{ background: "var(--bg)", paddingTop: "clamp(140px, 18vw, 200px)" }}>
+      <section className="section-pad" style={{ background: "var(--bg)", paddingTop: "clamp(110px, 16vw, 190px)" }}>
         <div className="max-w">
           <div className="section-header">
             <span className="t-label">PROGRAMS & EVENTS</span>
-            <h2 className="t-section">Where voices come alive</h2>
-            <p>From group workshops to personal coaching — find the format that fits your journey.</p>
+            <h2 className="t-section">Build voice, confidence, and leadership</h2>
+            <p>
+              Every program is designed to help you speak with clarity,
+              influence, and professional presence in real-world situations.
+            </p>
           </div>
 
           {/* Event Cards Grid */}
@@ -299,9 +451,9 @@ export default function ProgramsPage() {
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
             gap: "1rem",
-            marginBottom: "1rem",
+            marginBottom: "2rem",
           }}>
-            {events.map((event, i) => (
+            {eventItems.map((event, i) => (
               <ScrollReveal key={event.id} delay={i * 0.08}>
                 <div className="glass-card" style={{ height: "100%" }}>
                   {/* Date badge */}
@@ -382,7 +534,7 @@ export default function ProgramsPage() {
                     {event.description}
                   </p>
                   <Link
-                    href="/contact"
+                    href={event.url || "/contact"}
                     style={{
                       display: "inline-flex",
                       alignItems: "center",
@@ -401,6 +553,55 @@ export default function ProgramsPage() {
               </ScrollReveal>
             ))}
           </div>
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+              gap: "0.9rem",
+            }}
+          >
+            {[
+              { label: "Upcoming Programs", value: `${summary.total}` },
+              { label: "Online Sessions", value: `${summary.online}` },
+              { label: "Offline Sessions", value: `${summary.offline}` },
+              { label: "Next Start", value: summary.nextLabel },
+            ].map((item) => (
+              <div
+                key={item.label}
+                style={{
+                  border: "1px solid var(--border)",
+                  borderRadius: "var(--radius)",
+                  background: "var(--surface)",
+                  padding: "1rem 1.1rem",
+                  textAlign: "center",
+                }}
+              >
+                <p
+                  style={{
+                    fontFamily: "var(--font-body)",
+                    fontSize: "0.72rem",
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase",
+                    color: "var(--muted)",
+                    marginBottom: "0.35rem",
+                  }}
+                >
+                  {item.label}
+                </p>
+                <p
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontSize: "1.05rem",
+                    fontWeight: 700,
+                    color: "var(--text)",
+                  }}
+                >
+                  {item.value}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -411,243 +612,26 @@ export default function ProgramsPage() {
         <div className="max-w" style={{ maxWidth: 600 }}>
           <div className="section-header">
             <span className="t-label">SCHEDULE</span>
-            <h2 className="t-section">Find your date</h2>
-            <p>Tap any highlighted date to see event details.</p>
+            <h2 className="t-section">Program calendar 2026</h2>
+            <p>Tap any highlighted date to view details and booking options.</p>
           </div>
 
           <ScrollReveal>
-            <EventCalendar />
+            <EventCalendar eventItems={eventItems} />
           </ScrollReveal>
-        </div>
-      </section>
-
-      {/* ════════════════════════════════════
-          COURSES
-          ════════════════════════════════════ */}
-      <section className="section-pad" style={{ background: "var(--bg)" }}>
-        <div className="max-w">
-          <div className="section-header">
-            <span className="t-label">STRUCTURED PROGRAMS</span>
-            <h2 className="t-section">Choose your path</h2>
-            <p>Long-term programs designed for lasting transformation.</p>
-          </div>
-
-          <div style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: "1.25rem",
-          }}>
-            {courses.map((course, i) => (
-              <ScrollReveal key={course.name} delay={i * 0.1}>
-                <div
-                  className="glass-card"
-                  style={{
-                    height: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                    ...(course.featured ? { borderColor: "rgba(240,192,96,0.3)" } : {}),
-                  }}
-                >
-                  {course.featured && (
-                    <span
-                      style={{
-                        alignSelf: "flex-start",
-                        fontFamily: "var(--font-body)",
-                        fontWeight: 600,
-                        fontSize: "0.62rem",
-                        letterSpacing: "0.1em",
-                        textTransform: "uppercase",
-                        background: "var(--accent)",
-                        color: "var(--bg)",
-                        padding: "0.2rem 0.6rem",
-                        borderRadius: 100,
-                        marginBottom: "0.75rem",
-                      }}
-                    >
-                      Recommended
-                    </span>
-                  )}
-                  <div style={{
-                    width: 44,
-                    height: 44,
-                    borderRadius: 12,
-                    background: "var(--accent-soft)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    color: "var(--accent)",
-                    marginBottom: "1.25rem",
-                  }}>
-                    {course.icon}
-                  </div>
-                  <h3 className="t-card" style={{ marginBottom: "0.25rem" }}>
-                    {course.name}
-                  </h3>
-                  <p style={{
-                    fontFamily: "var(--font-body)",
-                    fontWeight: 500,
-                    fontSize: "0.8rem",
-                    color: "var(--accent)",
-                    fontStyle: "normal",
-                    marginBottom: "0.75rem",
-                  }}>
-                    {course.tagline}
-                  </p>
-                  <p style={{
-                    fontFamily: "var(--font-body)",
-                    fontSize: "0.9rem",
-                    color: "var(--text-dim)",
-                    lineHeight: 1.7,
-                    flex: 1,
-                  }}>
-                    {course.outcome}
-                  </p>
-
-                  <div style={{
-                    display: "flex",
-                    gap: "0.5rem",
-                    marginTop: "1.25rem",
-                    paddingTop: "1rem",
-                    borderTop: "1px solid var(--border)",
-                    flexWrap: "wrap",
-                  }}>
-                    <span style={{
-                      display: "inline-flex",
-                      alignItems: "center",
-                      gap: "0.3rem",
-                      padding: "0.25rem 0.6rem",
-                      background: "var(--surface-2)",
-                      borderRadius: 100,
-                      fontSize: "0.7rem",
-                      fontWeight: 500,
-                      color: "var(--text-dim)",
-                    }}>
-                      <Clock size={11} />
-                      {course.duration}
-                    </span>
-                    <span style={{
-                      display: "inline-flex",
-                      alignItems: "center",
-                      gap: "0.3rem",
-                      padding: "0.25rem 0.6rem",
-                      background: "var(--surface-2)",
-                      borderRadius: 100,
-                      fontSize: "0.7rem",
-                      fontWeight: 500,
-                      color: "var(--text-dim)",
-                    }}>
-                      {course.format}
-                    </span>
-                  </div>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ════════════════════════════════════
-          SERVICE COMPARISON
-          ════════════════════════════════════ */}
-      <section className="section-pad bg-gradient-subtle">
-        <div className="max-w">
-          <div className="section-header">
-            <span className="t-label">COMPARE</span>
-            <h2 className="t-section">What&apos;s included</h2>
-            <p>Every format delivers transformation — pick what&apos;s right for you.</p>
-          </div>
-
-          {/* Table-like comparison */}
-          <ScrollReveal>
-            <div style={{
-              background: "var(--surface)",
-              border: "1px solid var(--border)",
-              borderRadius: "var(--radius)",
-              overflow: "hidden",
-            }}>
-              {/* Table Header */}
-              <div style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr 1fr 1fr",
-                borderBottom: "1px solid var(--border)",
-              }}>
-                <div style={{ padding: "1rem 1.25rem" }} />
-                {["Group Class", "1:1 Coaching", "In-Person"].map((heading) => (
-                  <div key={heading} style={{
-                    padding: "1rem 1.25rem",
-                    fontFamily: "var(--font-display)",
-                    fontWeight: 700,
-                    fontSize: "0.85rem",
-                    color: "var(--text)",
-                    textAlign: "center",
-                    borderLeft: "1px solid var(--border)",
-                  }}>
-                    {heading}
-                  </div>
-                ))}
-              </div>
-
-              {/* Feature Rows */}
-              {[
-                { feature: "Live practice sessions", group: true, one: true, inPerson: true },
-                { feature: "Personal feedback", group: false, one: true, inPerson: true },
-                { feature: "Flexible scheduling", group: false, one: true, inPerson: false },
-                { feature: "Peer learning", group: true, one: false, inPerson: true },
-                { feature: "Custom curriculum", group: false, one: true, inPerson: false },
-                { feature: "Certificate", group: true, one: true, inPerson: true },
-              ].map((row, i) => (
-                <div
-                  key={row.feature}
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "1fr 1fr 1fr 1fr",
-                    borderBottom: i < 5 ? "1px solid var(--border)" : "none",
-                  }}
-                >
-                  <div style={{
-                    padding: "0.75rem 1.25rem",
-                    fontFamily: "var(--font-body)",
-                    fontWeight: 500,
-                    fontSize: "0.85rem",
-                    color: "var(--text-dim)",
-                  }}>
-                    {row.feature}
-                  </div>
-                  {[row.group, row.one, row.inPerson].map((val, j) => (
-                    <div key={j} style={{
-                      padding: "0.75rem 1.25rem",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      borderLeft: "1px solid var(--border)",
-                    }}>
-                      {val ? (
-                        <div style={{
-                          width: 22,
-                          height: 22,
-                          borderRadius: "50%",
-                          background: "var(--accent-soft)",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}>
-                          <Check size={12} style={{ color: "var(--accent)" }} />
-                        </div>
-                      ) : (
-                        <span style={{ color: "var(--border)", fontSize: "1.2rem" }}>—</span>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </ScrollReveal>
-
-          {/* CTA */}
           <ScrollReveal delay={0.1}>
             <div style={{ textAlign: "center", marginTop: "2.5rem" }}>
+              <p
+                style={{
+                  fontFamily: "var(--font-body)",
+                  color: "var(--text-dim)",
+                  marginBottom: "1rem",
+                }}
+              >
+                Need help choosing the right format for your current stage?
+              </p>
               <Link href="/contact" className="btn-primary">
-                Get Started
+                Talk to Me
                 <ArrowRight size={16} />
               </Link>
             </div>

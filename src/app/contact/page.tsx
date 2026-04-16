@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { motion } from "framer-motion";
-import { ArrowRight, MapPin, Send, CheckCircle } from "lucide-react";
+import { ArrowRight, MapPin, Send, CheckCircle, BookOpen } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 import { useState } from "react";
 
@@ -29,15 +29,6 @@ function FacebookIcon({ size = 18 }: { size?: number }) {
   );
 }
 
-function YoutubeIcon({ size = 18 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17" />
-      <path d="m10 15 5-3-5-3z" />
-    </svg>
-  );
-}
-
 function LinkedinIcon({ size = 18 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -58,10 +49,36 @@ const contactSchema = z.object({
 type ContactForm = z.infer<typeof contactSchema>;
 
 const socials = [
-  { icon: InstagramIcon, label: "Instagram", href: "https://instagram.com" },
-  { icon: FacebookIcon, label: "Facebook", href: "https://facebook.com" },
-  { icon: YoutubeIcon, label: "YouTube", href: "https://youtube.com" },
-  { icon: LinkedinIcon, label: "LinkedIn", href: "https://linkedin.com" },
+  {
+    icon: LinkedinIcon,
+    label: "LinkedIn",
+    shortLabel: "LinkedIn",
+    href: "https://www.linkedin.com/in/vani-sumanth-1a32182a4",
+  },
+  {
+    icon: InstagramIcon,
+    label: "Instagram (Vani Sumanth)",
+    shortLabel: "Insta • Vani",
+    href: "https://www.instagram.com/vani.sumanth?igsh=MXZuY3loYzR0OGt4aQ==",
+  },
+  {
+    icon: InstagramIcon,
+    label: "Instagram (Fluent Convo Coach)",
+    shortLabel: "Insta • Coach",
+    href: "https://www.instagram.com/fluentconvocoach?igsh=M2hjZjZ3eW41dTNq",
+  },
+  {
+    icon: FacebookIcon,
+    label: "Facebook (Official)",
+    shortLabel: "FB • Official",
+    href: "https://www.facebook.com/share/1bPgh7Tmyz/",
+  },
+  {
+    icon: FacebookIcon,
+    label: "Facebook (Community)",
+    shortLabel: "FB • Community",
+    href: "https://www.facebook.com/share/18Cqu8oQxD/",
+  },
 ];
 
 export default function ContactPage() {
@@ -92,7 +109,7 @@ export default function ContactPage() {
           ════════════════════════════════════ */}
       <section className="section-pad bg-accent-glow" style={{
         background: "var(--bg)",
-        paddingTop: "clamp(140px, 18vw, 200px)",
+        paddingTop: "clamp(110px, 16vw, 190px)",
         paddingBottom: "clamp(40px, 6vw, 60px)",
         position: "relative",
         overflow: "hidden",
@@ -104,7 +121,8 @@ export default function ContactPage() {
               Let&apos;s start with <span style={{ color: "var(--accent)" }}>hello.</span>
             </h1>
             <p style={{ maxWidth: 460 }}>
-              No forms that feel like job applications. Just tell me what&apos;s on your mind — and I&apos;ll get back to you personally.
+              Whether you are a student, professional, or institution, share
+              your goal and I will personally guide you to the right next step.
             </p>
           </div>
         </div>
@@ -241,36 +259,42 @@ export default function ContactPage() {
                     color: "var(--muted)",
                     marginBottom: "1rem",
                   }}>
-                    Find me on
+                    Connect with me
                   </h4>
-                  <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: "0.5rem" }}>
                     {socials.map((s) => (
                       <a
                         key={s.label}
                         href={s.href}
                         target="_blank"
                         rel="noopener noreferrer"
+                        title={s.label}
                         style={{
                           display: "flex",
                           alignItems: "center",
-                          gap: "0.75rem",
-                          padding: "0.6rem 0.75rem",
+                          justifyContent: "center",
+                          gap: "0.4rem",
+                          padding: "0.6rem 0.5rem",
                           borderRadius: "var(--radius-sm)",
-                          transition: "all 0.3s",
-                          color: "var(--text-dim)",
+                          border: "1px solid var(--border)",
+                          transition: "all 0.3s var(--ease)",
+                          color: "var(--text)",
+                          background: "var(--surface)",
                         }}
                         onMouseEnter={(e) => {
                           (e.currentTarget as HTMLAnchorElement).style.background = "var(--accent-soft)";
+                          (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(193, 123, 60, 0.32)";
                           (e.currentTarget as HTMLAnchorElement).style.color = "var(--accent)";
                         }}
                         onMouseLeave={(e) => {
-                          (e.currentTarget as HTMLAnchorElement).style.background = "transparent";
-                          (e.currentTarget as HTMLAnchorElement).style.color = "var(--text-dim)";
+                          (e.currentTarget as HTMLAnchorElement).style.background = "var(--surface)";
+                          (e.currentTarget as HTMLAnchorElement).style.borderColor = "var(--border)";
+                          (e.currentTarget as HTMLAnchorElement).style.color = "var(--text)";
                         }}
                       >
-                        <s.icon size={18} />
-                        <span style={{ fontFamily: "var(--font-body)", fontWeight: 500, fontSize: "0.85rem" }}>
-                          {s.label}
+                        <s.icon size={15} />
+                        <span style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "0.72rem", letterSpacing: "0.01em" }}>
+                          {s.shortLabel}
                         </span>
                       </a>
                     ))}
@@ -282,7 +306,7 @@ export default function ContactPage() {
                     marginTop: "1rem",
                     lineHeight: 1.6,
                   }}>
-                    Or just DM me on Instagram — I reply to every message.
+                    I reply personally to serious growth-focused messages.
                   </p>
                 </div>
               </ScrollReveal>
@@ -335,22 +359,41 @@ export default function ContactPage() {
                   padding: "1.25rem 1.5rem",
                 }}>
                   <p style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "0.45rem",
+                    fontFamily: "var(--font-body)",
+                    fontWeight: 700,
+                    fontSize: "0.75rem",
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase",
+                    color: "var(--accent)",
+                    marginBottom: "0.6rem",
+                  }}>
+                    <BookOpen size={14} />
+                    Featured & Impact
+                  </p>
+                  <p style={{
                     fontFamily: "var(--font-body)",
                     fontSize: "0.85rem",
                     color: "var(--text)",
                     fontStyle: "normal",
                     lineHeight: 1.7,
-                    marginBottom: "0.5rem",
+                    marginBottom: "0.6rem",
                   }}>
-                    &ldquo;I read every message personally. If you took the time to write, I&apos;ll take the time to reply.&rdquo;
+                    Article published in the eBook
+                    <strong> The Collective Minds</strong> with practical
+                    communication insights.
                   </p>
                   <p style={{
                     fontFamily: "var(--font-body)",
-                    fontWeight: 600,
-                    fontSize: "0.75rem",
-                    color: "var(--accent)",
+                    fontWeight: 500,
+                    fontSize: "0.78rem",
+                    color: "var(--text-dim)",
+                    lineHeight: 1.6,
                   }}>
-                    — Vani
+                    Corporate training sessions include BOSCH Group with
+                    practical, confidence-first communication outcomes.
                   </p>
                 </div>
               </ScrollReveal>

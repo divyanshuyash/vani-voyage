@@ -3,10 +3,68 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Play, Sparkles, Star, MessageCircle } from "lucide-react";
+import {
+  ArrowRight,
+  MessageCircle,
+  Play,
+  Sparkles,
+  Star,
+} from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 
 const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
+
+const heroProof = [
+  "8,000+ learners transformed",
+  "20+ years in education",
+  "Corporate training with BOSCH Group",
+];
+
+const painPoints = [
+  {
+    icon: <MessageCircle size={22} />,
+    title: "Thoughts Were Clear, Words Were Not",
+    desc: "Many knew what they wanted to say, but struggled to express it clearly in meetings, interviews, and conversations.",
+  },
+  {
+    icon: <Star size={22} />,
+    title: "Confidence Dropped Under Pressure",
+    desc: "From campus interviews to workplace presentations, fear often took over at the exact moment performance mattered most.",
+  },
+  {
+    icon: <Sparkles size={22} />,
+    title: "No Safe Place To Practice",
+    desc: "Countless people were ready to grow, but lacked structured guidance, honest feedback, and a supportive space to speak.",
+  },
+];
+
+const featuredPrograms = [
+  {
+    number: "01",
+    title: "Speak Like An Executive",
+    desc: "Executive communication training to help professionals speak with authority, structure, and presence.",
+    tag: "Leadership Communication",
+  },
+  {
+    number: "02",
+    title: "Unshakable Confidence Webinar",
+    desc: "A practical confidence reset for those who know their potential but hold back when it is time to speak.",
+    tag: "Confidence Accelerator",
+    featured: true,
+  },
+  {
+    number: "03",
+    title: "From Silent Strength To Recognised Power",
+    desc: "For quiet high-potential voices ready to be seen, heard, and respected in professional spaces.",
+    tag: "Personal Brand Presence",
+  },
+  {
+    number: "04",
+    title: "Career Catalyst",
+    desc: "Communication and mindset coaching designed to support faster career growth and stronger workplace influence.",
+    tag: "Career Growth",
+  },
+];
 
 export default function HomePage() {
   return (
@@ -26,18 +84,26 @@ export default function HomePage() {
           paddingTop: 72,
         }}
       >
-        <div className="max-w" style={{ width: "100%", padding: "3rem clamp(20px, 6vw, 100px)", position: "relative", zIndex: 1 }}>
+        <div
+          className="max-w"
+          style={{
+            width: "100%",
+            position: "relative",
+            zIndex: 1,
+            padding: "clamp(1.5rem, 4vw, 3rem) clamp(20px, 6vw, 100px)",
+          }}
+        >
           <div
             style={{
               display: "grid",
               gridTemplateColumns: "1fr",
-              gap: "3rem",
+              gap: "clamp(1.8rem, 3.6vw, 2.8rem)",
               alignItems: "center",
             }}
-            className="lg:!grid-cols-[1.1fr_0.9fr]"
+            className="lg:!grid-cols-[1fr_1fr]"
           >
             {/* Left — Text */}
-            <div>
+            <div style={{ width: "100%", maxWidth: 500, marginInline: "auto" }}>
               <motion.div
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -70,7 +136,7 @@ export default function HomePage() {
                   fontSize: "0.8rem",
                   color: "var(--text-dim)",
                 }}>
-                  Communication & Confidence Coach
+                  Communication, Confidence, And Mindset Mentor
                 </span>
               </motion.div>
 
@@ -83,7 +149,7 @@ export default function HomePage() {
               >
                 Find your voice.
                 <br />
-                <span style={{ color: "var(--accent)" }}>Speak without fear.</span>
+                <span style={{ color: "var(--accent)" }}>Speak with confidence.</span>
               </motion.h1>
 
               <motion.p
@@ -92,29 +158,36 @@ export default function HomePage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.25, duration: 0.6, ease }}
                 style={{
-                  maxWidth: 480,
+                  maxWidth: 560,
                   marginBottom: "2rem",
-                  fontSize: "1.1rem",
+                  fontSize: "1.04rem",
                 }}
               >
-                I don&apos;t teach English. I help you express what you already
-                know — with clarity, confidence, and zero fear. Because the world
-                needs to hear what you have to say.
+                For over two decades in education, I have seen one truth again
+                and again: communication changes everything. I do not just teach
+                English. I help people express themselves with clarity,
+                confidence, and courage in real-life situations.
               </motion.p>
 
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.6, ease }}
-                style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", marginBottom: "2.5rem" }}
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: "0.75rem",
+                  marginBottom: "2rem",
+                }}
+                className="flex-col sm:!flex-row"
               >
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="w-full sm:!w-auto">
                   <Link href="/contact" className="btn-primary">
                     Start Your Journey
                     <ArrowRight size={16} />
                   </Link>
                 </motion.div>
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="w-full sm:!w-auto">
                   <Link href="/discover" className="btn-ghost">
                     <Play size={14} />
                     Take the Quiz
@@ -127,17 +200,17 @@ export default function HomePage() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.6, duration: 0.6 }}
-                style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", alignItems: "center" }}
+                style={{ display: "flex", flexWrap: "wrap", gap: "0.65rem", alignItems: "center" }}
               >
-                {["500+ students coached", "4.9★ rated", "8+ years experience"].map((text) => (
+                {heroProof.map((text) => (
                   <span
                     key={text}
                     style={{
                       fontFamily: "var(--font-body)",
                       fontWeight: 500,
-                      fontSize: "0.75rem",
+                      fontSize: "0.74rem",
                       color: "var(--muted)",
-                      padding: "0.35rem 0.75rem",
+                      padding: "0.35rem 0.72rem",
                       background: "var(--surface)",
                       borderRadius: 100,
                       border: "1px solid var(--border)",
@@ -154,76 +227,61 @@ export default function HomePage() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.2, ease }}
-              className="hide-mobile"
+              style={{ display: "flex", justifyContent: "center", width: "100%" }}
             >
               <div
                 style={{
                   position: "relative",
+                  width: "min(100%, 500px)",
+                  aspectRatio: "4/5",
                   borderRadius: "var(--radius)",
                   overflow: "hidden",
-                  aspectRatio: "4/5",
-                  maxWidth: 420,
-                  marginLeft: "auto",
+                  border: "1px solid rgba(217, 210, 199, 0.72)",
+                  boxShadow: "0 22px 52px rgba(26, 22, 18, 0.14)",
                 }}
               >
                 <Image
-                  src="/vani-portrait.png"
+                  src="/vani-sumanth-hero.webp"
                   alt="Vani Sumanth — Communication & Confidence Coach"
                   fill
                   className="object-cover object-top"
                   priority
-                  sizes="(max-width: 768px) 100vw, 40vw"
-                  style={{ filter: "grayscale(15%) contrast(1.05)" }}
+                  sizes="(max-width: 1024px) 88vw, 38vw"
+                  style={{ filter: "contrast(1.05)" }}
                 />
-                {/* Amber gradient overlay at bottom */}
                 <div
                   style={{
                     position: "absolute",
-                    bottom: 0,
                     left: 0,
                     right: 0,
-                    height: "40%",
-                    background: "linear-gradient(transparent, rgba(245, 240, 232, 0.85))",
+                    bottom: 0,
+                    height: "35%",
+                    background: "linear-gradient(transparent, rgba(26, 22, 18, 0.5))",
                     pointerEvents: "none",
                   }}
                 />
-                {/* Floating quote card */}
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.8, duration: 0.6, ease }}
+                <motion.span
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.75, duration: 0.45, ease }}
                   style={{
                     position: "absolute",
-                    bottom: 20,
-                    left: 20,
-                    right: 20,
-                    background: "rgba(255, 255, 255, 0.75)",
-                    backdropFilter: "blur(16px)",
-                    border: "1px solid rgba(255, 255, 255, 0.5)",
-                    borderRadius: 12,
-                    padding: "1rem 1.25rem",
+                    left: 14,
+                    bottom: 14,
+                    borderRadius: 999,
+                    padding: "0.4rem 0.75rem",
+                    fontFamily: "var(--font-body)",
+                    fontWeight: 600,
+                    fontSize: "0.68rem",
+                    letterSpacing: "0.07em",
+                    textTransform: "uppercase",
+                    color: "var(--on-dark)",
+                    background: "rgba(44, 62, 53, 0.72)",
+                    border: "1px solid rgba(245, 240, 232, 0.3)",
                   }}
                 >
-                  <p style={{
-                    fontFamily: "var(--font-body)",
-                    fontWeight: 500,
-                    fontSize: "0.8rem",
-                    color: "var(--text)",
-                    fontStyle: "normal",
-                    lineHeight: 1.5,
-                  }}>
-                    &ldquo;She didn&apos;t just teach me to speak — she helped me believe I had something worth saying.&rdquo;
-                  </p>
-                  <p style={{
-                    fontFamily: "var(--font-body)",
-                    fontSize: "0.7rem",
-                    color: "var(--accent)",
-                    marginTop: "0.35rem",
-                    fontWeight: 600,
-                  }}>
-                    — Former student
-                  </p>
-                </motion.div>
+                  Speak with Confidence
+                </motion.span>
               </div>
             </motion.div>
           </div>
@@ -236,29 +294,15 @@ export default function HomePage() {
       <section className="section-pad bg-gradient-subtle">
         <div className="max-w">
           <div className="section-header">
-            <span className="t-label">WHO THIS IS FOR</span>
-            <h2 className="t-section">Sound familiar?</h2>
-            <p>You&apos;re not alone. Here&apos;s who benefits most from working with Vani.</p>
+            <span className="t-label">WHAT I KEPT SEEING</span>
+            <h2 className="t-section">A life gap, not just a skill gap</h2>
+            <p>
+              Across age groups and industries, these patterns kept showing up.
+            </p>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "1.25rem" }}>
-            {[
-              {
-                icon: <MessageCircle size={22} />,
-                title: "The Working Professional",
-                desc: "You know what to say in your head, but the words freeze the moment you open your mouth in a meeting.",
-              },
-              {
-                icon: <Star size={22} />,
-                title: "The Final-Year Student",
-                desc: "Campus placements and interviews terrify you more than any exam ever did. You need real practice, not tips.",
-              },
-              {
-                icon: <Sparkles size={22} />,
-                title: "The Silent Expert",
-                desc: "You know English perfectly. Grammar, vocabulary — all fine. But expressing yourself still feels impossible.",
-              },
-            ].map((item, i) => (
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1.25rem" }}>
+            {painPoints.map((item, i) => (
               <ScrollReveal key={item.title} delay={i * 0.1}>
                 <div className="glass-card" style={{ height: "100%" }}>
                   <div
@@ -312,7 +356,7 @@ export default function HomePage() {
             {/* Quote side */}
             <ScrollReveal>
               <div>
-                <span className="t-label" style={{ display: "block", marginBottom: "1.5rem" }}>ABOUT VANI</span>
+                <span className="t-label" style={{ display: "block", marginBottom: "1.5rem" }}>MY STORY</span>
                 <blockquote
                   style={{
                     fontFamily: "var(--font-display)",
@@ -326,9 +370,14 @@ export default function HomePage() {
                     borderLeft: "3px solid var(--accent)",
                   }}
                 >
-                  I&apos;m not the teacher on stage. I&apos;m the guide beside
-                  you — helping you find your own voice.
+                  I did not build this to teach textbook English. I built this
+                  to transform confidence, mindset, and voice.
                 </blockquote>
+                <p style={{ color: "var(--muted)", fontSize: "0.9rem", lineHeight: 1.7 }}>
+                  Through one-on-one conversations across India, it became clear
+                  that people are ready to grow but need direction, structure,
+                  and a safe space to practice.
+                </p>
               </div>
             </ScrollReveal>
 
@@ -337,16 +386,22 @@ export default function HomePage() {
               <div className="glass-card-static">
                 <p style={{ color: "var(--text-dim)", fontSize: "0.95rem", marginBottom: "1rem", lineHeight: 1.8 }}>
                   Hi, I&apos;m <strong style={{ color: "var(--text)" }}>Vani Sumanth</strong>.
-                  For years I watched brilliant people stay silent — not because they
-                  lacked ideas, but because they lacked the courage to voice them.
+                  For over two decades, I have been deeply rooted in education,
+                  training students, professionals, and institutions.
                 </p>
                 <p style={{ color: "var(--text-dim)", fontSize: "0.95rem", lineHeight: 1.8, marginBottom: "1.5rem" }}>
-                  That&apos;s what I change. Through patience, practice, and a whole
-                  lot of genuine belief in you, I help you transform from someone who
-                  hesitates to someone who speaks with clarity and confidence.
+                  This vision became Vani&apos;s Voice Voyage and my C.L.E.A.R.S
+                  framework, a result-driven approach that helps learners break
+                  hesitation, overcome fear, improve pronunciation and fluency,
+                  and build a stronger personal and professional presence.
                 </p>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
-                  {["8+ Years", "500+ Students", "Corporate Training", "1:1 Coaching"].map((tag) => (
+                  {[
+                    "20+ Years In Education",
+                    "8,000+ Learners",
+                    "Speak Without Fear",
+                    "Clarity + Fluency + Presence",
+                  ].map((tag) => (
                     <span
                       key={tag}
                       style={{
@@ -371,38 +426,86 @@ export default function HomePage() {
       </section>
 
       {/* ════════════════════════════════════
-          WHAT SHE OFFERS
+          PROUD MOMENT
+          ════════════════════════════════════ */}
+      <section className="section-pad bg-gradient-subtle">
+        <div className="max-w" style={{ maxWidth: 980 }}>
+          <div className="section-header" style={{ marginBottom: "2rem" }}>
+            <span className="t-label">A MOMENT I STILL CARRY</span>
+            <h2 className="t-section">At BOSCH, fear turned into voice</h2>
+            <p>
+              One training room, three days, and a transformation that still
+              shapes how I coach today.
+            </p>
+          </div>
+
+          <ScrollReveal>
+            <div className="glass-card-static" style={{ borderLeft: "3px solid var(--accent)" }}>
+              <p style={{ color: "var(--text-dim)", marginBottom: "1.25rem", lineHeight: 1.8, fontSize: "0.95rem" }}>
+                During a BOSCH corporate training, one participant from Mandya
+                told me speaking English in front of 24 colleagues felt
+                impossible.
+              </p>
+
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))",
+                  gap: "0.85rem",
+                  marginBottom: "1.25rem",
+                }}
+              >
+                <div style={{ background: "var(--accent-soft)", border: "1px solid var(--border)", borderRadius: "var(--radius-sm)", padding: "0.9rem" }}>
+                  <p style={{ color: "var(--accent)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "0.35rem" }}>
+                    Day 1
+                  </p>
+                  <p style={{ color: "var(--text-dim)", fontSize: "0.88rem", lineHeight: 1.7 }}>
+                    Emotion took over, and the participant could not continue.
+                  </p>
+                </div>
+
+                <div style={{ background: "var(--accent-soft)", border: "1px solid var(--border)", borderRadius: "var(--radius-sm)", padding: "0.9rem" }}>
+                  <p style={{ color: "var(--accent)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "0.35rem" }}>
+                    Day 3
+                  </p>
+                  <p style={{ color: "var(--text-dim)", fontSize: "0.88rem", lineHeight: 1.7 }}>
+                    With guided practice and a safe space, confidence came back.
+                  </p>
+                </div>
+
+                <div style={{ background: "var(--accent-soft)", border: "1px solid var(--border)", borderRadius: "var(--radius-sm)", padding: "0.9rem" }}>
+                  <p style={{ color: "var(--accent)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "0.35rem" }}>
+                    Breakthrough
+                  </p>
+                  <p style={{ color: "var(--text-dim)", fontSize: "0.88rem", lineHeight: 1.7 }}>
+                    The participant stood up again and spoke in natural,
+                    confident language.
+                  </p>
+                </div>
+              </div>
+
+              <p style={{ color: "var(--text)", fontWeight: 600, lineHeight: 1.7, fontSize: "0.95rem" }}>
+                That shift reminded me that real transformation starts when
+                people feel safe, seen, and supported.
+              </p>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* ════════════════════════════════════
+          SIGNATURE PROGRAMS
           ════════════════════════════════════ */}
       <section className="section-pad bg-gradient-subtle">
         <div className="max-w">
           <div className="section-header">
-            <span className="t-label">WHAT SHE OFFERS</span>
-            <h2 className="t-section">Three pillars of transformation</h2>
-            <p>Choose the format that fits your journey.</p>
+            <span className="t-label">SIGNATURE PROGRAMS</span>
+            <h2 className="t-section">Result-driven communication journeys</h2>
+            <p>Programs designed to build confidence, clarity, and leadership presence.</p>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "1.25rem" }}>
-            {[
-              {
-                number: "01",
-                title: "Group Classes",
-                desc: "Find your voice in a safe circle of fellow learners. Build confidence together through guided practice and peer support.",
-                tag: "8 Weeks · Online",
-              },
-              {
-                number: "02",
-                title: "1:1 Coaching",
-                desc: "Your pace, your goals, your growth. Personalized attention for your unique challenges and communication blocks.",
-                tag: "Flexible · Online/Offline",
-                featured: true,
-              },
-              {
-                number: "03",
-                title: "Offline Sessions",
-                desc: "Immersive in-person workshops that transform how you communicate. Real practice, real-time feedback, real transformation.",
-                tag: "2 Days · In-Person",
-              },
-            ].map((service, i) => (
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1.25rem" }}>
+            {featuredPrograms.map((service, i) => (
               <ScrollReveal key={service.number} delay={i * 0.1}>
                 <Link
                   href="/programs"
@@ -492,14 +595,13 @@ export default function HomePage() {
             {[...Array(2)].map((_, setIndex) => (
               <div key={setIndex} style={{ display: "flex", alignItems: "center" }}>
                 {[
-                  "Spoke in a meeting for the first time",
-                  "Got the job I wanted",
-                  "Stopped dreading phone calls",
-                  "Led a team presentation — and enjoyed it",
-                  "Finally said what I was thinking",
-                  "My confidence changed everything",
-                  "I found my voice",
-                  "No more rehearsing in my head",
+                  "A mindset shift is the real key to English fluency",
+                  "Boardroom Breakthrough",
+                  "Corporate Training for BOSCH Group",
+                  "Become A Leader And Grow Your Career In 2026",
+                  "Own The Boardroom, Scale High In Your Career",
+                  "Speak without fear",
+                  "Find your voice, create new possibilities",
                 ].map((text, i) => (
                   <span
                     key={`${setIndex}-${i}`}
@@ -522,52 +624,6 @@ export default function HomePage() {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* ════════════════════════════════════
-          NEWSLETTER CTA
-          ════════════════════════════════════ */}
-      <section className="section-pad bg-accent-glow" style={{ background: "var(--bg)", position: "relative", overflow: "hidden" }}>
-        <div className="max-w" style={{ maxWidth: 580, textAlign: "center", position: "relative", zIndex: 1 }}>
-          <ScrollReveal>
-            <span className="t-label" style={{ display: "block", marginBottom: "0.75rem" }}>STAY CONNECTED</span>
-            <h2 className="t-section" style={{ marginBottom: "0.75rem" }}>
-              Not ready yet? That&apos;s okay.
-            </h2>
-            <p style={{
-              fontFamily: "var(--font-body)",
-              color: "var(--text-dim)",
-              marginBottom: "2rem",
-              fontSize: "1rem",
-            }}>
-              Subscribe for weekly micro-tips on communication. No spam. Just a little courage in your inbox.
-            </p>
-          </ScrollReveal>
-
-          <ScrollReveal delay={0.1}>
-            <form
-              onSubmit={(e) => e.preventDefault()}
-              style={{
-                display: "flex",
-                gap: "0.75rem",
-                maxWidth: 440,
-                margin: "0 auto",
-              }}
-              className="flex-col sm:!flex-row"
-            >
-              <input
-                type="email"
-                placeholder="your.email@example.com"
-                className="form-input"
-                style={{ flex: 1, borderRadius: 100, padding: "0.75rem 1.25rem" }}
-                required
-              />
-              <button type="submit" className="btn-primary" style={{ borderRadius: 100 }}>
-                Subscribe
-              </button>
-            </form>
-          </ScrollReveal>
         </div>
       </section>
     </>

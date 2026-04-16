@@ -21,21 +21,22 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "Vani's Voice Voyage — Communication & Confidence Coach",
+  title: "Vani's Voice Voyage - Communication, Confidence & Leadership",
   description:
-    "Find your voice and speak without fear. Vani Sumanth helps working professionals and students overcome communication anxiety through personalized coaching, group classes, and offline workshops.",
+    "For over 20 years, Vani Sumanth has helped 8,000+ learners build communication confidence, spoken fluency, and professional presence through result-driven coaching and programs.",
   keywords: [
     "communication coach",
     "confidence coach",
     "public speaking",
-    "communication anxiety",
-    "voice coaching",
+    "executive communication",
+    "career growth communication",
     "Vani Sumanth",
+    "Vani's Voice Voyage",
   ],
   openGraph: {
-    title: "Vani's Voice Voyage — Communication & Confidence Coach",
+    title: "Vani's Voice Voyage - Find Your Voice, Speak with Confidence",
     description:
-      "Find your voice and speak without fear. Personalized coaching for professionals and students.",
+      "Communication and confidence transformation for students and professionals. 8,000+ learners trained with practical, real-life outcomes.",
     type: "website",
   },
 };

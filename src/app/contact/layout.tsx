@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Contact Vani — Let's Start with Hello",
+  title: "Contact Vani - Coaching & Training Enquiries",
   description:
-    "Reach out to Vani Sumanth for communication coaching inquiries, workshop bookings, or just to say hello. No corporate forms — just a real conversation.",
+    "Connect with Vani Sumanth for communication coaching, confidence programs, or corporate training enquiries.",
 };
 
 export default function ContactLayout({

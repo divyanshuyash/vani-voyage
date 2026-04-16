@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Programs, Events & Courses — Vani's Voice Voyage",
+  title: "Programs & Corporate Training - Vani's Voice Voyage",
   description:
-    "Explore group classes, 1:1 coaching, and offline workshops designed to unlock your communication confidence. Find the right program for your journey.",
+    "Explore signature programs like Speak Like an Executive, Boardroom Breakthrough, and leadership communication tracks for 2026 growth.",
 };
 
 export default function ProgramsLayout({
