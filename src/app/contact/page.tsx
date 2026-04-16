@@ -48,35 +48,32 @@ const contactSchema = z.object({
 
 type ContactForm = z.infer<typeof contactSchema>;
 
+const CONTACT_EMAIL = "vanisumanth21@gmail.com";
+
 const socials = [
   {
     icon: LinkedinIcon,
     label: "LinkedIn",
-    shortLabel: "LinkedIn",
     href: "https://www.linkedin.com/in/vani-sumanth-1a32182a4",
   },
   {
     icon: InstagramIcon,
-    label: "Instagram (Vani Sumanth)",
-    shortLabel: "Insta • Vani",
+    label: "Instagram",
     href: "https://www.instagram.com/vani.sumanth?igsh=MXZuY3loYzR0OGt4aQ==",
   },
   {
     icon: InstagramIcon,
-    label: "Instagram (Fluent Convo Coach)",
-    shortLabel: "Insta • Coach",
+    label: "Fluent Convo",
     href: "https://www.instagram.com/fluentconvocoach?igsh=M2hjZjZ3eW41dTNq",
   },
   {
     icon: FacebookIcon,
-    label: "Facebook (Official)",
-    shortLabel: "FB • Official",
+    label: "Facebook",
     href: "https://www.facebook.com/share/1bPgh7Tmyz/",
   },
   {
     icon: FacebookIcon,
-    label: "Facebook (Community)",
-    shortLabel: "FB • Community",
+    label: "Community",
     href: "https://www.facebook.com/share/18Cqu8oQxD/",
   },
 ];
@@ -93,10 +90,20 @@ export default function ContactPage() {
     resolver: zodResolver(contactSchema),
   });
 
-  const onSubmit = async (data: ContactForm) => {
-    // Simulate submission
-    console.log("Form submitted:", data);
-    await new Promise((r) => setTimeout(r, 1000));
+  const onSubmit = (data: ContactForm) => {
+    const subject = encodeURIComponent(`New enquiry from ${data.name}`);
+    const body = encodeURIComponent(
+      [
+        `Name: ${data.name}`,
+        `Email: ${data.email}`,
+        `Phone: ${data.phone?.trim() || "Not provided"}`,
+        "",
+        "Message:",
+        data.message,
+      ].join("\n")
+    );
+
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
     setSubmitted(true);
     reset();
     setTimeout(() => setSubmitted(false), 5000);
@@ -167,7 +174,7 @@ export default function ContactPage() {
                       Message sent!
                     </h3>
                     <p style={{ color: "var(--text-dim)", fontSize: "0.9rem" }}>
-                      I&apos;ll get back to you within 24 hours. Talk soon!
+                      Your email app has opened with a pre-filled message to {CONTACT_EMAIL}.
                     </p>
                   </motion.div>
                 ) : (
@@ -240,6 +247,18 @@ export default function ContactPage() {
                       {isSubmitting ? "Sending..." : "Send Message"}
                       {!isSubmitting && <ArrowRight size={16} />}
                     </button>
+
+                    <p
+                      style={{
+                        marginTop: "0.7rem",
+                        fontFamily: "var(--font-body)",
+                        fontSize: "0.76rem",
+                        color: "var(--muted)",
+                        textAlign: "center",
+                      }}
+                    >
+                      Clicking send opens your email app and drafts a message to {CONTACT_EMAIL}.
+                    </p>
                   </form>
                 )}
               </div>
@@ -261,7 +280,7 @@ export default function ContactPage() {
                   }}>
                     Connect with me
                   </h4>
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: "0.5rem" }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "0.55rem" }}>
                     {socials.map((s) => (
                       <a
                         key={s.label}
@@ -270,11 +289,11 @@ export default function ContactPage() {
                         rel="noopener noreferrer"
                         title={s.label}
                         style={{
-                          display: "flex",
+                          display: "grid",
+                          gridTemplateColumns: "34px 1fr auto",
                           alignItems: "center",
-                          justifyContent: "center",
-                          gap: "0.4rem",
-                          padding: "0.6rem 0.5rem",
+                          gap: "0.7rem",
+                          padding: "0.82rem 0.9rem",
                           borderRadius: "var(--radius-sm)",
                           border: "1px solid var(--border)",
                           transition: "all 0.3s var(--ease)",
@@ -282,23 +301,59 @@ export default function ContactPage() {
                           background: "var(--surface)",
                         }}
                         onMouseEnter={(e) => {
-                          (e.currentTarget as HTMLAnchorElement).style.background = "var(--accent-soft)";
-                          (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(193, 123, 60, 0.32)";
-                          (e.currentTarget as HTMLAnchorElement).style.color = "var(--accent)";
+                          e.currentTarget.style.borderColor = "var(--accent)";
+                          e.currentTarget.style.transform = "translateX(4px)";
                         }}
                         onMouseLeave={(e) => {
-                          (e.currentTarget as HTMLAnchorElement).style.background = "var(--surface)";
-                          (e.currentTarget as HTMLAnchorElement).style.borderColor = "var(--border)";
-                          (e.currentTarget as HTMLAnchorElement).style.color = "var(--text)";
+                          e.currentTarget.style.borderColor = "var(--border)";
+                          e.currentTarget.style.transform = "translateX(0)";
                         }}
                       >
-                        <s.icon size={15} />
-                        <span style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "0.72rem", letterSpacing: "0.01em" }}>
-                          {s.shortLabel}
+                        <span
+                          style={{
+                            width: 34,
+                            height: 34,
+                            borderRadius: 10,
+                            background: "var(--accent-soft)",
+                            color: "var(--accent)",
+                            display: "inline-flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <s.icon size={15} />
                         </span>
+
+                        <span style={{ display: "flex", alignItems: "center" }}>
+                          <span style={{ fontFamily: "var(--font-body)", fontWeight: 600, fontSize: "0.85rem", color: "var(--text)" }}>
+                            {s.label}
+                          </span>
+                        </span>
+
+                        <ArrowRight size={14} style={{ color: "var(--accent)" }} />
                       </a>
                     ))}
                   </div>
+                  <a
+                    href={`mailto:${CONTACT_EMAIL}`}
+                    style={{
+                      marginTop: "0.9rem",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      width: "100%",
+                      borderRadius: "var(--radius-sm)",
+                      border: "1px dashed rgba(193, 123, 60, 0.35)",
+                      background: "rgba(193,123,60,0.06)",
+                      padding: "0.62rem 0.8rem",
+                      fontFamily: "var(--font-body)",
+                      fontWeight: 600,
+                      fontSize: "0.82rem",
+                      color: "var(--accent)",
+                    }}
+                  >
+                    {CONTACT_EMAIL}
+                  </a>
                   <p style={{
                     fontFamily: "var(--font-body)",
                     fontSize: "0.8rem",
@@ -345,58 +400,15 @@ export default function ContactPage() {
                       <p style={{ fontFamily: "var(--font-body)", fontSize: "0.8rem", color: "var(--text-dim)", lineHeight: 1.6 }}>
                         In-person workshops and coaching sessions available. Drop me a message to know more.
                       </p>
+                      <p style={{ fontFamily: "var(--font-body)", fontWeight: 500, fontSize: "0.8rem", color: "var(--text)", marginTop: "0.45rem" }}>
+                        Email: <a href={`mailto:${CONTACT_EMAIL}`} style={{ color: "var(--accent)" }}>{CONTACT_EMAIL}</a>
+                      </p>
                     </div>
                   </div>
                 </div>
               </ScrollReveal>
 
-              {/* Quote Card */}
-              <ScrollReveal delay={0.2}>
-                <div style={{
-                  background: "var(--accent-soft)",
-                  borderLeft: "3px solid var(--accent)",
-                  borderRadius: "0 var(--radius-sm) var(--radius-sm) 0",
-                  padding: "1.25rem 1.5rem",
-                }}>
-                  <p style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "0.45rem",
-                    fontFamily: "var(--font-body)",
-                    fontWeight: 700,
-                    fontSize: "0.75rem",
-                    letterSpacing: "0.08em",
-                    textTransform: "uppercase",
-                    color: "var(--accent)",
-                    marginBottom: "0.6rem",
-                  }}>
-                    <BookOpen size={14} />
-                    Featured & Impact
-                  </p>
-                  <p style={{
-                    fontFamily: "var(--font-body)",
-                    fontSize: "0.85rem",
-                    color: "var(--text)",
-                    fontStyle: "normal",
-                    lineHeight: 1.7,
-                    marginBottom: "0.6rem",
-                  }}>
-                    Article published in the eBook
-                    <strong> The Collective Minds</strong> with practical
-                    communication insights.
-                  </p>
-                  <p style={{
-                    fontFamily: "var(--font-body)",
-                    fontWeight: 500,
-                    fontSize: "0.78rem",
-                    color: "var(--text-dim)",
-                    lineHeight: 1.6,
-                  }}>
-                    Corporate training sessions include BOSCH Group with
-                    practical, confidence-first communication outcomes.
-                  </p>
-                </div>
-              </ScrollReveal>
+
             </div>
           </div>
         </div>

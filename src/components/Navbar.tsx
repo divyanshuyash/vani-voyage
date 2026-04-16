@@ -196,12 +196,7 @@ export default function Navbar() {
               );
             })}
 
-            <Link href="/contact" className="btn-pill">
-              Book a Call
-            </Link>
           </div>
-
-          {/* Mobile Toggle */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="hide-desktop"
@@ -264,16 +259,6 @@ export default function Navbar() {
                 </Link>
               </motion.div>
             ))}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
-              style={{ marginTop: "1rem" }}
-            >
-              <Link href="/contact" className="btn-primary" onClick={() => setIsOpen(false)}>
-                Book a Call
-              </Link>
-            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

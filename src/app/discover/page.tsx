@@ -603,7 +603,8 @@ function DiscoverStatCard({
         boxShadow: "0 2px 16px rgba(26,22,18,0.06)",
         border: "none",
         padding: "1.15rem",
-        minHeight: 300,
+        minHeight: 320,
+        height: "100%",
         display: "flex",
         flexDirection: "column",
       }}
@@ -631,6 +632,9 @@ function DiscoverStatCard({
           lineHeight: 0.95,
           color: "var(--accent)",
           marginTop: "0.9rem",
+          minHeight: 66,
+          display: "flex",
+          alignItems: "center",
         }}
       >
         {stat.mode === "count" && typeof stat.value === "number" ? (
@@ -671,6 +675,8 @@ function DiscoverStatCard({
           color: "var(--muted)",
           lineHeight: 1.6,
           marginTop: "0.6rem",
+          minHeight: 86,
+          flex: 1,
         }}
       >
         {stat.context}
@@ -751,6 +757,17 @@ export default function DiscoverPage() {
 
   const [showIntro, setShowIntro] = useState(true);
 
+  useEffect(() => {
+    if (typeof window !== "undefined" && window.location.hash === "#voice-quiz") {
+      const el = document.getElementById("voice-quiz");
+      if (el) {
+        setTimeout(() => {
+          el.scrollIntoView({ behavior: "smooth" });
+        }, 150);
+      }
+    }
+  }, []);
+
   const current = quizQuestions[currentQuestion];
   const progress = ((currentQuestion + 1) / quizQuestions.length) * 100;
   const allAnswered = answers.every((a) => a !== null);
@@ -808,9 +825,9 @@ export default function DiscoverPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" style={{ gap: "1rem" }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" style={{ gap: "1rem", alignItems: "stretch" }}>
             {statsData.map((stat, i) => (
-              <ScrollReveal key={stat.label} delay={i * 0.06}>
+              <ScrollReveal key={stat.label} delay={i * 0.06} className="h-full">
                 <DiscoverStatCard
                   stat={stat}
                   shouldReduceMotion={Boolean(shouldReduceMotion)}
@@ -837,7 +854,7 @@ export default function DiscoverPage() {
       {/* ════════════════════════════════════
           QUIZ SECTION
           ════════════════════════════════════ */}
-      <section className="section-pad bg-gradient-subtle" style={{ position: "relative", overflow: "hidden" }}>
+      <section id="voice-quiz" className="section-pad bg-gradient-subtle" style={{ position: "relative", overflow: "hidden", scrollMarginTop: 96 }}>
         <div className="max-w" style={{ maxWidth: 680 }}>
           <div className="section-header">
             <span className="t-label">TEST YOURSELF</span>

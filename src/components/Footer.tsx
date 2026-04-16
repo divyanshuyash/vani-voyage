@@ -208,7 +208,7 @@ export default function Footer() {
               ))}
 
               <a
-                href="mailto:hello@vanisvoicevoyage.com"
+                href="mailto:vanisumanth21@gmail.com"
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
@@ -228,7 +228,7 @@ export default function Footer() {
                 onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(245, 240, 232, 0.85)")}
               >
                 <Mail size={14} />
-                hello@vanisvoicevoyage.com
+                vanisumanth21@gmail.com
               </a>
             </div>
           </div>

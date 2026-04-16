@@ -188,7 +188,7 @@ export default function HomePage() {
                   </Link>
                 </motion.div>
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="w-full sm:!w-auto">
-                  <Link href="/discover" className="btn-ghost">
+                  <Link href="/discover#voice-quiz" className="btn-ghost">
                     <Play size={14} />
                     Take the Quiz
                   </Link>
@@ -429,66 +429,207 @@ export default function HomePage() {
           PROUD MOMENT
           ════════════════════════════════════ */}
       <section className="section-pad bg-gradient-subtle">
-        <div className="max-w" style={{ maxWidth: 980 }}>
+        <div className="max-w" style={{ maxWidth: 1020 }}>
           <div className="section-header" style={{ marginBottom: "2rem" }}>
             <span className="t-label">A MOMENT I STILL CARRY</span>
-            <h2 className="t-section">At BOSCH, fear turned into voice</h2>
+            <h2 className="t-section">At BOSCH, hesitation turned into ownership</h2>
             <p>
-              One training room, three days, and a transformation that still
-              shapes how I coach today.
+              One room, one brave comeback, and a transformation that still
+              shapes how I coach every batch.
             </p>
           </div>
 
           <ScrollReveal>
-            <div className="glass-card-static" style={{ borderLeft: "3px solid var(--accent)" }}>
-              <p style={{ color: "var(--text-dim)", marginBottom: "1.25rem", lineHeight: 1.8, fontSize: "0.95rem" }}>
-                During a BOSCH corporate training, one participant from Mandya
-                told me speaking English in front of 24 colleagues felt
-                impossible.
-              </p>
-
+            <motion.div
+              whileHover={{ y: -6, boxShadow: "0 24px 50px rgba(193, 123, 60, 0.15)" }}
+              transition={{ duration: 0.4, ease }}
+              className="glass-card-static" style={{ padding: "clamp(1.4rem, 3vw, 2rem)", overflow: "hidden", position: "relative" }}
+            >
+              {/* Optional ambient background glow */}
+              <div style={{
+                position: "absolute",
+                top: "-20%", right: "-10%",
+                width: "50%", height: "80%",
+                background: "radial-gradient(ellipse at center, rgba(193, 123, 60, 0.1), transparent 70%)",
+                pointerEvents: "none"
+              }} />
               <div
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))",
-                  gap: "0.85rem",
-                  marginBottom: "1.25rem",
+                  gridTemplateColumns: "1fr",
+                  gap: "1rem",
+                  alignItems: "stretch",
                 }}
+                className="md:!grid-cols-[1.05fr_1fr]"
               >
-                <div style={{ background: "var(--accent-soft)", border: "1px solid var(--border)", borderRadius: "var(--radius-sm)", padding: "0.9rem" }}>
-                  <p style={{ color: "var(--accent)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "0.35rem" }}>
-                    Day 1
-                  </p>
-                  <p style={{ color: "var(--text-dim)", fontSize: "0.88rem", lineHeight: 1.7 }}>
-                    Emotion took over, and the participant could not continue.
-                  </p>
+                <div
+                  style={{
+                    borderRadius: "var(--radius)",
+                    border: "1px solid rgba(193, 123, 60, 0.26)",
+                    background:
+                      "linear-gradient(145deg, rgba(193,123,60,0.16), rgba(193,123,60,0.05))",
+                    padding: "1.2rem",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <motion.div
+                    initial={{ opacity: 0.8 }}
+                    whileHover={{ opacity: 1, x: 4 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <span
+                      style={{
+                        fontFamily: "var(--font-body)",
+                        fontWeight: 700,
+                        fontSize: "0.7rem",
+                        letterSpacing: "0.1em",
+                        textTransform: "uppercase",
+                        color: "var(--accent)",
+                        display: "block",
+                        marginBottom: "0.65rem",
+                      }}
+                    >
+                      Corporate Breakthrough Story
+                    </span>
+                    <h3
+                      className="t-card"
+                      style={{
+                        marginBottom: "0.65rem",
+                        fontSize: "clamp(1.2rem, 2vw, 1.55rem)",
+                        lineHeight: 1.35,
+                      }}
+                    >
+                      A participant who froze on day one came back and led the room by day three.
+                    </h3>
+                    <p
+                      style={{
+                        color: "var(--text-dim)",
+                        fontSize: "0.9rem",
+                        lineHeight: 1.75,
+                        marginBottom: "1rem",
+                      }}
+                    >
+                      I watched fear turn into ownership when the environment became
+                      safe, practical, and deeply supportive.
+                    </p>
+                  </motion.div>
+
+                  <div
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "repeat(auto-fit, minmax(110px, 1fr))",
+                      gap: "0.6rem",
+                    }}
+                  >
+                    {[
+                      { label: "Duration", value: "3 Days" },
+                      { label: "Participants", value: "24" },
+                      { label: "Result", value: "1 Breakthrough" },
+                    ].map((item) => (
+                      <div
+                        key={item.label}
+                        style={{
+                          borderRadius: "var(--radius-sm)",
+                          border: "1px solid rgba(193, 123, 60, 0.24)",
+                          background: "rgba(245, 240, 232, 0.74)",
+                          padding: "0.55rem 0.65rem",
+                        }}
+                      >
+                        <p
+                          style={{
+                            fontFamily: "var(--font-body)",
+                            fontSize: "0.66rem",
+                            letterSpacing: "0.09em",
+                            textTransform: "uppercase",
+                            color: "var(--muted)",
+                            marginBottom: "0.2rem",
+                          }}
+                        >
+                          {item.label}
+                        </p>
+                        <p
+                          style={{
+                            fontFamily: "var(--font-display)",
+                            fontWeight: 700,
+                            color: "var(--text)",
+                            fontSize: "0.95rem",
+                          }}
+                        >
+                          {item.value}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
 
-                <div style={{ background: "var(--accent-soft)", border: "1px solid var(--border)", borderRadius: "var(--radius-sm)", padding: "0.9rem" }}>
-                  <p style={{ color: "var(--accent)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "0.35rem" }}>
-                    Day 3
-                  </p>
-                  <p style={{ color: "var(--text-dim)", fontSize: "0.88rem", lineHeight: 1.7 }}>
-                    With guided practice and a safe space, confidence came back.
-                  </p>
-                </div>
-
-                <div style={{ background: "var(--accent-soft)", border: "1px solid var(--border)", borderRadius: "var(--radius-sm)", padding: "0.9rem" }}>
-                  <p style={{ color: "var(--accent)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: "0.35rem" }}>
-                    Breakthrough
-                  </p>
-                  <p style={{ color: "var(--text-dim)", fontSize: "0.88rem", lineHeight: 1.7 }}>
-                    The participant stood up again and spoke in natural,
-                    confident language.
-                  </p>
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.7rem" }}>
+                  {[
+                    {
+                      step: "Day 1",
+                      title: "Fear surfaced early",
+                      desc: "A participant from Mandya said speaking in front of colleagues felt impossible.",
+                    },
+                    {
+                      step: "Day 2",
+                      title: "Practice became structured",
+                      desc: "We shifted into guided drills, feedback loops, and repeat-safe speaking rounds.",
+                    },
+                    {
+                      step: "Day 3",
+                      title: "Voice took the lead",
+                      desc: "The same participant stood up again and delivered a clear, confident response.",
+                    },
+                  ].map((item) => (
+                    <div
+                      key={item.step}
+                      style={{
+                        borderRadius: "var(--radius-sm)",
+                        border: "1px solid var(--border)",
+                        background: "var(--surface)",
+                        padding: "0.85rem 0.95rem",
+                      }}
+                    >
+                      <p
+                        style={{
+                          fontFamily: "var(--font-body)",
+                          fontWeight: 700,
+                          fontSize: "0.68rem",
+                          letterSpacing: "0.08em",
+                          textTransform: "uppercase",
+                          color: "var(--accent)",
+                          marginBottom: "0.25rem",
+                        }}
+                      >
+                        {item.step}
+                      </p>
+                      <p
+                        style={{
+                          fontFamily: "var(--font-display)",
+                          fontWeight: 700,
+                          fontSize: "1rem",
+                          color: "var(--text)",
+                          marginBottom: "0.25rem",
+                        }}
+                      >
+                        {item.title}
+                      </p>
+                      <p
+                        style={{
+                          fontFamily: "var(--font-body)",
+                          fontSize: "0.86rem",
+                          color: "var(--text-dim)",
+                          lineHeight: 1.65,
+                        }}
+                      >
+                        {item.desc}
+                      </p>
+                    </div>
+                  ))}
                 </div>
               </div>
-
-              <p style={{ color: "var(--text)", fontWeight: 600, lineHeight: 1.7, fontSize: "0.95rem" }}>
-                That shift reminded me that real transformation starts when
-                people feel safe, seen, and supported.
-              </p>
-            </div>
+            </motion.div>
           </ScrollReveal>
         </div>
       </section>
@@ -500,54 +641,88 @@ export default function HomePage() {
         <div className="max-w">
           <div className="section-header">
             <span className="t-label">SIGNATURE PROGRAMS</span>
-            <h2 className="t-section">Result-driven communication journeys</h2>
-            <p>Programs designed to build confidence, clarity, and leadership presence.</p>
+            <h2 className="t-section">Choose your next breakthrough program</h2>
+            <p>Each track is built for visible speaking confidence in real professional moments.</p>
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1.25rem" }}>
             {featuredPrograms.map((service, i) => (
               <ScrollReveal key={service.number} delay={i * 0.1}>
-                <Link
-                  href="/programs"
+                <motion.div
+                  whileHover={{ y: -8, scale: 1.01 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ duration: 0.3, ease }}
+                  style={{ height: "100%" }}
+                >
+                  <Link
+                    href="/programs"
                   className="glass-card"
                   style={{
+                    position: "relative",
+                    overflow: "hidden",
                     display: "flex",
                     flexDirection: "column",
                     height: "100%",
-                    ...(service.featured ? { borderColor: "rgba(240, 192, 96, 0.3)" } : {}),
+                    minHeight: 310,
+                    ...(service.featured
+                      ? {
+                          borderColor: "rgba(193, 123, 60, 0.45)",
+                          boxShadow: "0 24px 48px rgba(193, 123, 60, 0.22)",
+                          background:
+                            "linear-gradient(150deg, rgba(193,123,60,0.22), rgba(255,255,255,0.38))",
+                        }
+                      : {}),
                   }}
                 >
-                  {service.featured && (
-                    <span
-                      style={{
-                        alignSelf: "flex-start",
-                        fontFamily: "var(--font-body)",
-                        fontWeight: 600,
-                        fontSize: "0.65rem",
-                        letterSpacing: "0.1em",
-                        textTransform: "uppercase",
-                        background: "var(--accent)",
-                        color: "var(--bg)",
-                        padding: "0.25rem 0.65rem",
-                        borderRadius: 100,
-                        marginBottom: "1rem",
-                      }}
-                    >
-                      Most Popular
-                    </span>
-                  )}
                   <span
                     style={{
-                      fontFamily: "var(--font-display)",
-                      fontWeight: 800,
-                      fontSize: "2.5rem",
-                      color: "var(--border)",
-                      lineHeight: 1,
-                      marginBottom: "1rem",
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      height: 3,
+                      background: "linear-gradient(90deg, rgba(193,123,60,0.2), var(--accent), rgba(193,123,60,0.2))",
+                    }}
+                  />
+
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      marginBottom: "0.95rem",
                     }}
                   >
-                    {service.number}
-                  </span>
+                    <span
+                      style={{
+                        fontFamily: "var(--font-body)",
+                        fontWeight: 600,
+                        fontSize: "0.66rem",
+                        letterSpacing: "0.08em",
+                        textTransform: "uppercase",
+                        color: service.featured ? "var(--accent)" : "var(--muted)",
+                        padding: "0.28rem 0.62rem",
+                        borderRadius: 999,
+                        border: "1px solid rgba(193,123,60,0.25)",
+                        background: service.featured ? "rgba(193,123,60,0.12)" : "var(--surface)",
+                      }}
+                    >
+                      {service.featured ? "Signature Spotlight" : "Program Journey"}
+                    </span>
+
+                    <span
+                      style={{
+                        fontFamily: "var(--font-display)",
+                        fontWeight: 800,
+                        fontSize: "1.5rem",
+                        color: "rgba(122, 110, 100, 0.45)",
+                        lineHeight: 1,
+                      }}
+                    >
+                      {service.number}
+                    </span>
+                  </div>
+
                   <h3 className="t-card" style={{ marginBottom: "0.75rem" }}>
                     {service.title}
                   </h3>
@@ -577,9 +752,23 @@ export default function HomePage() {
                     }}>
                       {service.tag}
                     </span>
-                    <ArrowRight size={16} style={{ color: "var(--accent)" }} />
+                    <span
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "0.3rem",
+                        color: "var(--accent)",
+                        fontSize: "0.78rem",
+                        fontWeight: 600,
+                        fontFamily: "var(--font-body)",
+                      }}
+                    >
+                      Explore
+                      <ArrowRight size={16} style={{ color: "var(--accent)" }} />
+                    </span>
                   </div>
-                </Link>
+                  </Link>
+                </motion.div>
               </ScrollReveal>
             ))}
           </div>
