@@ -49,10 +49,8 @@ export default function Footer() {
     >
       <div style={{ maxWidth: 1120, margin: "0 auto" }}>
         <div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr] gap-10"
           style={{
-            display: "grid",
-            gridTemplateColumns: "minmax(260px, 1.3fr) repeat(auto-fit, minmax(180px, 1fr))",
-            gap: "2.5rem",
             marginBottom: "2.75rem",
             paddingBottom: "2.5rem",
             borderBottom: "1px solid rgba(245, 240, 232, 0.12)",

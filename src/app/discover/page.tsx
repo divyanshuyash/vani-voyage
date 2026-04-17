@@ -777,7 +777,7 @@ export default function DiscoverPage() {
       {/* ════════════════════════════════════
           STATS SECTION
           ════════════════════════════════════ */}
-      <section className="section-pad" style={{ background: "var(--bg)", paddingTop: "clamp(110px, 16vw, 190px)" }}>
+      <section className="section-pad" style={{ background: "transparent", paddingTop: "clamp(110px, 16vw, 190px)" }}>
         <div className="max-w">
           <div style={{ marginBottom: "clamp(2rem, 4vw, 3rem)", textAlign: "left" }}>
             <span

@@ -47,8 +47,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${notoSerif.variable} ${manrope.variable}`}>
-      <body>
+    <html lang="en" className={`overflow-x-hidden w-full max-w-[100vw] ${notoSerif.variable} ${manrope.variable}`}>
+      <body className="overflow-x-hidden w-full max-w-[100vw]">
         <div aria-hidden="true" className="site-backdrop" />
         <div className="site-content">
           <CustomCursor />

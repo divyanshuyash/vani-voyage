@@ -115,7 +115,7 @@ export default function ContactPage() {
           HERO
           ════════════════════════════════════ */}
       <section className="section-pad bg-accent-glow" style={{
-        background: "var(--bg)",
+        background: "transparent",
         paddingTop: "clamp(110px, 16vw, 190px)",
         paddingBottom: "clamp(40px, 6vw, 60px)",
         position: "relative",
@@ -138,7 +138,7 @@ export default function ContactPage() {
       {/* ════════════════════════════════════
           FORM + SIDEBAR
           ════════════════════════════════════ */}
-      <section className="section-pad" style={{ background: "var(--bg)", paddingTop: "0" }}>
+      <section className="section-pad" style={{ background: "transparent", paddingTop: "0" }}>
         <div className="max-w">
           <div style={{
             display: "grid",

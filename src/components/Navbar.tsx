@@ -18,19 +18,14 @@ const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
 export default function Navbar() {
   const pathname = usePathname();
-  const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
-  }, [isOpen]);
 
   return (
     <>
@@ -57,16 +52,12 @@ export default function Navbar() {
         }}
       >
         <div
+          className="w-full flex justify-between items-center px-4 md:px-12 max-w-[1040px] mx-auto"
           style={{
-            width: "100%",
-            maxWidth: 1040,
-            margin: "0 auto",
-            paddingLeft: "clamp(16px, 4vw, 64px)",
-            paddingRight: "clamp(16px, 4vw, 64px)",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            gap: "1.1rem",
+            gap: "0.2rem",
             pointerEvents: "auto",
             background: "transparent",
             border: "none",
@@ -85,14 +76,14 @@ export default function Navbar() {
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "0.62rem",
+              gap: "0.4rem",
               flexShrink: 0,
             }}
           >
             <span
               style={{
-                width: 50,
-                height: 50,
+                width: 40,
+                height: 40,
                 display: "inline-flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -106,7 +97,7 @@ export default function Navbar() {
                 height={88}
                 priority
                 style={{
-                  height: 46,
+                  height: 38,
                   width: "auto",
                   objectFit: "contain",
                   objectPosition: "center",
@@ -153,8 +144,8 @@ export default function Navbar() {
             </span>
           </Link>
 
-          {/* Desktop Nav */}
-          <div className="hide-mobile" style={{ display: "flex", alignItems: "center", gap: "1.2rem" }}>
+          {/* Desktop Nav Links */}
+          <div className="hidden md:flex" style={{ alignItems: "center", gap: "clamp(0.2rem, 1vw, 1.2rem)" }}>
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
@@ -163,12 +154,12 @@ export default function Navbar() {
                   href={link.href}
                   style={{
                     fontFamily: "var(--font-body)",
-                    fontWeight: 500,
-                    fontSize: "0.85rem",
+                    fontWeight: isActive ? 600 : 500,
+                    fontSize: "clamp(0.7rem, 2vw, 0.85rem)",
                     color: isActive ? "var(--text)" : "var(--muted)",
                     transition: "color 0.3s, background 0.3s, transform 0.3s",
                     position: "relative",
-                    padding: "0.45rem 0.8rem",
+                    padding: "clamp(0.3rem, 1.5vw, 0.45rem) clamp(0.5rem, 2vw, 0.8rem)",
                     borderRadius: 999,
                     background: isActive ? "var(--accent-soft)" : "transparent",
                     display: "inline-flex",
@@ -181,13 +172,13 @@ export default function Navbar() {
                     <motion.div
                       layoutId="nav-underline"
                       style={{
-                        position: "absolute",
-                        bottom: 3,
-                        left: 0,
-                        right: 0,
-                        height: 2,
-                        background: "var(--accent)",
-                        borderRadius: 1,
+                         position: "absolute",
+                         bottom: 3,
+                         left: 0,
+                         right: 0,
+                         height: 2,
+                         background: "var(--accent)",
+                         borderRadius: 1,
                       }}
                       transition={{ type: "spring", stiffness: 380, damping: 30 }}
                     />
@@ -195,70 +186,68 @@ export default function Navbar() {
                 </Link>
               );
             })}
-
           </div>
+
+          {/* Mobile Hamburger Button */}
           <button
+            className="md:hidden flex items-center justify-center"
+            style={{ width: 44, height: 44, background: "transparent", border: "none", color: "var(--text)" }}
             onClick={() => setIsOpen(!isOpen)}
-            className="hide-desktop"
-            style={{
-              marginLeft: "auto",
-              color: "var(--text)",
-              padding: 0,
-              width: 44,
-              height: 44,
-              borderRadius: 999,
-              background: "rgba(255, 255, 255, 0.45)",
-              border: "1px solid rgba(217, 210, 199, 0.8)",
-              backdropFilter: "blur(14px)",
-              boxShadow: "0 10px 24px rgba(26, 22, 18, 0.08)",
-            }}
-            aria-label="Toggle menu"
+            aria-label="Toggle Menu"
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </motion.nav>
 
-      {/* Mobile Overlay */}
+      {/* Mobile Menu Dropdown */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3, ease }}
-            className="mobile-menu-overlay"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="md:hidden"
             style={{
-              alignItems: "center",
-              justifyContent: "center",
-              paddingTop: "6rem",
-              paddingBottom: "2rem",
-              textAlign: "center",
+              position: "fixed",
+              top: 72,
+              left: 0,
+              right: 0,
+              zIndex: 99,
+              background: "rgba(245, 240, 232, 0.98)",
+              borderBottom: "1px solid rgba(217, 210, 199, 0.45)",
+              boxShadow: "0 10px 24px rgba(26, 22, 18, 0.08)",
+              backdropFilter: "blur(10px)",
+              padding: "1rem clamp(12px, 3vw, 64px)",
+              display: "flex",
+              flexDirection: "column",
+              gap: "0.5rem",
             }}
           >
-            {navLinks.map((link, i) => (
-              <motion.div
-                key={link.href}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 10 }}
-                transition={{ delay: i * 0.06, duration: 0.4, ease }}
-              >
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href;
+              return (
                 <Link
+                  key={link.href}
                   href={link.href}
                   onClick={() => setIsOpen(false)}
                   style={{
-                    fontFamily: "var(--font-display)",
-                    fontWeight: 700,
-                    fontSize: "clamp(1.8rem, 7vw, 2.6rem)",
-                    color: pathname === link.href ? "var(--accent)" : "var(--text)",
-                    display: "inline-block",
+                    fontFamily: "var(--font-body)",
+                    fontWeight: isActive ? 600 : 500,
+                    fontSize: "1rem",
+                    color: isActive ? "var(--text)" : "var(--muted)",
+                    padding: "0.8rem 1rem",
+                    borderRadius: 8,
+                    background: isActive ? "var(--accent-soft)" : "transparent",
+                    display: "block",
+                    textDecoration: "none",
                   }}
                 >
                   {link.label}
                 </Link>
-              </motion.div>
-            ))}
+              );
+            })}
           </motion.div>
         )}
       </AnimatePresence>

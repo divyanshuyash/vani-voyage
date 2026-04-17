@@ -435,7 +435,7 @@ export default function ProgramsPage() {
       {/* ════════════════════════════════════
           HERO + EVENTS
           ════════════════════════════════════ */}
-      <section className="section-pad" style={{ background: "var(--bg)", paddingTop: "clamp(110px, 16vw, 190px)" }}>
+      <section className="section-pad" style={{ background: "transparent", paddingTop: "clamp(110px, 16vw, 190px)" }}>
         <div className="max-w">
           <div className="section-header">
             <span className="t-label">PROGRAMS & EVENTS</span>
