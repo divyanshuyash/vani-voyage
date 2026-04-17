@@ -5,6 +5,8 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import CustomCursor from "@/components/CustomCursor";
+import AmbientAlphabetBackground from "@/components/AmbientAlphabetBackground";
+import AmbientCursorTrail from "@/components/AmbientCursorTrail";
 
 const notoSerif = Noto_Serif({
   variable: "--font-noto-serif",
@@ -50,6 +52,9 @@ export default function RootLayout({
     <html lang="en" className={`overflow-x-hidden w-full max-w-[100vw] ${notoSerif.variable} ${manrope.variable}`}>
       <body className="overflow-x-hidden w-full max-w-[100vw]">
         <div aria-hidden="true" className="site-backdrop" />
+        <AmbientAlphabetBackground />
+        <AmbientCursorTrail />
+        <div aria-hidden="true" className="site-grain-overlay" />
         <div className="site-content">
           <CustomCursor />
           <Navbar />

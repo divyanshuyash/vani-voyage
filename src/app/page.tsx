@@ -1,25 +1,17 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
   MessageCircle,
-  Play,
   Sparkles,
   Star,
 } from "lucide-react";
+import CinematicHero from "@/components/CinematicHero";
 import ScrollReveal from "@/components/ScrollReveal";
+import TiltCard from "@/components/TiltCard";
 import VideoCarousel from "@/components/VideoCarousel";
-
-const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
-
-const heroProof = [
-  "8,000+ learners transformed",
-  "20+ years in education",
-  "Corporate training with BOSCH Group",
-];
 
 const painPoints = [
   {
@@ -256,266 +248,27 @@ export default function HomePage() {
           }
         }
       `}} />
-      {/* ════════════════════════════════════
-          HERO SECTION
-          ════════════════════════════════════ */}
-      <section
-        className="bg-accent-glow hero-grain"
-        style={{
-          minHeight: "100vh",
-          display: "flex",
-          alignItems: "center",
-          background: "transparent",
-          position: "relative",
-          overflow: "hidden",
-          paddingTop: 72,
-        }}
-      >
-        <div
-          className="max-w hero-mobile-pad overflow-x-hidden w-full"
-          style={{
-            width: "100%",
-            position: "relative",
-            zIndex: 1,
-            padding: "clamp(1.5rem, 4vw, 3rem) clamp(1rem, 5vw, 4rem)", paddingLeft: "max(16px, clamp(1rem, 5vw, 4rem))", paddingRight: "max(16px, clamp(1rem, 5vw, 4rem))", overflowX: "hidden",
-          }}
-        >
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr",
-              gap: "clamp(1.8rem, 3.6vw, 2.8rem)",
-              alignItems: "center",
-            }}
-            className="hero-grid lg:!grid-cols-[1fr_1fr]"
-          >
-            {/* Left — Text */}
-            <div className="hero-text-container" style={{ width: "100%", maxWidth: 500, marginInline: "auto" }}>
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease }}
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "0.5rem",
-                  background: "var(--surface)",
-                  border: "1px solid var(--border)",
-                  borderRadius: 100,
-                  padding: "0.4rem 1rem 0.4rem 0.6rem",
-                  marginBottom: "2rem",
-                }}
-              >
-                <span style={{
-                  width: 24,
-                  height: 24,
-                  borderRadius: "50%",
-                  background: "var(--accent-soft)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}>
-                  <Sparkles size={12} style={{ color: "var(--accent)" }} />
-                </span>
-                <span style={{
-                  fontFamily: "var(--font-body)",
-                  fontWeight: 500,
-                  fontSize: "0.8rem",
-                  color: "var(--text-dim)",
-                }}>
-                  Communication, Confidence, And Mindset Mentor
-                </span>
-              </motion.div>
-
-              <motion.h1
-                className="t-hero"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.1, ease }}
-                style={{ marginBottom: "1.5rem" }}
-              >
-                {"Find your voice.".split(" ").map((w, i) => <motion.span key={i} style={{display:"inline-block", marginRight:"0.28em"}} initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{delay:0.1 + i*0.1, duration:0.6}}>{w}</motion.span>)}
-                <br />
-                <span style={{ color: "var(--accent)" }}>
-                  {"Speak with confidence.".split(" ").map((w, i) => <motion.span key={i} style={{display:"inline-block", marginRight:"0.28em"}} initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{delay:0.4 + i*0.1, duration:0.6}}>{w}</motion.span>)}
-                </span>
-              </motion.h1>
-
-              <motion.div
-                className="mobile-only-line"
-                initial={{ opacity: 0, scaleX: 0 }}
-                animate={{ opacity: 1, scaleX: 1 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                style={{ transformOrigin: "left" }}
-              />
-              <motion.p
-                className="t-body hero-text-paragraph"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.25, duration: 0.6, ease }}
-                style={{
-                  maxWidth: 560,
-                  marginBottom: "2rem",
-                  fontSize: "1.04rem",
-                }}
-              >
-                For over two decades in education, I have seen one truth again
-                and again: communication changes everything. I do not just teach
-                English. I help people express themselves with clarity,
-                confidence, and courage in real-life situations.
-              </motion.p>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.6, ease }}
-                style={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  gap: "0.75rem",
-                  marginBottom: "2rem",
-                }}
-                className="hero-buttons-container flex-col sm:!flex-row"
-              >
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="w-full sm:!w-auto">
-                  <Link href="/contact" className="btn-primary btn-pulse">
-                    Start Your Journey
-                    <ArrowRight size={16} />
-                  </Link>
-                </motion.div>
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className="w-full sm:!w-auto">
-                  <Link href="/discover#voice-quiz" className="btn-ghost">
-                    <Play size={14} />
-                    Take the Quiz
-                  </Link>
-                </motion.div>
-              </motion.div>
-
-              {/* Social proof chips */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.6, duration: 0.6 }}
-                className="hero-badges-container"
-                style={{ display: "flex", flexWrap: "wrap", gap: "0.65rem", alignItems: "center" }}
-              >
-                {heroProof.map((text, i) => (
-                  <motion.span
-                    key={text}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.6 + i * 0.1, type: "spring", stiffness: 200, damping: 20 }}
-                    whileHover={{ y: -2, boxShadow: "0 4px 12px rgba(193, 123, 60, 0.12)" }}
-                    style={{
-                      fontFamily: "var(--font-body)",
-                      fontWeight: 500,
-                      fontSize: "0.74rem",
-                      color: "var(--muted)",
-                      padding: "0.35rem 0.72rem",
-                      background: "var(--surface)",
-                      borderRadius: 100,
-                      border: "1px solid var(--border)",
-                      display: "inline-flex",
-                      alignItems: "center",
-                      gap: "6px",
-                      cursor: "default",
-                    }}
-                  >
-                    <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--accent)", flexShrink: 0 }} />
-                    {text}
-                  </motion.span>
-                ))}
-              </motion.div>
-            </div>
-
-            {/* Right — Photo */}
-            <motion.div
-              className="hero-photo-container"
-              initial={{ opacity: 0, scale: 1.03 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1.2, delay: 0.2, ease }}
-              style={{ display: "flex", justifyContent: "center", width: "100%" }}
-            >
-              <div
-                className="hero-photo-wrapper"
-                style={{
-                  position: "relative",
-                  width: "100%", maxWidth: 500,
-                  aspectRatio: "4/5",
-                  borderRadius: "var(--radius)",
-                  overflow: "hidden",
-                  border: "1px solid rgba(217, 210, 199, 0.72)",
-                  boxShadow: "0 22px 52px rgba(26, 22, 18, 0.14)",
-                }}
-              >
-                <Image
-                  src="/vani-sumanth-hero.webp"
-                  alt="Vani Sumanth — Communication & Confidence Coach"
-                  fill
-                  className="object-cover object-top"
-                  priority
-                  sizes="(max-width: 1024px) 88vw, 38vw"
-                  style={{ filter: "contrast(1.05)" }}
-                />
-                <div
-                  className="hero-image-overlay"
-                  style={{
-                    position: "absolute",
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    height: "40%",
-                    background: "linear-gradient(transparent, rgba(26, 22, 18, 0.6))",
-                    pointerEvents: "none",
-                  }}
-                />
-                <motion.span
-                  className="hide-mobile"
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.75, duration: 0.45, ease }}
-                  style={{
-                    position: "absolute",
-                    left: 14,
-                    bottom: 14,
-                    borderRadius: 999,
-                    padding: "0.4rem 0.75rem",
-                    fontFamily: "var(--font-body)",
-                    fontWeight: 600,
-                    fontSize: "0.68rem",
-                    letterSpacing: "0.07em",
-                    textTransform: "uppercase",
-                    color: "var(--on-dark)",
-                    background: "rgba(44, 62, 53, 0.72)",
-                    border: "1px solid rgba(245, 240, 232, 0.3)",
-                  }}
-                >
-                  Speak with Confidence
-                </motion.span>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
+      <CinematicHero />
 
       {/* ════════════════════════════════════
           WHO IT'S FOR
           ════════════════════════════════════ */}
       <section className="section-pad bg-gradient-subtle">
         <div className="max-w">
-          <div className="section-header">
-            <span className="t-label">WHAT I KEPT SEEING</span>
-            <h2 className="t-section">A life gap, not just a skill gap</h2>
-            <p>
-              Across age groups and industries, these patterns kept showing up.
-            </p>
-          </div>
+          <ScrollReveal variant="clip">
+            <div className="section-header">
+              <span className="t-label">WHAT I KEPT SEEING</span>
+              <h2 className="t-section">A life gap, not just a skill gap</h2>
+              <p>
+                Across age groups and industries, these patterns kept showing up.
+              </p>
+            </div>
+          </ScrollReveal>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1.25rem" }}>
             {painPoints.map((item, i) => (
-              <ScrollReveal key={item.title} delay={i * 0.1}>
-                <div className="glass-card" style={{ height: "100%" }}>
+              <ScrollReveal key={item.title} delay={i * 0.1} variant="scale">
+                <TiltCard className="glass-card" style={{ height: "100%" }} maxTilt={4}>
                   <div
                     style={{
                       width: 48,
@@ -543,7 +296,7 @@ export default function HomePage() {
                   }}>
                     {item.desc}
                   </p>
-                </div>
+                </TiltCard>
               </ScrollReveal>
             ))}
           </div>
@@ -565,7 +318,7 @@ export default function HomePage() {
             className="md:!grid-cols-[1fr_1.2fr]"
           >
             {/* Quote side */}
-            <ScrollReveal>
+            <ScrollReveal variant="line">
               <div>
                 <span className="t-label" style={{ display: "block", marginBottom: "1.5rem" }}>MY STORY</span>
                 <blockquote
@@ -588,7 +341,7 @@ export default function HomePage() {
                     transition={{ duration: 0.4 }}
                     style={{ color: "var(--accent)", position: "absolute", left: "-0.5rem", top: "-0.5rem", fontSize: "1.2em", opacity: 0.4, fontStyle: "italic" }}
                   >
-                    "
+                    &quot;
                   </motion.span>
                   {"I did not build this to teach textbook English. I built this to transform confidence, mindset, and voice.".split(" ").map((w, i) => (
                     <motion.span key={i} style={{display:"inline-block", marginRight:"0.28em"}} initial={{opacity:0, y:8}} whileInView={{opacity:1, y:0}} viewport={{once:true, margin:"-50px"}} transition={{delay: i*0.06, duration:0.3}}>{w}</motion.span>
@@ -603,7 +356,7 @@ export default function HomePage() {
             </ScrollReveal>
 
             {/* Bio side */}
-            <ScrollReveal delay={0.15}>
+            <ScrollReveal delay={0.15} variant="clip">
               <div className="glass-card-static">
                 <p style={{ color: "var(--text-dim)", fontSize: "0.95rem", marginBottom: "1rem", lineHeight: 1.8 }}>
                   Hi, I&apos;m <strong style={{ color: "var(--text)" }}>Vani Sumanth</strong>.
@@ -651,20 +404,22 @@ export default function HomePage() {
           ════════════════════════════════════ */}
       <section className="section-pad bg-gradient-subtle">
         <div className="max-w" style={{ maxWidth: 1020 }}>
-          <div className="section-header" style={{ marginBottom: "2rem" }}>
-            <span className="t-label">A MOMENT I STILL CARRY</span>
-            <h2 className="t-section">At BOSCH, hesitation turned into ownership</h2>
-            <p>
-              One room, one brave comeback, and a transformation that still
-              shapes how I coach every batch.
-            </p>
-          </div>
+          <ScrollReveal variant="line">
+            <div className="section-header" style={{ marginBottom: "2rem" }}>
+              <span className="t-label">A MOMENT I STILL CARRY</span>
+              <h2 className="t-section">At BOSCH, hesitation turned into ownership</h2>
+              <p>
+                One room, one brave comeback, and a transformation that still
+                shapes how I coach every batch.
+              </p>
+            </div>
+          </ScrollReveal>
 
-          <ScrollReveal>
-            <motion.div
-              whileHover={{ y: -6, boxShadow: "0 24px 50px rgba(193, 123, 60, 0.15)" }}
-              transition={{ duration: 0.4, ease }}
-              className="glass-card-static" style={{ padding: "clamp(1.4rem, 3vw, 2rem)", overflow: "hidden", position: "relative" }}
+          <ScrollReveal variant="clip">
+            <TiltCard
+              className="glass-card-static"
+              style={{ padding: "clamp(1.4rem, 3vw, 2rem)", overflow: "hidden", position: "relative" }}
+              maxTilt={3.5}
             >
               {/* Optional ambient background glow */}
               <div style={{
@@ -850,7 +605,7 @@ export default function HomePage() {
                   ))}
                 </div>
               </div>
-            </motion.div>
+            </TiltCard>
           </ScrollReveal>
         </div>
       </section>
@@ -860,10 +615,12 @@ export default function HomePage() {
           ════════════════════════════════════ */}
       <section id="testimonial-videos" className="section-pad bg-gradient-subtle" style={{ position: "relative", overflow: "hidden" }}>
         <div className="max-w">
-          <div className="section-header" style={{ alignItems: "center" }}>
-            <span className="t-label">CLIENT BREAKTHROUGH VIDEOS</span>
-            <h2 className="t-section" style={{ textAlign: "center" }}>Real Stories, Visible Results.</h2>
-          </div>
+          <ScrollReveal variant="line">
+            <div className="section-header" style={{ alignItems: "center" }}>
+              <span className="t-label">CLIENT BREAKTHROUGH VIDEOS</span>
+              <h2 className="t-section" style={{ textAlign: "center" }}>Real Stories, Visible Results.</h2>
+            </div>
+          </ScrollReveal>
           <VideoCarousel />
         </div>
       </section>
@@ -873,22 +630,18 @@ export default function HomePage() {
           ════════════════════════════════════ */}
       <section className="section-pad bg-gradient-subtle">
         <div className="max-w">
-          <div className="section-header">
-            <span className="t-label">SIGNATURE PROGRAMS</span>
-            <h2 className="t-section">Choose your next breakthrough program</h2>
-            <p>Each track is built for visible speaking confidence in real professional moments.</p>
-          </div>
+          <ScrollReveal variant="clip">
+            <div className="section-header">
+              <span className="t-label">SIGNATURE PROGRAMS</span>
+              <h2 className="t-section">Choose your next breakthrough program</h2>
+              <p>Each track is built for visible speaking confidence in real professional moments.</p>
+            </div>
+          </ScrollReveal>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "1.25rem" }}>
             {featuredPrograms.map((service, i) => (
-              <ScrollReveal key={service.number} delay={i * 0.1}>
-                <motion.div
-                  whileHover={{ y: -8, scale: 1.01 }}
-                  className="card-wipe-border"
-                  whileTap={{ scale: 0.98 }}
-                  transition={{ duration: 0.4, ease }}
-                  style={{ height: "100%" }}
-                >
+              <ScrollReveal key={service.number} delay={i * 0.1} variant="scale">
+                <TiltCard className="card-wipe-border" style={{ height: "100%" }} maxTilt={4}>
                   <Link
                     href="/programs"
                     className="glass-card explore-link"
@@ -1003,7 +756,7 @@ export default function HomePage() {
                       </span>
                     </div>
                   </Link>
-                </motion.div>
+                </TiltCard>
               </ScrollReveal>
             ))}
           </div>
@@ -1013,7 +766,14 @@ export default function HomePage() {
       {/* ════════════════════════════════════
           SOCIAL PROOF MARQUEE
           ════════════════════════════════════ */}
-      <section style={{ background: "var(--surface)", padding: "1.5rem 0", borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)" }}>
+      <section
+        style={{
+          background: "linear-gradient(180deg, rgba(237, 232, 223, 0.96), rgba(245, 240, 232, 0.92))",
+          padding: "1.5rem 0",
+          borderTop: "1px solid var(--border)",
+          borderBottom: "1px solid var(--border)",
+        }}
+      >
         <div className="marquee-wrap">
           <div className="marquee-track">
             {[...Array(2)].map((_, setIndex) => (

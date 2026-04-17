@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence, PanInfo } from "framer-motion";
-import { ChevronLeft, ChevronRight, Play, Pause, Quote, Star, Sparkles } from "lucide-react";
+import { ChevronLeft, ChevronRight, Play, Quote, Star, Sparkles } from "lucide-react";
 
 interface TestimonialVideo {
   id: number;
@@ -23,6 +23,25 @@ const videos: TestimonialVideo[] = [
 export default function VideoCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isPhoneView, setIsPhoneView] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const media = window.matchMedia("(max-width: 768px), (hover: none) and (pointer: coarse)");
+    const sync = () => setIsPhoneView(media.matches);
+    sync();
+
+    if (typeof media.addEventListener === "function") {
+      media.addEventListener("change", sync);
+      return () => media.removeEventListener("change", sync);
+    }
+
+    media.addListener(sync);
+    return () => media.removeListener(sync);
+  }, []);
 
   useEffect(() => {
     setIsPlaying(false);
@@ -72,6 +91,34 @@ export default function VideoCarousel() {
     // Wrap around logic for infinite loop effect
     if (difference < -1) difference += total;
     if (difference > 1) difference -= total;
+
+    if (isPhoneView) {
+      if (difference === 0) {
+        return {
+          x: "0%", scale: 1, zIndex: 10, opacity: 1, rotateY: 0,
+          brightness: 1, blur: 0,
+        };
+      }
+
+      if (difference === 1) {
+        return {
+          x: "44%", scale: 0.86, zIndex: 5, opacity: 0.44, rotateY: 0,
+          brightness: 0.78, blur: 0,
+        };
+      }
+
+      if (difference === -1) {
+        return {
+          x: "-44%", scale: 0.86, zIndex: 5, opacity: 0.44, rotateY: 0,
+          brightness: 0.78, blur: 0,
+        };
+      }
+
+      return {
+        x: "0%", scale: 0.78, zIndex: 1, opacity: 0, rotateY: 0,
+        brightness: 0, blur: 0,
+      };
+    }
     
     if (difference === 0) {
       return { 
@@ -109,14 +156,20 @@ export default function VideoCarousel() {
         animate={{ scale: [1, 1.05, 1], opacity: [0.3, 0.4, 0.3] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] md:w-[600px] md:h-[600px] rounded-full pointer-events-none mix-blend-multiply"
-        style={{ background: "radial-gradient(circle, rgba(193,123,60,0.3) 0%, rgba(245,240,232,0) 70%)", filter: "blur(80px)", zIndex: 0 }}
+        style={{
+          background: "radial-gradient(circle, rgba(193,123,60,0.3) 0%, rgba(245,240,232,0) 70%)",
+          filter: isPhoneView ? "blur(42px)" : "blur(80px)",
+          opacity: isPhoneView ? 0.7 : 1,
+          zIndex: 0,
+        }}
       />
       
       {/* ═════════════════════════════════════════════════
           3D COVERFLOW TRAY
           ═════════════════════════════════════════════════ */}
       <div 
-         className="relative w-full max-w-[1040px] aspect-[4/5] sm:aspect-video flex items-center justify-center z-10 perspective-[1800px]"
+        className="relative w-full max-w-[1040px] aspect-[4/5] sm:aspect-video flex items-center justify-center z-10"
+        style={{ perspective: isPhoneView ? "none" : "1800px" }}
       >
         {videos.map((video, index) => {
           const props = getCardProps(index);
@@ -136,13 +189,17 @@ export default function VideoCarousel() {
               }}
               transition={{
                 type: "spring",
-                stiffness: 260,
-                damping: 30,
-                mass: 0.8
+                stiffness: isPhoneView ? 210 : 260,
+                damping: isPhoneView ? 34 : 30,
+                mass: isPhoneView ? 0.95 : 0.8,
               }}
-              className={`absolute top-0 left-0 right-0 bottom-0 mx-auto w-[85%] sm:w-[60%] md:w-[70%] max-w-[800px] rounded-[32px] overflow-hidden shadow-2xl ${isActive ? "cursor-grab active:cursor-grabbing" : "cursor-pointer"}`}
+              className={`absolute top-0 left-0 right-0 bottom-0 mx-auto ${isPhoneView ? "w-[78%]" : "w-[85%]"} sm:w-[60%] md:w-[70%] max-w-[800px] rounded-[32px] overflow-hidden shadow-2xl ${isActive ? "cursor-grab active:cursor-grabbing" : "cursor-pointer"}`}
               style={{
-                boxShadow: isActive ? "0 40px 80px -20px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.2)" : "0 10px 30px rgba(0,0,0,0.2)",
+                boxShadow: isPhoneView
+                  ? "0 20px 34px -18px rgba(0,0,0,0.35)"
+                  : isActive
+                    ? "0 40px 80px -20px rgba(0,0,0,0.3), inset 0 2px 4px rgba(255,255,255,0.2)"
+                    : "0 10px 30px rgba(0,0,0,0.2)",
                 border: "1px solid rgba(255,255,255,0.15)",
                 background: "black",
               }}
@@ -151,7 +208,7 @@ export default function VideoCarousel() {
               }}
               drag={isActive ? "x" : false}
               dragConstraints={{ left: 0, right: 0 }}
-              dragElastic={0.4}
+              dragElastic={isPhoneView ? 0.26 : 0.4}
               onDragEnd={handleDragEnd}
             >
               <video
@@ -160,7 +217,7 @@ export default function VideoCarousel() {
                 className="w-full h-full object-cover transition-transform duration-700 ease-out"
                 style={{ 
                   objectPosition: video.objectPos || "50% 50%", 
-                  transform: isActive ? "scale(1)" : "scale(1.1)" 
+                  transform: isPhoneView ? "scale(1)" : isActive ? "scale(1)" : "scale(1.1)" 
                 }}
                 playsInline
                 controls={isActive && isPlaying}
