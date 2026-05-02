@@ -22,9 +22,9 @@ body {
   --text: #2C2621;
   --text-dim: #4D443B;
   --muted: #7A6E64;
-  --accent: #59745D;
-  --accent-soft: rgba(89, 116, 93, 0.12);
-  --accent-glow: rgba(89, 116, 93, 0.18);
+  --accent: #A3835B;
+  --accent-soft: rgba(163, 131, 91, 0.12);
+  --accent-glow: rgba(163, 131, 91, 0.18);
   --on-dark: #E8DFCF;
   --light-bg: #0A0A0A;
   --light-text: #E8DFCF;
@@ -605,7 +605,7 @@ button {
   --surface-elevated: rgba(240, 232, 218, 0.80);
   --shadow-soft: 0 20px 60px rgba(44, 38, 33, 0.10);
   --shadow-strong: 0 32px 80px rgba(44, 38, 33, 0.16);
-  --ring: rgba(89, 116, 93, 0.38);
+  --ring: rgba(163, 131, 91, 0.38);
   --grid-faint: rgba(77, 68, 59, 0.06);
   --navy: var(--secondary);
   --coal: var(--text);
@@ -622,9 +622,9 @@ body {
   min-height: 100vh;
   overflow-x: clip;
   background:
-    radial-gradient(circle at 12% 10%, rgba(89, 116, 93, 0.12), transparent 24%),
+    radial-gradient(circle at 12% 10%, rgba(163, 131, 91, 0.12), transparent 24%),
     radial-gradient(circle at 88% 14%, rgba(44, 62, 53, 0.08), transparent 22%),
-    radial-gradient(circle at 50% 92%, rgba(89, 116, 93, 0.06), transparent 30%),
+    radial-gradient(circle at 50% 92%, rgba(163, 131, 91, 0.06), transparent 30%),
     linear-gradient(180deg, #F0E8D7 0%, var(--bg) 18%, #DFD4C1 100%);
 }
 
@@ -973,7 +973,7 @@ main section:not(.section-pad)::before {
 .bg-gradient-subtle {
   background:
     linear-gradient(180deg, rgba(232, 223, 207, 0.96) 0%, rgba(223, 212, 193, 0.98) 100%),
-    radial-gradient(circle at 50% 0%, rgba(89, 116, 93, 0.08), transparent 38%);
+    radial-gradient(circle at 50% 0%, rgba(163, 131, 91, 0.08), transparent 38%);
 }
 
 .bg-gradient-reverse {
@@ -989,7 +989,7 @@ main section:not(.section-pad)::before {
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(circle at 15% 20%, rgba(89, 116, 93, 0.08), transparent 28%),
+    radial-gradient(circle at 15% 20%, rgba(163, 131, 91, 0.08), transparent 28%),
     radial-gradient(circle at 85% 80%, rgba(44, 62, 53, 0.05), transparent 24%);
   opacity: 0.8;
   animation: gradient-bloom 18s ease-in-out infinite alternate;
