@@ -224,8 +224,8 @@ function StatGraph({
     duration: number;
     sparkles?: boolean;
   }) => {
-    const activeColor = "#5A7261";
-    const trackColor = "rgba(90, 114, 97, 0.1)";
+    const activeColor = "var(--accent)";
+    const trackColor = "#C17B3C18";
 
     const cx = 110;
     const cy = 102;
@@ -335,7 +335,7 @@ function StatGraph({
           style={{
             height: 8,
             borderRadius: 4,
-            background: "rgba(90, 114, 97, 0.1)",
+            background: "#C17B3C18",
             overflow: "hidden",
             position: "relative",
             width: "100%",
@@ -349,7 +349,7 @@ function StatGraph({
             style={{
               display: "block",
               height: "100%",
-              background: "#5A7261",
+              background: "var(--accent)",
             }}
           />
 
@@ -365,7 +365,7 @@ function StatGraph({
             style={{
               position: "absolute",
               inset: 0,
-              background: "#5A7261",
+              background: "var(--accent)",
               pointerEvents: "none",
             }}
           />
@@ -378,7 +378,7 @@ function StatGraph({
               initial={{ scale: 1, color: "var(--muted)" }}
               whileInView={{
                 scale: [1, 1.4, 1],
-                color: ["var(--muted)", "#5A7261", "var(--muted)"],
+                color: ["var(--muted)", "var(--accent)", "var(--muted)"],
               }}
               viewport={graphViewport}
               transition={{
@@ -413,8 +413,8 @@ function StatGraph({
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           {Array.from({ length: 5 }).map((_, index) => {
             const isActive = index < 3;
-            const fillColor = isActive ? "#5A7261" : "rgba(90, 114, 97, 0.3)";
-            const iconColor = isActive ? "#F5F0E8" : "rgba(90, 114, 97, 0.3)";
+            const fillColor = isActive ? "var(--accent)" : "#C17B3C18";
+            const iconColor = isActive ? "#F5F0E8" : "#C17B3C85";
             const fillDelay = shouldReduceMotion ? 0 : index * 0.15;
 
             return (
@@ -425,12 +425,12 @@ function StatGraph({
                   isActive && !shouldReduceMotion
                     ? showFinal
                       ? {
-                        boxShadow: [
-                          "0 0 0 0 rgba(193,123,60,0.45)",
-                          "0 0 0 8px rgba(193,123,60,0)",
-                          "0 0 0 8px rgba(193,123,60,0)",
-                        ],
-                      }
+                          boxShadow: [
+                            "0 0 0 0 rgba(193,123,60,0.45)",
+                            "0 0 0 8px rgba(193,123,60,0)",
+                            "0 0 0 8px rgba(193,123,60,0)",
+                          ],
+                        }
                       : {
                         boxShadow: [
                           "0 0 0 0 rgba(193,123,60,0)",
@@ -449,7 +449,7 @@ function StatGraph({
                   width: 44,
                   height: 44,
                   borderRadius: "50%",
-                  border: "2px solid #5A7261",
+                  border: "2px solid var(--accent)",
                   background: "transparent",
                   position: "relative",
                   overflow: "hidden",
@@ -519,15 +519,15 @@ function StatGraph({
                 boxShadow: isCenter && !shouldReduceMotion
                   ? showFinal
                     ? [
-                      "0 0 0 0 rgba(193,123,60,0.4)",
-                      "0 0 0 12px rgba(193,123,60,0)",
-                      "0 0 0 12px rgba(193,123,60,0)",
-                    ]
+                        "0 0 0 0 rgba(193,123,60,0.4)",
+                        "0 0 0 12px rgba(193,123,60,0)",
+                        "0 0 0 12px rgba(193,123,60,0)",
+                      ]
                     : [
-                      "0 0 0 0 rgba(193,123,60,0)",
-                      "0 0 0 0 rgba(193,123,60,0)",
-                      "0 0 0 0 rgba(193,123,60,0)",
-                    ]
+                        "0 0 0 0 rgba(193,123,60,0)",
+                        "0 0 0 0 rgba(193,123,60,0)",
+                        "0 0 0 0 rgba(193,123,60,0)",
+                      ]
                   : "0 0 0 0 rgba(193,123,60,0)",
               }}
               viewport={graphViewport}
@@ -546,7 +546,7 @@ function StatGraph({
               style={{
                 width: 8,
                 borderRadius: 4,
-                background: isCenter ? "#5A7261" : "rgba(90, 114, 97, 0.15)",
+                background: isCenter ? "var(--accent)" : "#C17B3C25",
                 display: "block",
               }}
             />
@@ -563,7 +563,7 @@ function StatGraph({
           width: 6,
           height: 6,
           borderRadius: "50%",
-          background: "#5A7261",
+          background: "var(--accent)",
           position: "absolute",
           left: "50%",
           bottom: 58,
@@ -592,9 +592,9 @@ function DiscoverStatCard({
         shouldReduceMotion
           ? undefined
           : {
-            y: -4,
-            boxShadow: "0 8px 32px rgba(193,123,60,0.12)",
-          }
+              y: -4,
+              boxShadow: "0 8px 32px rgba(193,123,60,0.12)",
+            }
       }
       transition={{ duration: 0.35, ease: "easeOut" }}
       style={{
@@ -618,7 +618,7 @@ function DiscoverStatCard({
           display: "inline-flex",
           alignItems: "center",
           justifyContent: "center",
-          color: "#5A7261",
+          color: "var(--accent)",
         }}
       >
         <Icon size={22} />
@@ -630,7 +630,7 @@ function DiscoverStatCard({
           fontWeight: 800,
           fontSize: "clamp(2.8rem, 5vw, 4rem)",
           lineHeight: 0.95,
-          color: "#5A7261",
+          color: "var(--accent)",
           marginTop: "0.9rem",
           minHeight: 66,
           display: "flex",
@@ -660,7 +660,7 @@ function DiscoverStatCard({
           textTransform: "uppercase",
           letterSpacing: "0.1em",
           fontSize: "0.72rem",
-          color: "rgba(90, 114, 97, 0.7)",
+          color: "var(--muted)",
           marginTop: "0.9rem",
         }}
       >
@@ -948,7 +948,7 @@ export default function DiscoverPage() {
                     {current.question}
                   </h3>
 
-                  <motion.div
+                  <motion.div 
                     initial="hidden" animate="visible" exit="hidden"
                     variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
                     style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}
@@ -1049,10 +1049,10 @@ export default function DiscoverPage() {
                 {score < 30
                   ? "Your voice is waiting to be found"
                   : score < 60
-                    ? "You're halfway there"
-                    : score < 80
-                      ? "Your voice is strong"
-                      : "You're a natural communicator"}
+                  ? "You're halfway there"
+                  : score < 80
+                  ? "Your voice is strong"
+                  : "You're a natural communicator"}
               </h3>
 
               <p style={{ color: "var(--text-dim)", maxWidth: 400, margin: "0 auto 2rem", fontSize: "0.95rem" }}>
