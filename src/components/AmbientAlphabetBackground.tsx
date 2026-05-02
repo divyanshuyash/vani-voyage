@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { shouldUseLiteEffects } from "@/lib/effectsBudget";
 
 type Tone = "accent" | "secondary" | "muted";
 
@@ -43,19 +44,47 @@ const glyphs: GlyphConfig[] = [
 
 export default function AmbientAlphabetBackground() {
   const layerRef = useRef<HTMLDivElement>(null);
+  const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") {
       return;
     }
 
-    const layer = layerRef.current;
-    if (!layer) {
+    const reducedMotionMedia = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const coarsePointerMedia = window.matchMedia("(hover: none), (pointer: coarse)");
+    const syncMode = () => setEnabled(!shouldUseLiteEffects());
+
+    syncMode();
+
+    if (typeof reducedMotionMedia.addEventListener === "function") {
+      reducedMotionMedia.addEventListener("change", syncMode);
+      coarsePointerMedia.addEventListener("change", syncMode);
+      return () => {
+        reducedMotionMedia.removeEventListener("change", syncMode);
+        coarsePointerMedia.removeEventListener("change", syncMode);
+      };
+    }
+
+    reducedMotionMedia.addListener(syncMode);
+    coarsePointerMedia.addListener(syncMode);
+    return () => {
+      reducedMotionMedia.removeListener(syncMode);
+      coarsePointerMedia.removeListener(syncMode);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!enabled) {
       return;
     }
 
-    const coarsePointer = window.matchMedia("(hover: none), (pointer: coarse)").matches;
-    if (coarsePointer) {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const layer = layerRef.current;
+    if (!layer) {
       return;
     }
 
@@ -147,19 +176,39 @@ export default function AmbientAlphabetBackground() {
       }
     };
 
+    const onVisibilityChange = () => {
+      if (document.visibilityState !== "visible") {
+        if (raf) {
+          window.cancelAnimationFrame(raf);
+          raf = 0;
+        }
+        return;
+      }
+
+      if (!raf) {
+        raf = window.requestAnimationFrame(syncVars);
+      }
+    };
+
     window.addEventListener("mousemove", onMove, { passive: true });
     window.addEventListener("mouseleave", onLeave, { passive: true });
     window.addEventListener("resize", onResize);
+    document.addEventListener("visibilitychange", onVisibilityChange);
 
     return () => {
       window.removeEventListener("mousemove", onMove);
       window.removeEventListener("mouseleave", onLeave);
       window.removeEventListener("resize", onResize);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
       if (raf) {
         window.cancelAnimationFrame(raf);
       }
     };
-  }, []);
+  }, [enabled]);
+
+  if (!enabled) {
+    return null;
+  }
 
   return (
     <div

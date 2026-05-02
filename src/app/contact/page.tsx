@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { motion } from "framer-motion";
-import { ArrowRight, MapPin, Send, CheckCircle, BookOpen } from "lucide-react";
+import { ArrowRight, MapPin, Send, CheckCircle } from "lucide-react";
 import ScrollReveal from "@/components/ScrollReveal";
 import { useState } from "react";
 
@@ -103,7 +103,7 @@ export default function ContactPage() {
       ].join("\n")
     );
 
-    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+    window.location.assign(`mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`);
     setSubmitted(true);
     reset();
     setTimeout(() => setSubmitted(false), 5000);

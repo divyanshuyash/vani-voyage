@@ -11,7 +11,9 @@ import {
 import CinematicHero from "@/components/CinematicHero";
 import ScrollReveal from "@/components/ScrollReveal";
 import TiltCard from "@/components/TiltCard";
+import VaniProfileCard from "@/components/VaniProfileCard";
 import VideoCarousel from "@/components/VideoCarousel";
+import WorkInActionGallery from "@/components/WorkInActionGallery";
 
 const painPoints = [
   {
@@ -357,45 +359,31 @@ export default function HomePage() {
 
             {/* Bio side */}
             <ScrollReveal delay={0.15} variant="clip">
-              <div className="glass-card-static">
-                <p style={{ color: "var(--text-dim)", fontSize: "0.95rem", marginBottom: "1rem", lineHeight: 1.8 }}>
-                  Hi, I&apos;m <strong style={{ color: "var(--text)" }}>Vani Sumanth</strong>.
-                  For over two decades, I have been deeply rooted in education,
-                  training students, professionals, and institutions.
-                </p>
-                <p style={{ color: "var(--text-dim)", fontSize: "0.95rem", lineHeight: 1.8, marginBottom: "1.5rem" }}>
-                  This vision became Vani&apos;s Voice Voyage and my C.L.E.A.R.S
-                  framework, a result-driven approach that helps learners break
-                  hesitation, overcome fear, improve pronunciation and fluency,
-                  and build a stronger personal and professional presence.
-                </p>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
-                  {[
-                    "20+ Years In Education",
-                    "8,000+ Learners",
-                    "Speak Without Fear",
-                    "Clarity + Fluency + Presence",
-                  ].map((tag) => (
-                    <span
-                      key={tag}
-                      style={{
-                        padding: "0.3rem 0.75rem",
-                        background: "var(--accent-soft)",
-                        border: "1px solid rgba(240,192,96,0.15)",
-                        borderRadius: 100,
-                        fontFamily: "var(--font-body)",
-                        fontWeight: 500,
-                        fontSize: "0.72rem",
-                        color: "var(--accent)",
-                      }}
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
+              <VaniProfileCard />
             </ScrollReveal>
           </div>
+        </div>
+      </section>
+
+      {/* ════════════════════════════════════
+          WORK IN ACTION
+          ════════════════════════════════════ */}
+      <section className="section-pad bg-gradient-reverse">
+        <div className="max-w">
+          <ScrollReveal variant="line">
+            <div className="section-header">
+              <span className="t-label">WORK IN ACTION</span>
+              <h2 className="t-section">Real classrooms. Real transformation.</h2>
+              <p>
+                These are moments from my live sessions where I help learners build clarity,
+                confidence, and professional presence.
+              </p>
+            </div>
+          </ScrollReveal>
+
+          <ScrollReveal delay={0.08} variant="clip">
+            <WorkInActionGallery />
+          </ScrollReveal>
         </div>
       </section>
 

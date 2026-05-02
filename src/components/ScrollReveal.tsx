@@ -26,20 +26,20 @@ export default function ScrollReveal({
 
   const variants: Record<RevealVariant, { hidden: TargetAndTransition; show: TargetAndTransition }> = {
     soft: {
-      hidden: { opacity: 0, y: 28, scale: 0.985, filter: "blur(10px)" },
-      show: { opacity: 1, y: 0, scale: 1, filter: "blur(0px)" },
+      hidden: { opacity: 0, y: 28, scale: 0.985 },
+      show: { opacity: 1, y: 0, scale: 1 },
     },
     clip: {
-      hidden: { opacity: 0, y: 16, clipPath: "inset(0 0 100% 0)", filter: "blur(6px)" },
-      show: { opacity: 1, y: 0, clipPath: "inset(0 0 0% 0)", filter: "blur(0px)" },
+      hidden: { opacity: 0, y: 16, clipPath: "inset(0 0 100% 0)" },
+      show: { opacity: 1, y: 0, clipPath: "inset(0 0 0% 0)" },
     },
     scale: {
-      hidden: { opacity: 0, scale: 0.92, y: 18, filter: "blur(6px)" },
-      show: { opacity: 1, scale: 1, y: 0, filter: "blur(0px)" },
+      hidden: { opacity: 0, scale: 0.92, y: 18 },
+      show: { opacity: 1, scale: 1, y: 0 },
     },
     line: {
-      hidden: { opacity: 0, y: 22, clipPath: "inset(0 0 100% 0)", filter: "blur(8px)" },
-      show: { opacity: 1, y: 0, clipPath: "inset(0 0 0% 0)", filter: "blur(0px)" },
+      hidden: { opacity: 0, y: 22, clipPath: "inset(0 0 100% 0)" },
+      show: { opacity: 1, y: 0, clipPath: "inset(0 0 0% 0)" },
     },
   };
 
@@ -56,7 +56,7 @@ export default function ScrollReveal({
         delay,
         ease: [0.16, 1, 0.3, 1] as [number, number, number, number],
       }}
-      style={{ willChange: "opacity, transform, filter", overflow: shouldClip ? "hidden" : undefined }}
+      style={{ willChange: "opacity, transform", overflow: shouldClip ? "hidden" : undefined }}
       className={className}
     >
       {children}

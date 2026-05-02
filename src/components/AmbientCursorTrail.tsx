@@ -1,9 +1,10 @@
 "use client";
 
-import { type CSSProperties, useEffect, useRef } from "react";
+import { type CSSProperties, useEffect, useRef, useState } from "react";
+import { shouldUseLiteEffects } from "@/lib/effectsBudget";
 
-const DOT_COUNT = 10;
-const RING_COUNT = 2;
+const DOT_COUNT = 7;
+const RING_COUNT = 1;
 const BASE_ENERGY = 0.3;
 
 interface Point {
@@ -20,16 +21,42 @@ interface Ring {
 export default function AmbientCursorTrail() {
   const dotRefs = useRef<Array<HTMLSpanElement | null>>([]);
   const ringRefs = useRef<Array<HTMLSpanElement | null>>([]);
+  const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") {
       return;
     }
 
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const coarsePointer = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+    const reducedMotionMedia = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const coarsePointerMedia = window.matchMedia("(hover: none), (pointer: coarse)");
+    const syncMode = () => setEnabled(!shouldUseLiteEffects());
 
-    if (reducedMotion || coarsePointer) {
+    syncMode();
+
+    if (typeof reducedMotionMedia.addEventListener === "function") {
+      reducedMotionMedia.addEventListener("change", syncMode);
+      coarsePointerMedia.addEventListener("change", syncMode);
+      return () => {
+        reducedMotionMedia.removeEventListener("change", syncMode);
+        coarsePointerMedia.removeEventListener("change", syncMode);
+      };
+    }
+
+    reducedMotionMedia.addListener(syncMode);
+    coarsePointerMedia.addListener(syncMode);
+    return () => {
+      reducedMotionMedia.removeListener(syncMode);
+      coarsePointerMedia.removeListener(syncMode);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!enabled) {
+      return;
+    }
+
+    if (typeof window === "undefined") {
       return;
     }
 
@@ -162,22 +189,41 @@ export default function AmbientCursorTrail() {
       startLoop();
     };
 
+    const onVisibilityChange = () => {
+      if (document.visibilityState !== "visible") {
+        if (raf) {
+          window.cancelAnimationFrame(raf);
+          raf = 0;
+        }
+        return;
+      }
+
+      lastInteraction = performance.now();
+      startLoop();
+    };
+
     window.addEventListener("mousemove", onMouseMove, { passive: true });
     window.addEventListener("mousedown", onMouseDown, { passive: true });
     window.addEventListener("mouseleave", onMouseLeave, { passive: true });
     window.addEventListener("resize", onResize);
+    document.addEventListener("visibilitychange", onVisibilityChange);
 
     return () => {
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("mousedown", onMouseDown);
       window.removeEventListener("mouseleave", onMouseLeave);
       window.removeEventListener("resize", onResize);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
 
       if (raf) {
         window.cancelAnimationFrame(raf);
       }
     };
-  }, []);
+  }, [enabled]);
+
+  if (!enabled) {
+    return null;
+  }
 
   return (
     <div aria-hidden="true" className="ambient-cursor-trail">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, PanInfo } from "framer-motion";
 import { ChevronLeft, ChevronRight, Play, Quote, Star, Sparkles } from "lucide-react";
 
@@ -24,6 +24,7 @@ export default function VideoCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isPhoneView, setIsPhoneView] = useState(false);
+  const videoRefs = useRef<Array<HTMLVideoElement | null>>([]);
 
   useEffect(() => {
     if (typeof window === "undefined") {
@@ -44,18 +45,18 @@ export default function VideoCarousel() {
   }, []);
 
   useEffect(() => {
-    setIsPlaying(false);
-    // Force natively pause all video elements in the carousel
-    videos.forEach((_, i) => {
-      const vid = document.getElementById(`video-${i}`) as HTMLVideoElement;
-      if (vid) {
-        vid.pause();
+    videoRefs.current.forEach((video, index) => {
+      if (!video || index === currentIndex) {
+        return;
       }
+
+      video.pause();
+      video.currentTime = 0;
     });
   }, [currentIndex]);
 
   const togglePlay = () => {
-    const vid = document.getElementById(`video-${currentIndex}`) as HTMLVideoElement;
+    const vid = videoRefs.current[currentIndex];
     if (vid) {
       if (isPlaying) {
         vid.pause();
@@ -67,14 +68,16 @@ export default function VideoCarousel() {
   };
 
   const nextVideo = () => {
+    setIsPlaying(false);
     setCurrentIndex((prev) => (prev + 1) % videos.length);
   };
 
   const prevVideo = () => {
+    setIsPlaying(false);
     setCurrentIndex((prev) => (prev - 1 + videos.length) % videos.length);
   };
 
-  const handleDragEnd = (e: any, info: PanInfo) => {
+  const handleDragEnd = (_event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     const swipeThreshold = 50;
     if (info.offset.x > swipeThreshold) {
       prevVideo();
@@ -96,50 +99,42 @@ export default function VideoCarousel() {
       if (difference === 0) {
         return {
           x: "0%", scale: 1, zIndex: 10, opacity: 1, rotateY: 0,
-          brightness: 1, blur: 0,
         };
       }
 
       if (difference === 1) {
         return {
           x: "44%", scale: 0.86, zIndex: 5, opacity: 0.44, rotateY: 0,
-          brightness: 0.78, blur: 0,
         };
       }
 
       if (difference === -1) {
         return {
           x: "-44%", scale: 0.86, zIndex: 5, opacity: 0.44, rotateY: 0,
-          brightness: 0.78, blur: 0,
         };
       }
 
       return {
         x: "0%", scale: 0.78, zIndex: 1, opacity: 0, rotateY: 0,
-        brightness: 0, blur: 0,
       };
     }
     
     if (difference === 0) {
       return { 
         x: "0%", scale: 1, zIndex: 10, opacity: 1, rotateY: 0, 
-        brightness: 1, blur: 0 
       };
     } else if (difference === 1) {
       return { 
         x: "55%", scale: 0.85, zIndex: 5, opacity: 0.6, rotateY: -15, 
-        brightness: 0.4, blur: 4 
       };
     } else if (difference === -1) {
       return { 
         x: "-55%", scale: 0.85, zIndex: 5, opacity: 0.6, rotateY: 15, 
-        brightness: 0.4, blur: 4 
       };
     } else {
       // Hidden behind
       return { 
         x: "0%", scale: 0.7, zIndex: 1, opacity: 0, rotateY: 0, 
-        brightness: 0, blur: 10 
       };
     }
   };
@@ -185,7 +180,6 @@ export default function VideoCarousel() {
                 zIndex: props.zIndex,
                 opacity: props.opacity,
                 rotateY: props.rotateY,
-                filter: `brightness(${props.brightness}) blur(${props.blur}px)`,
               }}
               transition={{
                 type: "spring",
@@ -195,6 +189,7 @@ export default function VideoCarousel() {
               }}
               className={`absolute top-0 left-0 right-0 bottom-0 mx-auto ${isPhoneView ? "w-[78%]" : "w-[85%]"} sm:w-[60%] md:w-[70%] max-w-[800px] rounded-[32px] overflow-hidden shadow-2xl ${isActive ? "cursor-grab active:cursor-grabbing" : "cursor-pointer"}`}
               style={{
+                willChange: "transform, opacity",
                 boxShadow: isPhoneView
                   ? "0 20px 34px -18px rgba(0,0,0,0.35)"
                   : isActive
@@ -204,7 +199,10 @@ export default function VideoCarousel() {
                 background: "black",
               }}
               onClick={() => {
-                if (!isActive) setCurrentIndex(index);
+                if (!isActive) {
+                  setIsPlaying(false);
+                  setCurrentIndex(index);
+                }
               }}
               drag={isActive ? "x" : false}
               dragConstraints={{ left: 0, right: 0 }}
@@ -212,13 +210,16 @@ export default function VideoCarousel() {
               onDragEnd={handleDragEnd}
             >
               <video
-                id={`video-${index}`}
+                ref={(node) => {
+                  videoRefs.current[index] = node;
+                }}
                 src={video.src}
                 className="w-full h-full object-cover transition-transform duration-700 ease-out"
                 style={{ 
                   objectPosition: video.objectPos || "50% 50%", 
                   transform: isPhoneView ? "scale(1)" : isActive ? "scale(1)" : "scale(1.1)" 
                 }}
+                preload={isActive ? "metadata" : "none"}
                 playsInline
                 controls={isActive && isPlaying}
                 onEnded={() => setIsPlaying(false)}

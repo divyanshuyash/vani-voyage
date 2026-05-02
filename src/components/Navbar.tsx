@@ -22,7 +22,12 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 40);
+    const handleScroll = () => {
+      const next = window.scrollY > 40;
+      setScrolled((prev) => (prev === next ? prev : next));
+    };
+
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -43,8 +48,8 @@ export default function Navbar() {
           display: "flex",
           alignItems: "center",
           padding: "0",
-          background: scrolled ? "rgba(245, 240, 232, 0.95)" : "rgba(245, 240, 232, 0.9)",
-          borderBottom: scrolled ? "1px solid rgba(217, 210, 199, 0.72)" : "1px solid rgba(217, 210, 199, 0.45)",
+          background: scrolled ? "rgba(232, 223, 207, 0.96)" : "rgba(232, 223, 207, 0.92)",
+          borderBottom: scrolled ? "1px solid rgba(199, 185, 160, 0.72)" : "1px solid rgba(199, 185, 160, 0.45)",
           boxShadow: scrolled ? "0 10px 24px rgba(26, 22, 18, 0.08)" : "0 4px 16px rgba(26, 22, 18, 0.04)",
           backdropFilter: "blur(10px) saturate(150%)",
           WebkitBackdropFilter: "blur(10px) saturate(150%)",
@@ -172,13 +177,13 @@ export default function Navbar() {
                     <motion.div
                       layoutId="nav-underline"
                       style={{
-                         position: "absolute",
-                         bottom: 3,
-                         left: 0,
-                         right: 0,
-                         height: 2,
-                         background: "var(--accent)",
-                         borderRadius: 1,
+                        position: "absolute",
+                        bottom: 3,
+                        left: 0,
+                        right: 0,
+                        height: 2,
+                        background: "var(--accent)",
+                        borderRadius: 1,
                       }}
                       transition={{ type: "spring", stiffness: 380, damping: 30 }}
                     />
@@ -215,8 +220,8 @@ export default function Navbar() {
               left: 0,
               right: 0,
               zIndex: 99,
-              background: "rgba(245, 240, 232, 0.98)",
-              borderBottom: "1px solid rgba(217, 210, 199, 0.45)",
+              background: "rgba(232, 223, 207, 0.98)",
+              borderBottom: "1px solid rgba(199, 185, 160, 0.45)",
               boxShadow: "0 10px 24px rgba(26, 22, 18, 0.08)",
               backdropFilter: "blur(10px)",
               padding: "1rem clamp(12px, 3vw, 64px)",

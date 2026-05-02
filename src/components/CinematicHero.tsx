@@ -65,7 +65,7 @@ export default function CinematicHero() {
       return;
     }
 
-    let removeListeners = () => {};
+    let removeListeners = () => { };
 
     const ctx = gsap.context(() => {
       gsap.set(tiltNode, { transformPerspective: 1200, transformStyle: "preserve-3d" });
@@ -139,8 +139,8 @@ export default function CinematicHero() {
               display: inline-flex;
               align-items: center;
               gap: 0.5rem;
-              background: rgba(245, 240, 232, 0.84);
-              border: 1px solid rgba(217, 210, 199, 0.9);
+              background: rgba(232, 223, 207, 0.84);
+              border: 1px solid rgba(199, 185, 160, 0.9);
               border-radius: 999px;
               padding: 0.4rem 1rem 0.4rem 0.6rem;
               margin-bottom: 2rem;
@@ -199,7 +199,7 @@ export default function CinematicHero() {
               font-size: 0.74rem;
               color: var(--muted);
               padding: 0.35rem 0.72rem;
-              background: rgba(237, 232, 223, 0.78);
+              background: rgba(223, 212, 193, 0.78);
               border-radius: 999px;
               border: 1px solid var(--border);
               display: inline-flex;
