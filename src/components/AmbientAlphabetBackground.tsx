@@ -123,13 +123,13 @@ export default function AmbientAlphabetBackground() {
       layer.style.setProperty("--ambient-tilt", `${currentTilt.toFixed(3)}deg`);
 
       const isSettled =
-        Math.abs(targetX - currentX) < 0.002 &&
-        Math.abs(targetY - currentY) < 0.002 &&
-        Math.abs(targetPointerX - currentPointerX) < 0.5 &&
-        Math.abs(targetPointerY - currentPointerY) < 0.5 &&
-        Math.abs(targetActive - currentActive) < 0.01 &&
-        Math.abs(targetPulse - currentPulse) < 0.01 &&
-        Math.abs(targetTilt - currentTilt) < 0.01;
+        Math.abs(targetX - currentX) < 0.01 &&
+        Math.abs(targetY - currentY) < 0.01 &&
+        Math.abs(targetPointerX - currentPointerX) < 1.0 &&
+        Math.abs(targetPointerY - currentPointerY) < 1.0 &&
+        Math.abs(targetActive - currentActive) < 0.02 &&
+        Math.abs(targetPulse - currentPulse) < 0.02 &&
+        Math.abs(targetTilt - currentTilt) < 0.02;
 
       if (isSettled) {
         raf = 0;

@@ -715,6 +715,7 @@ main {
   z-index: 1;
   overflow: hidden;
   pointer-events: none;
+  contain: layout paint;
   --ambient-mx: 0;
   --ambient-my: 0;
   --ambient-cx: 50vw;

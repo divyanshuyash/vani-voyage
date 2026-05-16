@@ -18,6 +18,8 @@ const videos: TestimonialVideo[] = [
   { id: 2, src: "/videos/testimonial-2.mp4", caption: "Executive clarity and unwavering confidence.", role: "Corporate Lead", objectPos: "50% 15%", author: "David M." },
   { id: 3, src: "/videos/testimonial-3.mp4", caption: "Overcoming public speaking roadblocks completely.", role: "Startup Founder", author: "Elena R." },
   { id: 4, src: "/videos/testimonial-4.mp4", caption: "Mastery in daily corporate communication.", role: "Tech Executive", author: "James T." },
+  { id: 5, src: "/videos/new-video-1.mp4", caption: "Speaking confidently without hesitation.", role: "Manager", author: "John D.", objectPos: "50% 15%" },
+  { id: 6, src: "/videos/new-video-2.mp4", caption: "A complete mindset shift towards communication.", role: "Entrepreneur", author: "Priya K.", objectPos: "50% 15%" },
 ];
 
 export default function VideoCarousel() {

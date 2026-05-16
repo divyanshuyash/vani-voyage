@@ -129,9 +129,9 @@ export default function AmbientCursorTrail() {
       }
 
       const settled =
-        Math.abs(targetX - currentX) < 0.6 &&
-        Math.abs(targetY - currentY) < 0.6 &&
-        Math.abs(targetEnergy - currentEnergy) < 0.02;
+        Math.abs(targetX - currentX) < 1.0 &&
+        Math.abs(targetY - currentY) < 1.0 &&
+        Math.abs(targetEnergy - currentEnergy) < 0.05;
       const recentlyActive = timestamp - lastInteraction < 120;
 
       if (!settled || hasActiveRing || recentlyActive) {

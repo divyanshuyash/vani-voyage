@@ -30,6 +30,20 @@ const workMoments = [
     detail: "Every batch ends with visible confidence and stronger voice presence.",
     areaClass: styles.group,
   },
+  {
+    src: "/work/new-photo-1.jpeg",
+    alt: "Interactive workshop in action.",
+    title: "Interactive Sessions",
+    detail: "Hands-on exercises leading to measurable improvements.",
+    areaClass: styles.classroom,
+  },
+  {
+    src: "/work/new-photo-2.jpeg",
+    alt: "Vani presenting and actively teaching.",
+    title: "Expert Guidance",
+    detail: "Vani conveying decades of communication expertise.",
+    areaClass: styles.coaching,
+  },
 ];
 
 export default function WorkInActionGallery() {

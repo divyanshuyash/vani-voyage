@@ -7,6 +7,7 @@ import {
   MessageCircle,
   Sparkles,
   Star,
+  BookOpen,
 } from "lucide-react";
 import CinematicHero from "@/components/CinematicHero";
 import ScrollReveal from "@/components/ScrollReveal";
@@ -349,11 +350,21 @@ export default function HomePage() {
                     <motion.span key={i} style={{display:"inline-block", marginRight:"0.28em"}} initial={{opacity:0, y:8}} whileInView={{opacity:1, y:0}} viewport={{once:true, margin:"-50px"}} transition={{delay: i*0.06, duration:0.3}}>{w}</motion.span>
                   ))}
                 </blockquote>
-                <p style={{ color: "var(--muted)", fontSize: "0.9rem", lineHeight: 1.7 }}>
+                <p style={{ color: "var(--muted)", fontSize: "0.9rem", lineHeight: 1.7, marginBottom: "2rem" }}>
                   Through one-on-one conversations across India, it became clear
                   that people are ready to grow but need direction, structure,
                   and a safe space to practice.
                 </p>
+                <Link
+                  href="https://bit.ly/4emcq28"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-primary"
+                  style={{ display: "inline-flex", fontWeight: 600 }}
+                >
+                  <BookOpen size={16} />
+                  Read My E-Book: THE COLLECTIVE MIND
+                </Link>
               </div>
             </ScrollReveal>
 

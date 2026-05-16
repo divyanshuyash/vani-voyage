@@ -14,8 +14,8 @@ export function shouldUseLiteEffects(): boolean {
   const coarsePointer = window.matchMedia("(hover: none), (pointer: coarse)").matches;
   const navigatorWithHints = navigator as NavigatorWithHints;
   const saveData = navigatorWithHints.connection?.saveData ?? false;
-  const lowCpu = (navigator.hardwareConcurrency ?? 8) <= 4;
-  const lowMemory = (navigatorWithHints.deviceMemory ?? 8) <= 4;
+  const lowCpu = (navigator.hardwareConcurrency ?? 8) <= 6;
+  const lowMemory = (navigatorWithHints.deviceMemory ?? 8) <= 6;
 
   return reducedMotion || coarsePointer || saveData || lowCpu || lowMemory;
 }
