@@ -35,6 +35,7 @@ type ProgramEvent = {
   name: string;
   type: "online" | "offline";
   date: Date;
+  time?: string;
   description: string;
   cta: string;
   url: string;
@@ -44,64 +45,15 @@ type ProgramEvent = {
 const events: ProgramEvent[] = [
   {
     id: 1,
-    name: "Speak Like an Executive",
+    name: "Unshakable Confidence",
     type: "online" as const,
-    date: new Date(2026, 0, 17),
-    description:
-      "Executive communication training to help you speak with authority in meetings, presentations, and leadership conversations.",
-    cta: "Book This Program",
-    url: "/contact",
-  },
-  {
-    id: 2,
-    name: "Unshakable Confidence Webinar",
-    type: "online" as const,
-    date: new Date(2026, 1, 7),
+    date: new Date(2026, 4, 17), // 4 is May
+    time: "11:00 PM",
     description:
       "A confidence reset for learners and professionals who know their potential but hesitate when it is time to speak.",
     cta: "Book This Program",
-    url: "/contact",
-  },
-  {
-    id: 3,
-    name: "From Silent Strength to Recognised Power",
-    type: "offline" as const,
-    date: new Date(2026, 2, 14),
-    description:
-      "For high-potential professionals ready to step forward, communicate clearly, and be seen as valuable contributors.",
-    cta: "Book This Program",
-    url: "/contact",
-  },
-  {
-    id: 4,
-    name: "Career Catalyst",
-    type: "online" as const,
-    date: new Date(2026, 3, 4),
-    description:
-      "Communication and mindset coaching to accelerate your professional growth and leadership readiness.",
-    cta: "Book This Program",
-    url: "/contact",
-  },
-  {
-    id: 5,
-    name: "Boardroom Breakthrough",
-    type: "offline" as const,
-    date: new Date(2026, 4, 9),
-    description:
-      "High-impact in-person training to own high-stakes rooms, influence decisions, and communicate with executive presence.",
-    cta: "Book This Program",
-    url: "/contact",
-  },
-  {
-    id: 6,
-    name: "Corporate Training for BOSCH Group",
-    type: "offline" as const,
-    date: new Date(2026, 5, 13),
-    description:
-      "Enterprise communication and confidence training model tailored for teams and corporate cohorts.",
-    cta: "Enquire for Corporate",
-    url: "/contact",
-  },
+    url: "https://zoom.tagmango.com/redirect/webinar/single/6a081c57f60298442a05932a",
+  }
 ];
 
 function parseSheetDate(value: string): Date | null {
@@ -330,6 +282,7 @@ function EventCalendar({ eventItems }: { eventItems: ProgramEvent[] }) {
               <span className="t-label" style={{ marginBottom: "0.5rem", display: "block" }}>
                 {selectedEvent.type === "online" ? "Online" : "Offline"} ·{" "}
                 {format(selectedEvent.date, "MMM d, yyyy")}
+                {selectedEvent.time ? ` · ${selectedEvent.time}` : ""}
               </span>
               <h5 className="t-card" style={{ marginBottom: "0.5rem" }}>
                 {selectedEvent.name}
@@ -362,7 +315,7 @@ function EventCalendar({ eventItems }: { eventItems: ProgramEvent[] }) {
 }
 
 export default function ProgramsPage() {
-  const [eventItems, setEventItems] = useState<ProgramEvent[]>([]);
+  const [eventItems, setEventItems] = useState<ProgramEvent[]>(events);
 
   const summary = useMemo(() => {
     const onlineCount = eventItems.filter((event) => event.type === "online").length;
@@ -376,59 +329,6 @@ export default function ProgramsPage() {
       nextLabel: nextEvent ? format(nextEvent.date, "MMM d, yyyy") : "To be announced",
     };
   }, [eventItems]);
-
-  useEffect(() => {
-    let active = true;
-
-    fetch("/api/programs", { cache: "no-store" })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Programs API failed with status ${response.status}`);
-        }
-
-        return response.json() as Promise<{ rows: ProgramSheetRow[] }>;
-      })
-      .then(({ rows }) => {
-        if (!active) {
-          return;
-        }
-
-        const mappedEvents: ProgramEvent[] = rows
-          .map((row, index) => {
-            const parsedDate = parseSheetDate(row.startDate);
-            if (!parsedDate) {
-              return null;
-            }
-
-            const eventType = getProgramType(row.mode, row.location);
-
-            return {
-              id: index + 1,
-              name: row.course,
-              type: eventType,
-              date: parsedDate,
-              description: row.description || "Details will be shared soon.",
-              cta: "Book This Program",
-              url: row.url || "/contact",
-            };
-          })
-          .filter((event): event is ProgramEvent => event !== null);
-
-        setEventItems(mappedEvents);
-      })
-      .catch((error) => {
-        console.error("Failed to load program rows from API", error);
-        if (!active) {
-          return;
-        }
-
-        setEventItems(events);
-      });
-
-    return () => {
-      active = false;
-    };
-  }, []);
 
   return (
     <>
@@ -496,6 +396,7 @@ export default function ProgramsPage() {
                           color: "var(--muted)",
                         }}>
                           {format(event.date, "yyyy")}
+                          {event.time ? ` · ${event.time}` : ""}
                         </span>
                       </div>
                     </div>
