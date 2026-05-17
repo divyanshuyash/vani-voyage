@@ -1,5 +1,9 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Project Guidance
+
+Before making changes, review [AGENTS.md](./AGENTS.md) and [CLAUDE.md](./CLAUDE.md) for project-specific guidance. This repo uses a customized Next.js build, so consult `node_modules/next/dist/docs/` before editing app code.
+
 ## Getting Started
 
 First, run the development server:
