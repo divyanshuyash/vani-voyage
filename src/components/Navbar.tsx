@@ -31,6 +31,16 @@ export default function Navbar() {
     : isLiveWebinarPage
       ? "/live-webinar/images/logo.png"
       : "/image-removebg-preview.png";
+  const navHeight = isLiveWebinarPage ? 64 : 72;
+  const navMaxWidth = isLiveWebinarPage ? 1180 : 1240;
+  const logoImageSize = isLiveWebinarPage ? 34 : 38;
+  const navSurface = isLiveWebinarPage
+    ? scrolled
+      ? "rgba(232, 223, 207, 0.96)"
+      : "rgba(232, 223, 207, 0.9)"
+    : scrolled
+      ? "rgba(232, 223, 207, 0.96)"
+      : "rgba(232, 223, 207, 0.92)";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -42,6 +52,17 @@ export default function Navbar() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
+  if (isLiveWebinarPage || isOneOnOnePage) {
+    return null;
+  }
 
   return (
     <>
@@ -55,25 +76,28 @@ export default function Navbar() {
           left: 0,
           right: 0,
           zIndex: 100,
-          height: 72,
+          height: navHeight,
           display: "flex",
           alignItems: "center",
           padding: "0",
-          background: scrolled ? "rgba(232, 223, 207, 0.96)" : "rgba(232, 223, 207, 0.92)",
-          borderBottom: scrolled ? "1px solid rgba(199, 185, 160, 0.72)" : "1px solid rgba(199, 185, 160, 0.45)",
-          boxShadow: scrolled ? "0 10px 24px rgba(26, 22, 18, 0.08)" : "0 4px 16px rgba(26, 22, 18, 0.04)",
-          backdropFilter: "blur(10px) saturate(150%)",
-          WebkitBackdropFilter: "blur(10px) saturate(150%)",
+          background: navSurface,
+          borderBottom: scrolled
+            ? "1px solid rgba(199, 185, 160, 0.72)"
+            : "1px solid rgba(199, 185, 160, 0.38)",
+          boxShadow: scrolled ? "0 10px 24px rgba(26, 22, 18, 0.08)" : "none",
+          backdropFilter: "blur(14px) saturate(150%)",
+          WebkitBackdropFilter: "blur(14px) saturate(150%)",
           pointerEvents: "none",
         }}
       >
         <div
-          className="w-full flex justify-between items-center px-4 md:px-7 max-w-[1240px] mx-auto"
+          className="w-full flex justify-between items-center px-4 md:px-7 mx-auto"
           style={{
+            maxWidth: navMaxWidth,
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            gap: "0.2rem",
+            gap: isLiveWebinarPage ? "1.25rem" : "0.2rem",
             pointerEvents: "auto",
             background: "transparent",
             border: "none",
@@ -81,8 +105,8 @@ export default function Navbar() {
             boxShadow: "none",
             backdropFilter: "none",
             WebkitBackdropFilter: "none",
-            paddingTop: "0.65rem",
-            paddingBottom: "0.65rem",
+            paddingTop: isLiveWebinarPage ? "0.35rem" : "0.65rem",
+            paddingBottom: isLiveWebinarPage ? "0.35rem" : "0.65rem",
           }}
         >
           {/* Logo */}
@@ -98,8 +122,8 @@ export default function Navbar() {
           >
             <span
               style={{
-                width: 40,
-                height: 40,
+                width: isLiveWebinarPage ? 36 : 40,
+                height: isLiveWebinarPage ? 36 : 40,
                 display: "inline-flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -113,7 +137,7 @@ export default function Navbar() {
                 height={88}
                 priority
                 style={{
-                  height: 38,
+                  height: logoImageSize,
                   width: "auto",
                   objectFit: "contain",
                   objectPosition: "center",
@@ -136,9 +160,9 @@ export default function Navbar() {
                 style={{
                   fontFamily: "var(--font-display)",
                   fontWeight: 700,
-                  fontSize: "1.08rem",
+                  fontSize: isLiveWebinarPage ? "1rem" : "1.08rem",
                   color: "var(--text)",
-                  letterSpacing: "-0.015em",
+                  letterSpacing: 0,
                   textShadow: "0 2px 10px rgba(193, 123, 60, 0.18)",
                   whiteSpace: "nowrap",
                 }}
@@ -161,47 +185,39 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Nav Links */}
-          <div className="hidden md:flex" style={{ alignItems: "center", gap: "clamp(0.08rem, 0.7vw, 0.85rem)" }}>
+          <div className="hidden lg:flex" style={{ alignItems: "center", gap: isLiveWebinarPage ? "0.2rem" : "clamp(0.08rem, 0.7vw, 0.85rem)" }}>
             {navLinks.map((link) => {
               const isActive =
                 link.href === "/"
                   ? pathname === link.href
                   : pathname === link.href || pathname.startsWith(`${link.href}/`);
+              const isWebinarActive = isLiveWebinarPage && link.href === "/live-webinar";
               return (
                 <Link
                   key={link.href}
                   href={link.href}
                   style={{
                     fontFamily: "var(--font-body)",
-                    fontWeight: isActive ? 600 : 500,
-                    fontSize: "clamp(0.68rem, 1vw, 0.82rem)",
+                    fontWeight: isActive ? 700 : 600,
+                    fontSize: isLiveWebinarPage ? "0.78rem" : "clamp(0.68rem, 1vw, 0.82rem)",
                     color: isActive ? "var(--text)" : "var(--muted)",
-                    transition: "color 0.3s, background 0.3s, transform 0.3s",
+                    transition: "color 0.25s, background 0.25s, border-color 0.25s",
                     position: "relative",
-                    padding: "clamp(0.3rem, 1.5vw, 0.45rem) clamp(0.4rem, 1vw, 0.72rem)",
+                    padding: isLiveWebinarPage ? "0.45rem 0.7rem" : "clamp(0.3rem, 1.5vw, 0.45rem) clamp(0.4rem, 1vw, 0.72rem)",
                     borderRadius: 999,
-                    background: isActive ? "var(--accent-soft)" : "transparent",
+                    border: isWebinarActive ? "1px solid rgba(163, 131, 91, 0.26)" : "1px solid transparent",
+                    background: isWebinarActive
+                      ? "linear-gradient(180deg, rgba(163, 131, 91, 0.16), rgba(163, 131, 91, 0.08))"
+                      : isActive
+                        ? "var(--accent-soft)"
+                        : "transparent",
                     display: "inline-flex",
                     alignItems: "center",
                     lineHeight: 1,
+                    whiteSpace: "nowrap",
                   }}
                 >
                   {link.label}
-                  {isActive && (
-                    <motion.div
-                      layoutId="nav-underline"
-                      style={{
-                        position: "absolute",
-                        bottom: 3,
-                        left: 0,
-                        right: 0,
-                        height: 2,
-                        background: "var(--accent)",
-                        borderRadius: 1,
-                      }}
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                    />
-                  )}
                 </Link>
               );
             })}
@@ -209,7 +225,7 @@ export default function Navbar() {
 
           {/* Mobile Hamburger Button */}
           <button
-            className="md:hidden flex items-center justify-center"
+            className="lg:hidden flex items-center justify-center"
             style={{ width: 44, height: 44, background: "transparent", border: "none", color: "var(--text)" }}
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle Menu"
@@ -227,10 +243,10 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden"
+            className="lg:hidden"
             style={{
               position: "fixed",
-              top: 72,
+              top: navHeight,
               left: 0,
               right: 0,
               zIndex: 99,
@@ -238,10 +254,10 @@ export default function Navbar() {
               borderBottom: "1px solid rgba(199, 185, 160, 0.45)",
               boxShadow: "0 10px 24px rgba(26, 22, 18, 0.08)",
               backdropFilter: "blur(10px)",
-              padding: "1rem clamp(12px, 3vw, 64px)",
+              padding: "0.85rem clamp(16px, 4vw, 40px) 1rem",
               display: "flex",
               flexDirection: "column",
-              gap: "0.5rem",
+              gap: "0.35rem",
             }}
           >
             {navLinks.map((link) => {

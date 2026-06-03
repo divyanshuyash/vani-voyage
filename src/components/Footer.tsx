@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { Mail } from "lucide-react";
 
 const navLinks = [
@@ -35,6 +36,16 @@ const socialLinks = [
 ];
 
 export default function Footer() {
+  const pathname = usePathname();
+  const isOneOnOnePage =
+    pathname === "/one-on-one-sessions" || pathname.startsWith("/one-on-one-sessions/");
+  const isLiveWebinarPage =
+    pathname === "/live-webinar" || pathname.startsWith("/live-webinar/");
+
+  if (isLiveWebinarPage || isOneOnOnePage) {
+    return null;
+  }
+
   return (
     <footer
       style={{
