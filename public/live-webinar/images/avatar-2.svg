@@ -1,0 +1,12 @@
+<svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title">
+  <title id="title">Placeholder avatar for Rohit</title>
+  <rect width="160" height="160" rx="80" fill="#D4C7B0"/>
+  <circle cx="80" cy="66" r="32" fill="#221A16"/>
+  <circle cx="80" cy="75" r="26" fill="#B97B58"/>
+  <path d="M43 148C47 118 61 101 80 101C100 101 114 118 118 148" fill="#213F53"/>
+  <path d="M57 60C64 41 97 41 104 60C91 53 73 53 57 60Z" fill="#17120F"/>
+  <rect x="63" y="71" width="13" height="7" rx="3.5" stroke="#2C2621" stroke-width="2"/>
+  <rect x="85" y="71" width="13" height="7" rx="3.5" stroke="#2C2621" stroke-width="2"/>
+  <path d="M76 75H85" stroke="#2C2621" stroke-width="2"/>
+  <path d="M70 90C76 95 86 95 92 90" stroke="#6D3427" stroke-width="3" stroke-linecap="round"/>
+</svg>

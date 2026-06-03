@@ -11,6 +11,8 @@ const navLinks = [
   { href: "/", label: "Home" },
   { href: "/discover", label: "Discover" },
   { href: "/programs", label: "Programs" },
+  { href: "/live-webinar", label: "Live Webinar" },
+  { href: "/one-on-one-sessions", label: "1:1 Session" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -20,6 +22,15 @@ export default function Navbar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const isOneOnOnePage =
+    pathname === "/one-on-one-sessions" || pathname.startsWith("/one-on-one-sessions/");
+  const isLiveWebinarPage =
+    pathname === "/live-webinar" || pathname.startsWith("/live-webinar/");
+  const logoSrc = isOneOnOnePage
+    ? "/one-on-one-sessions/images/logo.png"
+    : isLiveWebinarPage
+      ? "/live-webinar/images/logo.png"
+      : "/image-removebg-preview.png";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,7 +68,7 @@ export default function Navbar() {
         }}
       >
         <div
-          className="w-full flex justify-between items-center px-4 md:px-12 max-w-[1040px] mx-auto"
+          className="w-full flex justify-between items-center px-4 md:px-7 max-w-[1240px] mx-auto"
           style={{
             display: "flex",
             alignItems: "center",
@@ -96,7 +107,7 @@ export default function Navbar() {
               }}
             >
               <Image
-                src="/image-removebg-preview.png"
+                src={logoSrc}
                 alt="Vani's Voice Voyage Logo"
                 width={88}
                 height={88}
@@ -150,9 +161,12 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Nav Links */}
-          <div className="hidden md:flex" style={{ alignItems: "center", gap: "clamp(0.2rem, 1vw, 1.2rem)" }}>
+          <div className="hidden md:flex" style={{ alignItems: "center", gap: "clamp(0.08rem, 0.7vw, 0.85rem)" }}>
             {navLinks.map((link) => {
-              const isActive = pathname === link.href;
+              const isActive =
+                link.href === "/"
+                  ? pathname === link.href
+                  : pathname === link.href || pathname.startsWith(`${link.href}/`);
               return (
                 <Link
                   key={link.href}
@@ -160,11 +174,11 @@ export default function Navbar() {
                   style={{
                     fontFamily: "var(--font-body)",
                     fontWeight: isActive ? 600 : 500,
-                    fontSize: "clamp(0.7rem, 2vw, 0.85rem)",
+                    fontSize: "clamp(0.68rem, 1vw, 0.82rem)",
                     color: isActive ? "var(--text)" : "var(--muted)",
                     transition: "color 0.3s, background 0.3s, transform 0.3s",
                     position: "relative",
-                    padding: "clamp(0.3rem, 1.5vw, 0.45rem) clamp(0.5rem, 2vw, 0.8rem)",
+                    padding: "clamp(0.3rem, 1.5vw, 0.45rem) clamp(0.4rem, 1vw, 0.72rem)",
                     borderRadius: 999,
                     background: isActive ? "var(--accent-soft)" : "transparent",
                     display: "inline-flex",
@@ -231,7 +245,10 @@ export default function Navbar() {
             }}
           >
             {navLinks.map((link) => {
-              const isActive = pathname === link.href;
+              const isActive =
+                link.href === "/"
+                  ? pathname === link.href
+                  : pathname === link.href || pathname.startsWith(`${link.href}/`);
               return (
                 <Link
                   key={link.href}

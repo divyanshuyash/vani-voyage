@@ -1,0 +1,11 @@
+<svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title">
+  <title id="title">Placeholder avatar for Ananya</title>
+  <rect width="160" height="160" rx="80" fill="#D4C7B0"/>
+  <circle cx="80" cy="68" r="32" fill="#4A241B"/>
+  <circle cx="80" cy="72" r="25" fill="#C98E69"/>
+  <path d="M42 148C46 116 60 100 80 100C100 100 114 116 118 148" fill="#123329"/>
+  <path d="M62 56C70 39 94 38 102 56C91 52 75 52 62 56Z" fill="#271813"/>
+  <circle cx="70" cy="72" r="2.5" fill="#2C2621"/>
+  <circle cx="91" cy="72" r="2.5" fill="#2C2621"/>
+  <path d="M70 88C76 93 85 93 91 88" stroke="#7B3E2D" stroke-width="3" stroke-linecap="round"/>
+</svg>

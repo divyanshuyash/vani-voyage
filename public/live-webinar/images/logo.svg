@@ -1,0 +1,14 @@
+<svg width="250" height="88" viewBox="0 0 250 88" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Vani's Voice Voyage logo</title>
+  <desc id="desc">Editorial bronze wordmark for Vani's Voice Voyage.</desc>
+  <rect width="250" height="88" fill="none"/>
+  <text x="4" y="36" fill="#8F6B3F" font-family="Georgia, serif" font-size="34" font-weight="700" letter-spacing="1.2">VANI'S</text>
+  <text x="4" y="68" fill="#8F6B3F" font-family="Georgia, serif" font-size="22" font-weight="600" letter-spacing="3.6">VOICE VOYAGE</text>
+  <g transform="translate(188 18)" stroke="#A3835B" stroke-width="4" stroke-linecap="round">
+    <path d="M0 22V14"/>
+    <path d="M8 26V10"/>
+    <path d="M16 30V6"/>
+    <path d="M24 26V10"/>
+    <path d="M32 22V14"/>
+  </g>
+</svg>

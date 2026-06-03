@@ -1,0 +1,18 @@
+<svg width="500" height="500" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Vani Sumanth speaker placeholder</title>
+  <desc id="desc">Circular portrait placeholder for the mentor section.</desc>
+  <rect width="500" height="500" rx="250" fill="#102D25"/>
+  <circle cx="250" cy="250" r="226" fill="#E8DFCF"/>
+  <circle cx="250" cy="250" r="210" fill="#153B31"/>
+  <ellipse cx="251" cy="178" rx="110" ry="132" fill="#241812"/>
+  <path d="M165 180C165 106 200 63 251 63C306 63 340 106 337 182C334 262 300 308 252 308C202 308 166 262 165 180Z" fill="#C78C68"/>
+  <path d="M160 184C178 135 204 113 238 114C283 116 310 96 339 149C330 86 296 51 247 53C193 56 158 101 160 184Z" fill="#211611"/>
+  <circle cx="213" cy="197" r="5" fill="#211611"/>
+  <circle cx="287" cy="197" r="5" fill="#211611"/>
+  <path d="M220 256C239 272 266 272 286 256" stroke="#7A3428" stroke-width="8" stroke-linecap="round"/>
+  <path d="M130 354C142 295 184 266 250 266C316 266 359 296 371 354V500H130V354Z" fill="#123A31"/>
+  <path d="M209 289L250 346L292 289L312 374L251 436L188 374L209 289Z" fill="#161411"/>
+  <path d="M195 324C160 341 141 370 140 411V500H239L195 324Z" fill="#163F34"/>
+  <path d="M305 324C341 342 360 370 361 411V500H261L305 324Z" fill="#163F34"/>
+  <circle cx="250" cy="250" r="232" stroke="#A3835B" stroke-width="10"/>
+</svg>
