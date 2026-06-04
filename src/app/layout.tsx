@@ -52,6 +52,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`overflow-x-hidden w-full max-w-[100vw] ${notoSerif.variable} ${manrope.variable}`}>
       <body className="overflow-x-hidden w-full max-w-[100vw]">
+        <MetaPixel />
         <div aria-hidden="true" className="site-backdrop" />
         <AmbientAlphabetBackground />
         <AmbientCursorTrail />
@@ -62,7 +63,6 @@ export default function RootLayout({
           <PageTransition>{children}</PageTransition>
           <Footer />
         </div>
-        <MetaPixel />
       </body>
     </html>
   );
