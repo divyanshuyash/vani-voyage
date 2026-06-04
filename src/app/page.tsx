@@ -15,6 +15,7 @@ import TiltCard from "@/components/TiltCard";
 import VaniProfileCard from "@/components/VaniProfileCard";
 import VideoCarousel from "@/components/VideoCarousel";
 import WorkInActionGallery from "@/components/WorkInActionGallery";
+import MetaPixelEvents from "@/components/MetaPixelEvents";
 
 const painPoints = [
   {
@@ -65,6 +66,7 @@ const featuredPrograms = [
 export default function HomePage() {
   return (
     <>
+      <MetaPixelEvents />
       <style dangerouslySetInnerHTML={{
         __html: `
 

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, MessageCircle, Sparkles } from "lucide-react";
+import MetaPixelEvents from "@/components/MetaPixelEvents";
 
 export const metadata: Metadata = {
   title: "Thank You | Vani's Voice Voyage",
@@ -14,17 +15,19 @@ const whatsappUrl =
 
 export default function ThankYouPage() {
   return (
-    <main
-      style={{
-        minHeight: "100svh",
-        padding: "clamp(112px, 14vw, 152px) clamp(20px, 5vw, 72px) clamp(56px, 8vw, 92px)",
-        background:
-          "radial-gradient(circle at 22% 16%, rgba(255, 248, 236, 0.74), transparent 34%), radial-gradient(circle at 78% 22%, rgba(163, 131, 91, 0.18), transparent 30%), #E8DFCF",
-        color: "#2C2621",
-        overflow: "hidden",
-        position: "relative",
-      }}
-    >
+    <>
+      <MetaPixelEvents trackLead />
+      <main
+        style={{
+          minHeight: "100svh",
+          padding: "clamp(112px, 14vw, 152px) clamp(20px, 5vw, 72px) clamp(56px, 8vw, 92px)",
+          background:
+            "radial-gradient(circle at 22% 16%, rgba(255, 248, 236, 0.74), transparent 34%), radial-gradient(circle at 78% 22%, rgba(163, 131, 91, 0.18), transparent 30%), #E8DFCF",
+          color: "#2C2621",
+          overflow: "hidden",
+          position: "relative",
+        }}
+      >
       <div
         aria-hidden="true"
         style={{
@@ -225,6 +228,7 @@ export default function ThankYouPage() {
           </p>
         </div>
       </section>
-    </main>
+      </main>
+    </>
   );
 }

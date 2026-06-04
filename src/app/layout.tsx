@@ -7,6 +7,7 @@ import PageTransition from "@/components/PageTransition";
 import CustomCursor from "@/components/CustomCursor";
 import AmbientAlphabetBackground from "@/components/AmbientAlphabetBackground";
 import AmbientCursorTrail from "@/components/AmbientCursorTrail";
+import MetaPixel from "@/components/MetaPixel";
 
 const notoSerif = Noto_Serif({
   variable: "--font-noto-serif",
@@ -61,6 +62,7 @@ export default function RootLayout({
           <PageTransition>{children}</PageTransition>
           <Footer />
         </div>
+        <MetaPixel />
       </body>
     </html>
   );
