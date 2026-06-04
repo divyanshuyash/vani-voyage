@@ -1,7 +1,6 @@
 "use client";
 
 import { CSSProperties, ReactNode, useEffect, useRef } from "react";
-import { gsap } from "gsap";
 
 interface MagneticHoverProps {
   children: ReactNode;
@@ -35,44 +34,59 @@ export default function MagneticHover({
       return;
     }
 
-    let removeListeners = () => {};
+    let cancelled = false;
+    let cleanupAnimation = () => {};
 
-    const ctx = gsap.context(() => {
-      const xTo = gsap.quickTo(content, "x", {
-        duration: 0.35,
-        ease: "power3.out",
-      });
-      const yTo = gsap.quickTo(content, "y", {
-        duration: 0.35,
-        ease: "power3.out",
-      });
+    void (async () => {
+      const { gsap } = await import("gsap");
 
-      const handleMove = (event: MouseEvent) => {
-        const rect = wrapper.getBoundingClientRect();
-        const offsetX = event.clientX - rect.left - rect.width / 2;
-        const offsetY = event.clientY - rect.top - rect.height / 2;
+      if (cancelled) {
+        return;
+      }
 
-        xTo(offsetX * strength);
-        yTo(offsetY * strength);
+      let removeListeners = () => {};
+      const ctx = gsap.context(() => {
+        const xTo = gsap.quickTo(content, "x", {
+          duration: 0.35,
+          ease: "power3.out",
+        });
+        const yTo = gsap.quickTo(content, "y", {
+          duration: 0.35,
+          ease: "power3.out",
+        });
+
+        const handleMove = (event: MouseEvent) => {
+          const rect = wrapper.getBoundingClientRect();
+          const offsetX = event.clientX - rect.left - rect.width / 2;
+          const offsetY = event.clientY - rect.top - rect.height / 2;
+
+          xTo(offsetX * strength);
+          yTo(offsetY * strength);
+        };
+
+        const handleLeave = () => {
+          xTo(0);
+          yTo(0);
+        };
+
+        wrapper.addEventListener("mousemove", handleMove);
+        wrapper.addEventListener("mouseleave", handleLeave);
+
+        removeListeners = () => {
+          wrapper.removeEventListener("mousemove", handleMove);
+          wrapper.removeEventListener("mouseleave", handleLeave);
+        };
+      }, wrapper);
+
+      cleanupAnimation = () => {
+        removeListeners();
+        ctx.revert();
       };
-
-      const handleLeave = () => {
-        xTo(0);
-        yTo(0);
-      };
-
-      wrapper.addEventListener("mousemove", handleMove);
-      wrapper.addEventListener("mouseleave", handleLeave);
-
-      removeListeners = () => {
-        wrapper.removeEventListener("mousemove", handleMove);
-        wrapper.removeEventListener("mouseleave", handleLeave);
-      };
-    }, wrapper);
+    })();
 
     return () => {
-      removeListeners();
-      ctx.revert();
+      cancelled = true;
+      cleanupAnimation();
     };
   }, [strength]);
 

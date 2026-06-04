@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Play, Sparkles } from "lucide-react";
-import { gsap } from "gsap";
 import MagneticHover from "@/components/MagneticHover";
 
 const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
@@ -65,52 +64,67 @@ export default function CinematicHero() {
       return;
     }
 
-    let removeListeners = () => { };
+    let cancelled = false;
+    let cleanupAnimation = () => {};
 
-    const ctx = gsap.context(() => {
-      gsap.set(tiltNode, { transformPerspective: 1200, transformStyle: "preserve-3d" });
+    void (async () => {
+      const { gsap } = await import("gsap");
 
-      const rotateXTo = gsap.quickTo(tiltNode, "rotationX", {
-        duration: 0.42,
-        ease: "power3.out",
-      });
-      const rotateYTo = gsap.quickTo(tiltNode, "rotationY", {
-        duration: 0.42,
-        ease: "power3.out",
-      });
-      const liftTo = gsap.quickTo(tiltNode, "y", {
-        duration: 0.42,
-        ease: "power3.out",
-      });
+      if (cancelled) {
+        return;
+      }
 
-      const handleMove = (event: MouseEvent) => {
-        const rect = tiltNode.getBoundingClientRect();
-        const px = (event.clientX - rect.left) / rect.width - 0.5;
-        const py = (event.clientY - rect.top) / rect.height - 0.5;
+      let removeListeners = () => {};
+      const ctx = gsap.context(() => {
+        gsap.set(tiltNode, { transformPerspective: 1200, transformStyle: "preserve-3d" });
 
-        rotateXTo(-py * 12);
-        rotateYTo(px * 12);
-        liftTo(-5);
+        const rotateXTo = gsap.quickTo(tiltNode, "rotationX", {
+          duration: 0.42,
+          ease: "power3.out",
+        });
+        const rotateYTo = gsap.quickTo(tiltNode, "rotationY", {
+          duration: 0.42,
+          ease: "power3.out",
+        });
+        const liftTo = gsap.quickTo(tiltNode, "y", {
+          duration: 0.42,
+          ease: "power3.out",
+        });
+
+        const handleMove = (event: MouseEvent) => {
+          const rect = tiltNode.getBoundingClientRect();
+          const px = (event.clientX - rect.left) / rect.width - 0.5;
+          const py = (event.clientY - rect.top) / rect.height - 0.5;
+
+          rotateXTo(-py * 12);
+          rotateYTo(px * 12);
+          liftTo(-5);
+        };
+
+        const handleLeave = () => {
+          rotateXTo(0);
+          rotateYTo(0);
+          liftTo(0);
+        };
+
+        tiltNode.addEventListener("mousemove", handleMove);
+        tiltNode.addEventListener("mouseleave", handleLeave);
+
+        removeListeners = () => {
+          tiltNode.removeEventListener("mousemove", handleMove);
+          tiltNode.removeEventListener("mouseleave", handleLeave);
+        };
+      }, tiltNode);
+
+      cleanupAnimation = () => {
+        removeListeners();
+        ctx.revert();
       };
-
-      const handleLeave = () => {
-        rotateXTo(0);
-        rotateYTo(0);
-        liftTo(0);
-      };
-
-      tiltNode.addEventListener("mousemove", handleMove);
-      tiltNode.addEventListener("mouseleave", handleLeave);
-
-      removeListeners = () => {
-        tiltNode.removeEventListener("mousemove", handleMove);
-        tiltNode.removeEventListener("mouseleave", handleLeave);
-      };
-    }, tiltNode);
+    })();
 
     return () => {
-      removeListeners();
-      ctx.revert();
+      cancelled = true;
+      cleanupAnimation();
     };
   }, []);
 

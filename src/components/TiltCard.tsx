@@ -1,7 +1,6 @@
 "use client";
 
 import { CSSProperties, ReactNode, useEffect, useRef } from "react";
-import { gsap } from "gsap";
 
 interface TiltCardProps {
   children: ReactNode;
@@ -33,52 +32,67 @@ export default function TiltCard({
       return;
     }
 
-    let removeListeners = () => {};
+    let cancelled = false;
+    let cleanupAnimation = () => {};
 
-    const ctx = gsap.context(() => {
-      gsap.set(card, { transformPerspective: 1200, transformStyle: "preserve-3d" });
+    void (async () => {
+      const { gsap } = await import("gsap");
 
-      const rotateXTo = gsap.quickTo(card, "rotationX", {
-        duration: 0.34,
-        ease: "power3.out",
-      });
-      const rotateYTo = gsap.quickTo(card, "rotationY", {
-        duration: 0.34,
-        ease: "power3.out",
-      });
-      const liftTo = gsap.quickTo(card, "y", {
-        duration: 0.34,
-        ease: "power3.out",
-      });
+      if (cancelled) {
+        return;
+      }
 
-      const handleMove = (event: MouseEvent) => {
-        const rect = card.getBoundingClientRect();
-        const px = (event.clientX - rect.left) / rect.width - 0.5;
-        const py = (event.clientY - rect.top) / rect.height - 0.5;
+      let removeListeners = () => {};
+      const ctx = gsap.context(() => {
+        gsap.set(card, { transformPerspective: 1200, transformStyle: "preserve-3d" });
 
-        rotateXTo(-py * maxTilt * 2);
-        rotateYTo(px * maxTilt * 2);
-        liftTo(-4);
+        const rotateXTo = gsap.quickTo(card, "rotationX", {
+          duration: 0.34,
+          ease: "power3.out",
+        });
+        const rotateYTo = gsap.quickTo(card, "rotationY", {
+          duration: 0.34,
+          ease: "power3.out",
+        });
+        const liftTo = gsap.quickTo(card, "y", {
+          duration: 0.34,
+          ease: "power3.out",
+        });
+
+        const handleMove = (event: MouseEvent) => {
+          const rect = card.getBoundingClientRect();
+          const px = (event.clientX - rect.left) / rect.width - 0.5;
+          const py = (event.clientY - rect.top) / rect.height - 0.5;
+
+          rotateXTo(-py * maxTilt * 2);
+          rotateYTo(px * maxTilt * 2);
+          liftTo(-4);
+        };
+
+        const handleLeave = () => {
+          rotateXTo(0);
+          rotateYTo(0);
+          liftTo(0);
+        };
+
+        card.addEventListener("mousemove", handleMove);
+        card.addEventListener("mouseleave", handleLeave);
+
+        removeListeners = () => {
+          card.removeEventListener("mousemove", handleMove);
+          card.removeEventListener("mouseleave", handleLeave);
+        };
+      }, card);
+
+      cleanupAnimation = () => {
+        removeListeners();
+        ctx.revert();
       };
-
-      const handleLeave = () => {
-        rotateXTo(0);
-        rotateYTo(0);
-        liftTo(0);
-      };
-
-      card.addEventListener("mousemove", handleMove);
-      card.addEventListener("mouseleave", handleLeave);
-
-      removeListeners = () => {
-        card.removeEventListener("mousemove", handleMove);
-        card.removeEventListener("mouseleave", handleLeave);
-      };
-    }, card);
+    })();
 
     return () => {
-      removeListeners();
-      ctx.revert();
+      cancelled = true;
+      cleanupAnimation();
     };
   }, [maxTilt]);
 

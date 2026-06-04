@@ -10,6 +10,8 @@ export default function CustomCursor() {
   const [enabled, setEnabled] = useState(false);
   const visibleRef = useRef(false);
   const hoveringRef = useRef(false);
+  const pointerRef = useRef({ x: 0, y: 0 });
+  const rafRef = useRef<number | null>(null);
 
   const springConfig = { stiffness: 400, damping: 28 };
   const x = useSpring(0, springConfig);
@@ -51,8 +53,18 @@ export default function CustomCursor() {
     }
 
     const handleMouseMove = (e: MouseEvent) => {
-      x.set(e.clientX - 8);
-      y.set(e.clientY - 8);
+      pointerRef.current = {
+        x: e.clientX - 8,
+        y: e.clientY - 8,
+      };
+
+      if (rafRef.current === null) {
+        rafRef.current = window.requestAnimationFrame(() => {
+          x.set(pointerRef.current.x);
+          y.set(pointerRef.current.y);
+          rafRef.current = null;
+        });
+      }
 
       if (!visibleRef.current) {
         visibleRef.current = true;
@@ -102,6 +114,11 @@ export default function CustomCursor() {
       document.removeEventListener("mouseout", handleMouseLeave);
       window.removeEventListener("mouseleave", handleWindowLeave);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
+
+      if (rafRef.current !== null) {
+        window.cancelAnimationFrame(rafRef.current);
+        rafRef.current = null;
+      }
     };
   }, [enabled, x, y]);
 
