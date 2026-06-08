@@ -19,6 +19,7 @@ import {
 import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
 import styles from "./page.module.css";
+import LeadForm from "@/components/LeadForm";
 
 export const metadata: Metadata = {
   title: "Unshakable Confidence Webinar | Vani's Voice Voyage",
@@ -26,8 +27,7 @@ export const metadata: Metadata = {
     "A premium live webinar with Vani Sumanth for fluent English, executive-level communication, confidence, and leadership presence.",
 };
 
-const registrationUrl =
-  "https://zoom.tagmango.com/redirect/webinar/single/6a081c57f60298442a05932a";
+
 
 const heroChecks = [
   "Transform hesitation into confidence.",
@@ -192,15 +192,13 @@ const faqRight = [
   },
 ];
 
-function CtaButton() {
+function CtaButton({ small }: { small?: boolean } = {}) {
   return (
     <a
-      className={styles.ctaButton}
-      href={registrationUrl}
-      target="_blank"
-      rel="noreferrer"
+      className={small ? styles.ctaButtonSmall : styles.ctaButton}
+      href="#booking-form"
     >
-      Register for the Webinar <span aria-hidden="true">-&gt;</span>
+      Register Now <span aria-hidden="true">-&gt;</span>
     </a>
   );
 }
@@ -311,6 +309,9 @@ export default function LiveWebinarPage() {
               </article>
             ))}
           </div>
+          <div className={styles.ctaWrapper}>
+            <CtaButton />
+          </div>
         </div>
       </section>
 
@@ -337,6 +338,9 @@ export default function LiveWebinarPage() {
                 <p>{copy}</p>
               </article>
             ))}
+          </div>
+          <div className={styles.ctaWrapper}>
+            <CtaButton />
           </div>
         </div>
       </section>
@@ -428,6 +432,9 @@ export default function LiveWebinarPage() {
             <aside className={styles.joinCard}>
               <Sparkles size={72} strokeWidth={1.35} />
               <h2>Join 8,000+ learners</h2>
+              <div style={{ width: "100%", marginTop: "auto", paddingTop: "1rem" }}>
+                <CtaButton small />
+              </div>
             </aside>
           </div>
         </div>
@@ -455,6 +462,10 @@ export default function LiveWebinarPage() {
             ))}
           </div>
         </div>
+      </section>
+
+      <section id="booking-form" style={{ padding: "clamp(3rem, 8vw, 6rem) clamp(1rem, 5vw, 3rem)" }}>
+        <LeadForm title="Register for the Webinar" subtitle="Please provide your details below to reserve your spot for the live session." />
       </section>
     </main>
   );

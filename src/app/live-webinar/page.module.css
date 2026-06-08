@@ -1350,3 +1350,12 @@
     font-size: 1.24rem;
   }
 }
+
+.ctaWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: clamp(40px, 5vw, 64px);
+  width: 100%;
+}
+

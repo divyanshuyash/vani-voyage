@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 const whatsappUrl =
-  "https://wa.me/919845316311?text=Hello%20Vani%20ma'am%2C%20I%20have%20joined%20the%20program%20and%20would%20like%20to%20know%20the%20next%20steps.";
+  "https://chat.whatsapp.com/HDmwDzZPrQ05CaNNpILIfp";
 
 export default function ThankYouPage() {
   return (
@@ -175,7 +175,7 @@ export default function ThankYouPage() {
               href={whatsappUrl}
               target="_blank"
               rel="noreferrer"
-              aria-label="Chat on WhatsApp with Vani's Voice Voyage"
+              aria-label="Join WhatsApp Group"
               style={{
                 minHeight: 54,
                 display: "inline-flex",
@@ -191,41 +191,10 @@ export default function ThankYouPage() {
               }}
             >
               <MessageCircle size={20} />
-              Chat on WhatsApp
+              Join WhatsApp Group
               <ArrowRight size={18} />
             </a>
-
-            <Link
-              href="/"
-              style={{
-                minHeight: 54,
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 9,
-                borderRadius: 10,
-                padding: "0.95rem 1.25rem",
-                border: "1px solid rgba(163,131,91,0.6)",
-                color: "#2C2621",
-                fontWeight: 800,
-                background: "rgba(247,240,229,0.38)",
-              }}
-            >
-              <Sparkles size={18} />
-              Back to Website
-            </Link>
           </div>
-
-          <p
-            style={{
-              marginTop: 22,
-              color: "#7A6E64",
-              fontSize: "0.92rem",
-              fontWeight: 700,
-            }}
-          >
-            WhatsApp: +91 98453 16311
-          </p>
         </div>
       </section>
       </main>

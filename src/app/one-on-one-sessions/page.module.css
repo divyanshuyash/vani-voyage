@@ -1164,3 +1164,12 @@
     min-height: 62px;
   }
 }
+
+.ctaWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: clamp(40px, 5vw, 64px);
+  width: 100%;
+}
+

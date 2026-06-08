@@ -41,8 +41,10 @@ export default function Footer() {
     pathname === "/one-on-one-sessions" || pathname.startsWith("/one-on-one-sessions/");
   const isLiveWebinarPage =
     pathname === "/live-webinar" || pathname.startsWith("/live-webinar/");
+  const isThankYouPage =
+    pathname === "/thankyoupage" || pathname.startsWith("/thankyoupage/");
 
-  if (isLiveWebinarPage || isOneOnOnePage) {
+  if (isLiveWebinarPage || isOneOnOnePage || isThankYouPage) {
     return null;
   }
 

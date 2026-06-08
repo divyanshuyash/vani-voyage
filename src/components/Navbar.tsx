@@ -26,6 +26,8 @@ export default function Navbar() {
     pathname === "/one-on-one-sessions" || pathname.startsWith("/one-on-one-sessions/");
   const isLiveWebinarPage =
     pathname === "/live-webinar" || pathname.startsWith("/live-webinar/");
+  const isThankYouPage =
+    pathname === "/thankyoupage" || pathname.startsWith("/thankyoupage/");
   const logoSrc = isOneOnOnePage
     ? "/one-on-one-sessions/images/logo.png"
     : isLiveWebinarPage
@@ -60,7 +62,7 @@ export default function Navbar() {
     };
   }, [isOpen]);
 
-  if (isLiveWebinarPage || isOneOnOnePage) {
+  if (isLiveWebinarPage || isOneOnOnePage || isThankYouPage) {
     return null;
   }
 

@@ -14,10 +14,9 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import styles from "./page.module.css";
+import LeadForm from "@/components/LeadForm";
 
-const bookingUrl =
-  process.env.NEXT_PUBLIC_TAGMANGO_BOOKING_URL ||
-  "https://learn.vanisumanth.com/web/lite/events/6a16f5df073d47ef6cbf0c9f";
+
 
 export const metadata: Metadata = {
   title: "30-Minute 1:1 Consultation | Vani Sumanth",
@@ -173,11 +172,9 @@ function CtaButton({ className = "" }: { className?: string }) {
   return (
     <a
       className={`${styles.ctaButton} ${className}`}
-      href={bookingUrl}
-      target="_blank"
-      rel="noreferrer"
+      href="#booking-form"
     >
-      <span>Book Your 1:1 Session</span>
+      <span>Register Now</span>
       <span aria-hidden="true">→</span>
     </a>
   );
@@ -281,6 +278,9 @@ export default function OneOnOneSessionsPage() {
               </article>
             ))}
           </div>
+          <div className={styles.ctaWrapper}>
+            <CtaButton />
+          </div>
         </div>
       </section>
 
@@ -359,6 +359,9 @@ export default function OneOnOneSessionsPage() {
               </article>
             ))}
           </div>
+          <div className={styles.ctaWrapper}>
+            <CtaButton />
+          </div>
         </div>
       </section>
 
@@ -379,6 +382,9 @@ export default function OneOnOneSessionsPage() {
                 </div>
               </article>
             ))}
+          </div>
+          <div className={styles.ctaWrapper}>
+            <CtaButton />
           </div>
         </div>
       </section>
@@ -402,6 +408,10 @@ export default function OneOnOneSessionsPage() {
             ))}
           </div>
         </div>
+      </section>
+
+      <section id="booking-form" style={{ padding: "clamp(3rem, 8vw, 6rem) clamp(1rem, 5vw, 3rem)" }}>
+        <LeadForm title="Book Your 1:1 Session" subtitle="Fill out the details below to request your session. We'll be in touch." />
       </section>
     </main>
   );
