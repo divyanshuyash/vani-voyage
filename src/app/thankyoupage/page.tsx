@@ -130,7 +130,7 @@ export default function ThankYouPage() {
               marginBottom: 12,
             }}
           >
-            You are in
+            Form Submitted
           </p>
 
           <h1
@@ -145,7 +145,7 @@ export default function ThankYouPage() {
               maxWidth: 780,
             }}
           >
-            Thank you for joining this program.
+            Thank you for reaching out!
           </h1>
 
           <p
@@ -158,8 +158,8 @@ export default function ThankYouPage() {
               fontWeight: 600,
             }}
           >
-            We are excited to have you here. For further information, program details,
-            or the next steps, you can chat directly with Vani&apos;s team on WhatsApp.
+            We have received your details. Our team will get back to you shortly.
+            For immediate assistance or next steps, you can chat directly with Vani&apos;s team on WhatsApp.
           </p>
 
           <div

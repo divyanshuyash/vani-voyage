@@ -309,9 +309,6 @@ export default function LiveWebinarPage() {
               </article>
             ))}
           </div>
-          <div className={styles.ctaWrapper}>
-            <CtaButton />
-          </div>
         </div>
       </section>
 
@@ -339,7 +336,8 @@ export default function LiveWebinarPage() {
               </article>
             ))}
           </div>
-          <div className={styles.ctaWrapper}>
+          <div className={styles.bottomCtaWrapper} style={{ marginTop: 'clamp(50px, 6vw, 80px)', gridColumn: '1 / -1' }}>
+            <h2>Master these skills in our live session</h2>
             <CtaButton />
           </div>
         </div>
@@ -461,6 +459,10 @@ export default function LiveWebinarPage() {
               </div>
             ))}
           </div>
+        </div>
+        <div className={styles.bottomCtaWrapper}>
+          <h2>Ready to transform your communication?</h2>
+          <CtaButton />
         </div>
       </section>
 

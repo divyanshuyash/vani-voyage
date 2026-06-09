@@ -1359,3 +1359,29 @@
   width: 100%;
 }
 
+.bottomCtaWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(20px, 3vw, 40px);
+  width: min(100%, 1000px);
+  margin: clamp(40px, 6vw, 80px) auto 0;
+  padding: clamp(28px, 4vw, 40px) clamp(32px, 5vw, 56px);
+  text-align: left;
+  border: 1px solid rgba(208, 184, 145, 0.68);
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(255, 251, 244, 0.94), rgba(247, 236, 218, 0.84));
+  box-shadow: 0 16px 38px rgba(61, 45, 20, 0.08);
+}
+
+.bottomCtaWrapper h2 {
+  color: #111917;
+  font-family: var(--font-noto-serif), Georgia, "Times New Roman", serif;
+  font-size: clamp(1.45rem, 2vw, 2.1rem);
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 0;
+  flex: 1;
+  min-width: 260px;
+}

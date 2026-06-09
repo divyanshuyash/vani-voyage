@@ -11,20 +11,38 @@ export default function LeadForm({ title = "Book Your Spot", subtitle = "Fill ou
     setStatus("submitting");
 
     const formData = new FormData(e.currentTarget);
+    
+    // Create a FormData object to send directly to Google Sheets (Apps Script expects x-www-form-urlencoded or multipart/form-data usually, but we can send JSON)
     const data = {
       name: formData.get("name"),
       email: formData.get("email"),
       phone: formData.get("phone"),
-      message: formData.get("message"),
+      what: formData.get("what"),
+      why: formData.get("why"),
+      source: typeof window !== "undefined" && window.location.pathname.includes("webinar") ? "Live Webinar" : "1:1 Session"
     };
 
     try {
-      // Send data to our local API route
-      await fetch("/api/leads", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
+      // Send data to the Google Sheet Web App URL
+      const googleSheetUrl = process.env.NEXT_PUBLIC_GOOGLE_SHEET_URL || "https://script.google.com/macros/s/AKfycbwMfCIiLOI4XqNSmwzOIygH_Q9oj1qI3QZfiCoC3wcRzwU8TQwUU3uP306yhOozA7UhLw/exec";
+
+      if (googleSheetUrl) {
+        await fetch(googleSheetUrl, {
+          method: "POST",
+          mode: "no-cors", // This is required for Google Apps Script Web Apps to prevent CORS errors
+          headers: {
+            "Content-Type": "text/plain;charset=utf-8",
+          },
+          body: JSON.stringify(data),
+        });
+      } else {
+        // Fallback to local API if Google Sheet URL is not set yet
+        await fetch("/api/leads", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+      }
 
       // Show redirecting message and go to Thank You page
       setStatus("success");
@@ -72,8 +90,13 @@ export default function LeadForm({ title = "Book Your Spot", subtitle = "Fill ou
         </div>
 
         <div className={styles.inputGroup}>
-          <label htmlFor="message">Message / Query</label>
-          <textarea id="message" name="message" rows={4} placeholder="How can we help you?"></textarea>
+          <label htmlFor="what">What are you looking for? *</label>
+          <textarea id="what" name="what" required rows={2} placeholder="E.g., Improve my communication skills, prepare for an interview..."></textarea>
+        </div>
+
+        <div className={styles.inputGroup}>
+          <label htmlFor="why">Why do you want to join? *</label>
+          <textarea id="why" name="why" required rows={2} placeholder="E.g., I have a promotion coming up and need to speak confidently..."></textarea>
         </div>
 
         <button 
