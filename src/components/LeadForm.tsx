@@ -1,12 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import styles from "./LeadForm.module.css";
 
 export default function LeadForm({ title = "Book Your Spot", subtitle = "Fill out the form below and our team will get in touch with you shortly." }: { title?: string, subtitle?: string }) {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus("submitting");
 
@@ -27,28 +29,25 @@ export default function LeadForm({ title = "Book Your Spot", subtitle = "Fill ou
       const googleSheetUrl = process.env.NEXT_PUBLIC_GOOGLE_SHEET_URL || "https://script.google.com/macros/s/AKfycbwMfCIiLOI4XqNSmwzOIygH_Q9oj1qI3QZfiCoC3wcRzwU8TQwUU3uP306yhOozA7UhLw/exec";
 
       if (googleSheetUrl) {
-        await fetch(googleSheetUrl, {
+        fetch(googleSheetUrl, {
           method: "POST",
           mode: "no-cors", // This is required for Google Apps Script Web Apps to prevent CORS errors
           headers: {
             "Content-Type": "text/plain;charset=utf-8",
           },
           body: JSON.stringify(data),
-        });
+        }).catch(err => console.error("Fetch error:", err));
       } else {
         // Fallback to local API if Google Sheet URL is not set yet
-        await fetch("/api/leads", {
+        fetch("/api/leads", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data),
-        });
+        }).catch(err => console.error("Fetch error:", err));
       }
 
-      // Show redirecting message and go to Thank You page
-      setStatus("success");
-      setTimeout(() => {
-        window.location.href = "/thankyoupage";
-      }, 1500);
+      // Go directly to Thank You page instantly
+      router.push("/thankyoupage");
     } catch (error) {
       console.error("Submission error:", error);
       setStatus("idle");
@@ -56,15 +55,7 @@ export default function LeadForm({ title = "Book Your Spot", subtitle = "Fill ou
     }
   };
 
-  if (status === "success") {
-    return (
-      <div className={styles.successMessage}>
-        <div className={styles.successIcon}>✓</div>
-        <h3>Redirecting...</h3>
-        <p>Taking you to the next steps...</p>
-      </div>
-    );
-  }
+
 
   return (
     <div className={styles.formContainer}>
