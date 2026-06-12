@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import {
   BriefcaseBusiness,
+  CalendarDays,
   Check,
   ChevronDown,
   ClipboardList,
+  Clock,
   GraduationCap,
   Handshake,
   Medal,
@@ -251,6 +253,19 @@ export default function LiveWebinarPage() {
                 </li>
               ))}
             </ul>
+
+            <div className={styles.dateTimeBox}>
+              <div className={styles.dateTimeItem}>
+                <CalendarDays className={styles.dateTimeIcon} size={20} strokeWidth={2.2} />
+                <span>17th June, Wednesday</span>
+              </div>
+              <div className={styles.dateTimeDivider} />
+              <div className={styles.dateTimeItem}>
+                <Clock className={styles.dateTimeIcon} size={20} strokeWidth={2.2} />
+                <span>7:00 PM</span>
+              </div>
+            </div>
+
             <CtaButton />
           </div>
 
