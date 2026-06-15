@@ -172,7 +172,7 @@
 
 .checkList li {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
   min-height: 44px;
   padding: 10px 16px;
@@ -189,6 +189,7 @@
 .checkList span {
   width: 22px;
   height: 22px;
+  margin-top: 1px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
