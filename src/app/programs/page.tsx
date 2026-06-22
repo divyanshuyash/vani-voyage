@@ -47,8 +47,8 @@ const events: ProgramEvent[] = [
     id: 1,
     name: "Unshakable Confidence",
     type: "online" as const,
-    date: new Date(2026, 4, 17), // 4 is May
-    time: "11:00 PM",
+    date: new Date(2026, 5, 27), // 5 is June
+    time: "7:30 PM",
     description:
       "A confidence reset for learners and professionals who know their potential but hesitate when it is time to speak.",
     cta: "Book This Program",

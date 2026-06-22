@@ -257,12 +257,12 @@ export default function LiveWebinarPage() {
             <div className={styles.dateTimeBox}>
               <div className={styles.dateTimeItem}>
                 <CalendarDays className={styles.dateTimeIcon} size={20} strokeWidth={2.2} />
-                <span>20th June, Saturday</span>
+                <span>27th June, Saturday</span>
               </div>
               <div className={styles.dateTimeDivider} />
               <div className={styles.dateTimeItem}>
                 <Clock className={styles.dateTimeIcon} size={20} strokeWidth={2.2} />
-                <span>7:00 PM</span>
+                <span>7:30 PM</span>
               </div>
             </div>
 
