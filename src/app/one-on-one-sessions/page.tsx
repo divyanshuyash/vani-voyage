@@ -114,16 +114,16 @@ const mentorStats: IconCard[] = [
 
 const testimonialCards = [
   {
-    video: "/one-on-one-sessions/videos/video1.mp4#t=0.1",
+    video: "/videos/new-video-1.mp4#t=0.1",
   },
   {
-    video: "/one-on-one-sessions/videos/video2.mp4#t=0.1",
+    video: "/videos/new-video-2.mp4#t=0.1",
   },
   {
-    video: "/one-on-one-sessions/videos/video3.mp4#t=0.1",
+    video: "/live-webinar/videos/video3.mp4#t=0.1",
   },
   {
-    video: "/one-on-one-sessions/videos/video4.mp4#t=0.1",
+    video: "/live-webinar/videos/video4.mp4#t=0.1",
   },
 ];
 

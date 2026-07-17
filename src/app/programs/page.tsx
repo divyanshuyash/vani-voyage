@@ -26,7 +26,6 @@ import {
   endOfWeek,
   isToday,
 } from "date-fns";
-import type { ProgramSheetRow } from "@/lib/programSheet";
 
 const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
@@ -41,13 +40,12 @@ type ProgramEvent = {
   url: string;
 };
 
-// ── Events Data ──
 const events: ProgramEvent[] = [
   {
     id: 1,
     name: "Unshakable Confidence",
-    type: "online" as const,
-    date: new Date(2026, 5, 27), // 5 is June
+    type: "online",
+    date: new Date(2026, 5, 27),
     time: "7:30 PM",
     description:
       "A confidence reset for learners and professionals who know their potential but hesitate when it is time to speak.",
@@ -55,45 +53,6 @@ const events: ProgramEvent[] = [
     url: "https://zoom.tagmango.com/redirect/webinar/single/6a081c57f60298442a05932a",
   }
 ];
-
-function parseSheetDate(value: string): Date | null {
-  const normalized = value.trim();
-  if (!normalized) {
-    return null;
-  }
-
-  const dayFirstMatch = normalized.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
-  if (dayFirstMatch) {
-    const day = Number(dayFirstMatch[1]);
-    const month = Number(dayFirstMatch[2]) - 1;
-    const year = Number(dayFirstMatch[3]);
-    const date = new Date(year, month, day);
-    return Number.isNaN(date.getTime()) ? null : date;
-  }
-
-  const isoMatch = normalized.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
-  if (isoMatch) {
-    const year = Number(isoMatch[1]);
-    const month = Number(isoMatch[2]) - 1;
-    const day = Number(isoMatch[3]);
-    const date = new Date(year, month, day);
-    return Number.isNaN(date.getTime()) ? null : date;
-  }
-
-  const fallback = new Date(normalized);
-  return Number.isNaN(fallback.getTime()) ? null : fallback;
-}
-
-function getProgramType(mode: string, location: string): "online" | "offline" {
-  const normalizedMode = mode.toLowerCase();
-  const normalizedLocation = location.toLowerCase();
-
-  if (normalizedMode.includes("offline") || normalizedLocation.includes("offline")) {
-    return "offline";
-  }
-
-  return "online";
-}
 
 // ── Calendar Component ──
 function EventCalendar({ eventItems }: { eventItems: ProgramEvent[] }) {
@@ -315,7 +274,7 @@ function EventCalendar({ eventItems }: { eventItems: ProgramEvent[] }) {
 }
 
 export default function ProgramsPage() {
-  const [eventItems, setEventItems] = useState<ProgramEvent[]>(events);
+  const eventItems = events;
 
   const summary = useMemo(() => {
     const onlineCount = eventItems.filter((event) => event.type === "online").length;

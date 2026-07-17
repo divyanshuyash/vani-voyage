@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { connection } from "next/server";
 import {
   BriefcaseBusiness,
   CalendarDays,
@@ -22,6 +23,7 @@ import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
 import styles from "./page.module.css";
 import LeadForm from "@/components/LeadForm";
+import { getPublicWebinarSchedule } from "@/data/webinar";
 
 export const metadata: Metadata = {
   title: "Unshakable Confidence Webinar | Vani's Voice Voyage",
@@ -146,10 +148,10 @@ const mentorStats = [
 
 const testimonials = [
   {
-    video: "/live-webinar/videos/video1.mp4#t=0.1",
+    video: "/videos/new-video-1.mp4#t=0.1",
   },
   {
-    video: "/live-webinar/videos/video2.mp4#t=0.1",
+    video: "/videos/new-video-2.mp4#t=0.1",
   },
   {
     video: "/live-webinar/videos/video3.mp4#t=0.1",
@@ -221,7 +223,10 @@ function SectionIntro({
   );
 }
 
-export default function LiveWebinarPage() {
+export default async function LiveWebinarPage() {
+  await connection();
+  const webinarSchedule = await getPublicWebinarSchedule();
+
   return (
     <main className={`${styles.page} vvv-live-webinar`}>
       <section className={styles.hero} aria-label="Live webinar">
@@ -257,12 +262,12 @@ export default function LiveWebinarPage() {
             <div className={styles.dateTimeBox}>
               <div className={styles.dateTimeItem}>
                 <CalendarDays className={styles.dateTimeIcon} size={20} strokeWidth={2.2} />
-                <span>11th July, Saturday</span>
+                <span>{webinarSchedule.dateLabel}</span>
               </div>
               <div className={styles.dateTimeDivider} />
               <div className={styles.dateTimeItem}>
                 <Clock className={styles.dateTimeIcon} size={20} strokeWidth={2.2} />
-                <span>7:30 PM</span>
+                <span>{webinarSchedule.timeLabel}</span>
               </div>
             </div>
 

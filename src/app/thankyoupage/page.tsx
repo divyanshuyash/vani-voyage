@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
-import { ArrowRight, CheckCircle2, MessageCircle, Sparkles } from "lucide-react";
+import { ArrowRight, CheckCircle2, MessageCircle } from "lucide-react";
 import MetaPixelEvents from "@/components/MetaPixelEvents";
 
 export const metadata: Metadata = {

@@ -28,21 +28,9 @@ export default function Navbar() {
     pathname === "/live-webinar" || pathname.startsWith("/live-webinar/");
   const isThankYouPage =
     pathname === "/thankyoupage" || pathname.startsWith("/thankyoupage/");
-  const logoSrc = isOneOnOnePage
-    ? "/one-on-one-sessions/images/logo.png"
-    : isLiveWebinarPage
-      ? "/live-webinar/images/logo.png"
-      : "/image-removebg-preview.png";
-  const navHeight = isLiveWebinarPage ? 64 : 72;
-  const navMaxWidth = isLiveWebinarPage ? 1180 : 1240;
-  const logoImageSize = isLiveWebinarPage ? 34 : 38;
-  const navSurface = isLiveWebinarPage
-    ? scrolled
-      ? "rgba(232, 223, 207, 0.96)"
-      : "rgba(232, 223, 207, 0.9)"
-    : scrolled
-      ? "rgba(232, 223, 207, 0.96)"
-      : "rgba(232, 223, 207, 0.92)";
+  const navSurface = scrolled
+    ? "rgba(232, 223, 207, 0.96)"
+    : "rgba(232, 223, 207, 0.92)";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -78,7 +66,7 @@ export default function Navbar() {
           left: 0,
           right: 0,
           zIndex: 100,
-          height: navHeight,
+          height: 72,
           display: "flex",
           alignItems: "center",
           padding: "0",
@@ -95,11 +83,11 @@ export default function Navbar() {
         <div
           className="w-full flex justify-between items-center px-4 md:px-7 mx-auto"
           style={{
-            maxWidth: navMaxWidth,
+            maxWidth: 1240,
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            gap: isLiveWebinarPage ? "1.25rem" : "0.2rem",
+            gap: "0.2rem",
             pointerEvents: "auto",
             background: "transparent",
             border: "none",
@@ -107,8 +95,8 @@ export default function Navbar() {
             boxShadow: "none",
             backdropFilter: "none",
             WebkitBackdropFilter: "none",
-            paddingTop: isLiveWebinarPage ? "0.35rem" : "0.65rem",
-            paddingBottom: isLiveWebinarPage ? "0.35rem" : "0.65rem",
+            paddingTop: "0.65rem",
+            paddingBottom: "0.65rem",
           }}
         >
           {/* Logo */}
@@ -124,8 +112,8 @@ export default function Navbar() {
           >
             <span
               style={{
-                width: isLiveWebinarPage ? 36 : 40,
-                height: isLiveWebinarPage ? 36 : 40,
+                width: 40,
+                height: 40,
                 display: "inline-flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -133,13 +121,13 @@ export default function Navbar() {
               }}
             >
               <Image
-                src={logoSrc}
+                src="/image-removebg-preview.png"
                 alt="Vani's Voice Voyage Logo"
                 width={88}
                 height={88}
                 priority
                 style={{
-                  height: logoImageSize,
+                  height: 38,
                   width: "auto",
                   objectFit: "contain",
                   objectPosition: "center",
@@ -162,7 +150,7 @@ export default function Navbar() {
                 style={{
                   fontFamily: "var(--font-display)",
                   fontWeight: 700,
-                  fontSize: isLiveWebinarPage ? "1rem" : "1.08rem",
+                  fontSize: "1.08rem",
                   color: "var(--text)",
                   letterSpacing: 0,
                   textShadow: "0 2px 10px rgba(193, 123, 60, 0.18)",
@@ -187,13 +175,12 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Nav Links */}
-          <div className="hidden lg:flex" style={{ alignItems: "center", gap: isLiveWebinarPage ? "0.2rem" : "clamp(0.08rem, 0.7vw, 0.85rem)" }}>
+          <div className="hidden lg:flex" style={{ alignItems: "center", gap: "clamp(0.08rem, 0.7vw, 0.85rem)" }}>
             {navLinks.map((link) => {
               const isActive =
                 link.href === "/"
                   ? pathname === link.href
                   : pathname === link.href || pathname.startsWith(`${link.href}/`);
-              const isWebinarActive = isLiveWebinarPage && link.href === "/live-webinar";
               return (
                 <Link
                   key={link.href}
@@ -201,18 +188,14 @@ export default function Navbar() {
                   style={{
                     fontFamily: "var(--font-body)",
                     fontWeight: isActive ? 700 : 600,
-                    fontSize: isLiveWebinarPage ? "0.78rem" : "clamp(0.68rem, 1vw, 0.82rem)",
+                    fontSize: "clamp(0.68rem, 1vw, 0.82rem)",
                     color: isActive ? "var(--text)" : "var(--muted)",
                     transition: "color 0.25s, background 0.25s, border-color 0.25s",
                     position: "relative",
-                    padding: isLiveWebinarPage ? "0.45rem 0.7rem" : "clamp(0.3rem, 1.5vw, 0.45rem) clamp(0.4rem, 1vw, 0.72rem)",
+                    padding: "clamp(0.3rem, 1.5vw, 0.45rem) clamp(0.4rem, 1vw, 0.72rem)",
                     borderRadius: 999,
-                    border: isWebinarActive ? "1px solid rgba(163, 131, 91, 0.26)" : "1px solid transparent",
-                    background: isWebinarActive
-                      ? "linear-gradient(180deg, rgba(163, 131, 91, 0.16), rgba(163, 131, 91, 0.08))"
-                      : isActive
-                        ? "var(--accent-soft)"
-                        : "transparent",
+                    border: "1px solid transparent",
+                    background: isActive ? "var(--accent-soft)" : "transparent",
                     display: "inline-flex",
                     alignItems: "center",
                     lineHeight: 1,
@@ -248,7 +231,7 @@ export default function Navbar() {
             className="lg:hidden"
             style={{
               position: "fixed",
-              top: navHeight,
+              top: 72,
               left: 0,
               right: 0,
               zIndex: 99,
